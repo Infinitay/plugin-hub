@@ -12,13 +12,15 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
-import tictac7x.charges.item.triggers.OnGraphicChanged;
+import tictac7x.charges.item.triggers.OnHitsplatApplied;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
+import tictac7x.charges.store.CombatStyle;
+import tictac7x.charges.store.HitsplatTarget;
 import tictac7x.charges.store.Store;
 
-public class S_TomeOfWater extends ChargedItem {
-    public S_TomeOfWater(
+public class J_AmuletOfBloodFury extends ChargedItem {
+    public J_AmuletOfBloodFury(
         final Client client,
         final ClientThread clientThread,
         final ConfigManager configManager,
@@ -30,25 +32,24 @@ public class S_TomeOfWater extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(TicTac7xChargesImprovedConfig.tome_of_water, ItemID.TOME_OF_WATER, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
+        super(TicTac7xChargesImprovedConfig.amulet_of_blood_fury, ItemID.AMULET_OF_BLOOD_FURY, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
-            new TriggerItem(ItemID.TOME_OF_WATER_EMPTY).fixedCharges(0),
-            new TriggerItem(ItemID.TOME_OF_WATER).needsToBeEquipped(),
+            new TriggerItem(ItemID.AMULET_OF_BLOOD_FURY),
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers = new TriggerBase[]{
+            // Creation
+            new OnChatMessage("You have successfully created an Amulet of blood fury.").setFixedCharges(10000),
+
             // Check.
-            new OnChatMessage("Your tome currently holds (?<charges>.+) charges?.").setDynamicallyCharges().onItemClick(),
+            new OnChatMessage("Your Amulet of blood fury (will work|can perform) for (?<charges>.+) more hits?.").setDynamicallyCharges(),
 
-            // Attack with regular spellbook water spells.
-            new OnGraphicChanged(93, 120, 135, 161, 1458).isEquipped().decreaseCharges(1),
+            // Charge.
+            new OnChatMessage("You have successfully added .+ hits? to your Amulet of blood fury. It will now work for (?<charges>.+) more hits?.").setDynamicallyCharges(),
 
-            // Auto-charge.
-            new OnChatMessage("The banker charges your Tome of fire using (?<soakedpage>.+)x Soaked page.").matcherConsumer(m -> {
-                final int soakedPages = Integer.parseInt(m.group("soakedpage"));
-                increaseCharges(soakedPages * 20);
-            }),
+            // Take damage.
+            new OnHitsplatApplied(HitsplatTarget.ENEMY).combatStyle(CombatStyle.MELEE).isEquipped().decreaseCharges(1),
         };
     }
 }

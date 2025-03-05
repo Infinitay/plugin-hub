@@ -1,4 +1,4 @@
-# Item Charges Improved - v0.5.20
+# Item Charges Improved - v0.5.21
 
 Show charges of various items that are in inventory or equipped
 
@@ -63,6 +63,8 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 
 ### Jewellery
 
+- Alchemists amulet
+- Amulet of blood fury
 - Binding necklace
 - Bracelet of clay
 - Bracelet of expeditious
@@ -70,6 +72,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - Bracelet of slaughter
 - Burning amulet
 - Camulet
+- Castle wars bracelet
 - Desert amulet
 - Digsite pendant
 - Efaritay's aid
@@ -81,6 +84,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - Pendant of ates
 - Ring of celestial
 - Ring of dueling
+- Ring of forging
 - Ring of elements
 - Ring of endurance
 - Ring of explorer
