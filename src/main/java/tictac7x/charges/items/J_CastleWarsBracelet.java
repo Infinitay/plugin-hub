@@ -27,7 +27,7 @@ public class J_CastleWarsBracelet extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(TicTac7xChargesImprovedConfig.castle_wars_braelet, ItemID.CASTLE_WARS_BRACELET1, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
+        super(TicTac7xChargesImprovedConfig.castle_wars_bracelet, ItemID.CASTLE_WARS_BRACELET1, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.CASTLE_WARS_BRACELET1).fixedCharges(1).needsToBeEquipped(),

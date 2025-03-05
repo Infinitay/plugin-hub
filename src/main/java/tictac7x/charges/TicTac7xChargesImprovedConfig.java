@@ -41,7 +41,7 @@ public interface TicTac7xChargesImprovedConfig extends Config {
     String bryophytas_staff = "bryophytas_staff";
     String burning_amulet = "burning_amulet";
     String camulet = "camulet";
-    String castle_wars_braelet = "castle_wars_bracelet";
+    String castle_wars_bracelet = "castle_wars_bracelet";
     String celestial_ring = "celestial_ring";
     String chronicle = "chronicle";
     String circlet_of_water = "circlet_of_water";
@@ -523,7 +523,7 @@ public interface TicTac7xChargesImprovedConfig extends Config {
         ) default boolean camuletInfobox() { return true; }
 
         @ConfigItem(
-            keyName = castle_wars_braelet + infobox,
+            keyName = castle_wars_bracelet + infobox,
             name = "Castle wars bracelet",
             description = "",
             section = infoboxes
@@ -1216,7 +1216,7 @@ public interface TicTac7xChargesImprovedConfig extends Config {
         ) default boolean camuletOverlay() { return true; }
 
         @ConfigItem(
-            keyName = castle_wars_braelet + overlay,
+            keyName = castle_wars_bracelet + overlay,
             name = "Castle wars bracelet",
             description = "",
             section = overlays
