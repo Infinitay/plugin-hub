@@ -206,6 +206,14 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             position = 8
         ) default boolean showUnlimited() { return true; }
 
+        @ConfigItem(
+            keyName = "show_daily_reset",
+            name = "Show daily reset message",
+            description = "Show message in chatbox when items daily charges have been reset",
+            section = general,
+            position = 9
+        ) default boolean showDailyReset() { return false; }
+
     @ConfigSection(
         name = "Colors",
         description = "Colors of item overlays",

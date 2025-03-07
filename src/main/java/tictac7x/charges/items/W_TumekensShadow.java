@@ -52,6 +52,12 @@ public class W_TumekensShadow extends ChargedItem {
 
             // Attack.
             new OnGraphicChanged(2125).decreaseCharges(1),
+
+            // Auto-charge.
+            new OnChatMessage("The banker charges your Tumeken's shadow using (?<soulrune>.+)x Soul rune").matcherConsumer(m -> {
+                final int soulRunes = Integer.parseInt(m.group("soulrune"));
+                increaseCharges(soulRunes / 2);
+            }),
         };
     }
 }

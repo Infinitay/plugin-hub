@@ -46,7 +46,13 @@ public class W_SanguinestiStaff extends ChargedItem {
             new OnChatMessage("You apply an additional .+ charges? to your Sanguinesti staff. It now has (?<charges>.+) charges? in total.").setDynamicallyCharges(),
 
             // Charge empty.
-            new OnChatMessage("You apply (?<charges>.+) charges to your Sanguinesti staff.").setDynamicallyCharges()
+            new OnChatMessage("You apply (?<charges>.+) charges to your Sanguinesti staff.").setDynamicallyCharges(),
+
+            // Auto-charge.
+            new OnChatMessage("The banker charges your (Holy s|S)anguinesti staff using (?<bloodrune>.+)x Blood rune.").matcherConsumer(m -> {
+                final int bloodRunes = Integer.parseInt(m.group("bloodrune"));
+                increaseCharges(bloodRunes / 3);
+            }),
         };
     }
 }

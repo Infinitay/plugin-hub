@@ -623,6 +623,8 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 	}
 
 	private void checkForChargesReset() {
+		if (!config.showDailyReset()) return;
+
 		final String date = LocalDateTime.now(timezone).format(DateTimeFormatter.ISO_LOCAL_DATE);
 		if (date.equals(config.getResetDate())) return;
 
