@@ -101,6 +101,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - Ash sanctifier
 - Bonecrusher
 - Bottomless compost bucket
+- Chugging barrel
 - Coal bag
 - Colossal Pouch
 - Crystal saw
@@ -117,6 +118,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - Meat pouches
 - Ogre bellows
 - Plank sack
+- Reagent pouch
 - Seed box
 - Soul bearer
 - Strange old lockpick

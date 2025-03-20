@@ -44,6 +44,7 @@ public interface TicTac7xChargesImprovedConfig extends Config {
     String castle_wars_bracelet = "castle_wars_bracelet";
     String celestial_ring = "celestial_ring";
     String chronicle = "chronicle";
+    String chugging_barrel = "chugging_barrel";
     String circlet_of_water = "circlet_of_water";
     String coal_bag = "coal_bag";
     String colossal_pouch = "colossal_pouch";
@@ -495,6 +496,13 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             description = "",
             section = infoboxes
         ) default boolean circletOfWaterInfobox() { return true; }
+
+        @ConfigItem(
+            keyName = chugging_barrel + infobox,
+            name = "Chugging barrel",
+            description = "",
+            section = infoboxes
+        ) default boolean chuggingBarrelInfobox() { return true; }
 
         @ConfigItem(
             keyName = kandarin_headgear + infobox,
@@ -1265,6 +1273,13 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             description = "",
             section = overlays
         ) default boolean circletOfWaterOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = chugging_barrel + overlay,
+            name = "Chugging barrel",
+            description = "",
+            section = overlays
+        ) default boolean chuggingBarrelOverlay() { return true; }
 
         @ConfigItem(
             keyName = coal_bag + overlay,
@@ -2104,6 +2119,13 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             description = circlet_of_water,
             section = debug
         ) default int getCircletOfWaterCharges() { return Charges.UNKNOWN; }
+
+        @ConfigItem(
+            keyName = chugging_barrel + storage,
+            name = chugging_barrel,
+            description = chugging_barrel,
+            section = debug
+        ) default String getChuggingBarrelStorage() { return ""; }
 
         @ConfigItem(
             keyName = teleport_crystal,

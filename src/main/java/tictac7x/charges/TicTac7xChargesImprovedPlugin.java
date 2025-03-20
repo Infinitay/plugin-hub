@@ -127,6 +127,7 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 	private final String pluginVersion = "v0.5.22";
 	private final String pluginMessage = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + pluginVersion + ":<br>" +
+		"<colHIGHLIGHT>* Chugging barrel and Reagent pouch added.<br>" +
 		"<colHIGHLIGHT>* Huasca herbs support for herb sack.<br>" +
 		"<colHIGHLIGHT>* All storage items at bank have proper empty/fill menu options.<br>" +
 		"<colHIGHLIGHT>* Auto-charges support for some missing items.<br>" +
@@ -282,6 +283,7 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 			new U_AshSanctifier(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_BoneCrusher(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_BottomlessCompostBucket(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new U_ChuggingBarrel(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_CoalBag(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_CrystalSaw(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_ColossalPouch(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
