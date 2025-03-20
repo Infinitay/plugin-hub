@@ -36,6 +36,7 @@ public class Store {
     private int lastChatMessagesTick = 0;
     private List<String> lastChatMessages = new ArrayList<>();
     public Optional<ItemContainer> inventory = Optional.empty();
+    public Optional<StorageItems> inventoryStorage = Optional.empty();
     public Optional<ItemContainer> equipment = Optional.empty();
     public Optional<ItemContainer> bank = Optional.empty();
 
@@ -128,6 +129,7 @@ public class Store {
         // Update inventory, save previous items.
         if (event.getContainerId() == InventoryID.INVENTORY.getId()) {
             inventory = Optional.of(event.getItemContainer());
+            inventoryStorage = Optional.of(new StorageItems(event));
 
             previousInventoryItems = new ArrayList<>();
             for (final StorageItem storageItem : currentInventoryItems) {

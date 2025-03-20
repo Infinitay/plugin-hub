@@ -14,6 +14,7 @@ import tictac7x.charges.TicTac7xChargesImprovedPlugin;
 import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.storage.StorableItem;
 import tictac7x.charges.item.storage.StorageItem;
+import tictac7x.charges.item.storage.StorageItems;
 import tictac7x.charges.item.triggers.*;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.store.WidgetId;
@@ -39,10 +40,10 @@ public class U_ReagentPouch extends ChargedItemWithStorage {
         storage.emptyIsNegative().setMaximumIndividualQuantity(26).storableItems(
             new StorableItem(ItemID.EYE_OF_NEWT).checkName("Eye of newt"),
             new StorableItem(ItemID.LIMPWURT_ROOT).checkName("Limpwurt root"),
-            new StorableItem(ItemID.RED_SPIDERS_EGGS).checkName("Red spider's eggs"),
-            new StorableItem(ItemID.TOADS_LEGS).checkName("Toad's legs"),
+            new StorableItem(ItemID.RED_SPIDERS_EGGS).checkName("Red spider's eggs", "eggs"),
+            new StorableItem(ItemID.TOADS_LEGS).checkName("Toad's legs", "toad legs"),
             new StorableItem(ItemID.SNAPE_GRASS).checkName("Snape grass"),
-            new StorableItem(ItemID.MORT_MYRE_FUNGUS).checkName("Mort myre fungus"),
+            new StorableItem(ItemID.MORT_MYRE_FUNGUS).checkName("Mort myre fungus", "Mort Myre fungi"),
             new StorableItem(ItemID.WHITE_BERRIES).checkName("White berries"),
             new StorableItem(ItemID.JANGERBERRIES).checkName("Jangerberries"),
             new StorableItem(ItemID.POISON_IVY_BERRIES).checkName("Poison ivy berries"),
@@ -50,17 +51,17 @@ public class U_ReagentPouch extends ChargedItemWithStorage {
             new StorableItem(ItemID.CACTUS_SPINE).checkName("Cactus spine"),
             new StorableItem(ItemID.ASHES).checkName("Ashes"),
             new StorableItem(ItemID.CHOCOLATE_DUST).checkName("Chocolate dust"),
-            new StorableItem(ItemID.DRAGON_SCALE_DUST).checkName("Dragon scale dust"),
-            new StorableItem(ItemID.GOAT_HORN_DUST).checkName("Goat horn dust"),
+            new StorableItem(ItemID.DRAGON_SCALE_DUST).checkName("Dragon scale dust", "dragon scale"),
+            new StorableItem(ItemID.GOAT_HORN_DUST).checkName("Goat horn dust", "ground desert goat horn"),
             new StorableItem(ItemID.GORAK_CLAW_POWDER).checkName("Gorak claw powder"),
-            new StorableItem(ItemID.KEBBIT_TEETH_DUST).checkName("Kebbit teeth dust"),
+            new StorableItem(ItemID.KEBBIT_TEETH_DUST).checkName("Kebbit teeth dust", "ground kebbit teeth"),
             new StorableItem(ItemID.SILVER_DUST).checkName("Silver dust"),
-            new StorableItem(ItemID.UNICORN_HORN_DUST).checkName("Unicorn horn dust"),
-            new StorableItem(ItemID.WINE_OF_ZAMORAK).checkName("Wine of zamorak"),
+            new StorableItem(ItemID.UNICORN_HORN_DUST).checkName("Unicorn horn dust", "unicorn horn"),
+            new StorableItem(ItemID.WINE_OF_ZAMORAK).checkName("Wine of zamorak", "wine"),
             new StorableItem(ItemID.ALDARIUM).checkName("Aldarium"),
             new StorableItem(ItemID.YEW_ROOTS).checkName("Yew roots"),
             new StorableItem(ItemID.MAGIC_ROOTS).checkName("Magic roots"),
-            new StorableItem(ItemID.CRUSHED_NEST).checkName("Crushed nest"),
+            new StorableItem(ItemID.CRUSHED_NEST).checkName("Crushed nest", "crushed bird nest"),
             new StorableItem(ItemID.CRUSHED_SUPERIOR_DRAGON_BONES).checkName("Crushed superior dragon bones"),
             new StorableItem(ItemID.NAIL_BEAST_NAILS).checkName("Nail beast nails"),
             new StorableItem(ItemID.LILY_OF_THE_SANDS).checkName("Lily of the sands"),
@@ -82,11 +83,14 @@ public class U_ReagentPouch extends ChargedItemWithStorage {
             new OnChatMessage("(?<amount>.+) x (?<item>.+)").matcherConsumer(m -> {
                 final Optional<StorageItem> item = getStorageItemFromName(m.group("item"));
                 final int amount = Integer.parseInt(m.group("amount"));
-
-                if (item.isPresent()) {
-                    storage.put(item.get().itemId, amount);
-                }
+                if (item.isPresent()) storage.put(item.get().itemId, amount);
             }).hasChatMessage("You look in your Reagent pouch and see:"),
+
+            // Pick up.
+            new OnChatMessage("You put the (?<item>.+) into your Reagent pouch.").matcherConsumer(m -> {
+                final Optional<StorageItem> item = getStorageItemFromName(m.group("item"));
+                if (item.isPresent()) storage.add(item.get().itemId, 1);
+            }),
 
             // Empty to bank.
             new OnChatMessage("You empty your pouch into the bank").onItemClick().emptyStorage(),
@@ -95,11 +99,25 @@ public class U_ReagentPouch extends ChargedItemWithStorage {
             new OnItemContainerChanged(INVENTORY).emptyStorageToInventory().onMenuOption("Empty"),
 
             // Fill from inventory.
-            new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().onMenuOption("Fill", TicTac7xChargesImprovedPlugin.menuOptionFillFromInventory),
+            new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().onInventoryDifference(inventoryDifference -> {
+                if (!store.inventoryStorage.isPresent()) return;
+                for (final StorageItem inventoryDifferenceItem : inventoryDifference.getItems()) {
+                    // Item was put into the reagent pouch, but there is more in inventory, meaning that item is filled to maximum.
+                    if (store.inventoryStorage.get().hasItem(inventoryDifferenceItem.itemId)) {
+                        storage.put(inventoryDifferenceItem.itemId, 26);
+                    }
+                }
+            }).onMenuOption("Fill", TicTac7xChargesImprovedPlugin.menuOptionFillFromInventory),
 
             // Replace "Use" with proper Fill/Empty option.
             new OnMenuEntryAdded("Use").replaceOptionConsumer(() -> getMenuOptionForUse()).isWidgetVisible(WidgetId.BANK, WidgetId.DEPOSIT_BOX),
             new OnMenuEntryAdded("Use").replaceOptionConsumer(() -> getMenuOptionForUse()).isWidgetVisible(WidgetId.BANK, WidgetId.DEPOSIT_BOX),
+
+            // Mix potions.
+            new OnChatMessage("You mix the (?<item>.+) into (your|the unfinished)( antifire)? (potion|antidote\\+\\+).*").matcherConsumer((m) -> {
+                final Optional<StorageItem> item = getStorageItemFromName(m.group("item"));
+                if (item.isPresent()) storage.remove(item.get().itemId, 1);
+            }).requiredItem(ItemID.OPEN_REAGENT_POUCH),
         };
     }
 

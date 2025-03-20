@@ -19,7 +19,7 @@ public class StorageItems {
 
         for (final Item item : itemContainer.getItems()) {
             if (item == null || item.getId() <= 0 || items.containsKey(item.getId())) continue;
-            items.put(item.getId(), new StorageItem(item.getId(), item.getQuantity()));
+            items.put(item.getId(), new StorageItem(item.getId(), itemContainer.count(item.getId())));
         }
     }
 
