@@ -11,6 +11,7 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
+import tictac7x.charges.TicTac7xChargesImprovedPlugin;
 import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.storage.StorableItem;
 import tictac7x.charges.item.triggers.*;
@@ -80,13 +81,16 @@ public class U_FurPouch extends ChargedItemWithStorage {
             new OnItemContainerChanged(ItemContainerId.INVENTORY).emptyStorageToInventory().onMenuOption("Empty"),
 
             // Empty to bank.
-            new OnItemContainerChanged(BANK).emptyStorageToBank().onMenuOption("Empty"),
+            new OnItemContainerChanged(BANK).emptyStorageToBank().onMenuOption(TicTac7xChargesImprovedPlugin.menuOptionEmptyToBank),
 
             // Empty from deposit box.
-            new OnMenuOptionClicked("Empty").onItemClick().isWidgetVisible(WidgetId.DEPOSIT_BOX).emptyStorage(),
+            new OnMenuOptionClicked(TicTac7xChargesImprovedPlugin.menuOptionEmptyToBank).onItemClick().isWidgetVisible(WidgetId.DEPOSIT_BOX).emptyStorage(),
 
             // Use fur on pouch.
             new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().onUseStorageItemOnChargedItem(storage.getStorableItems()),
+
+            // Replace "Empty" with proper "Empty to bank".
+            new OnMenuEntryAdded("Empty").replaceOption(TicTac7xChargesImprovedPlugin.menuOptionEmptyToBank).isWidgetVisible(WidgetId.BANK, WidgetId.DEPOSIT_BOX),
 
             // Hide destroy option.
             new OnMenuEntryAdded("Destroy").hide(),
@@ -102,19 +106,19 @@ public class U_FurPouch extends ChargedItemWithStorage {
 
             // Pitfalls.
             new OnChatMessage("You've caught a spined larupia!").requiredItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).addToStorage(ItemID.LARUPIA_FUR),
-            new OnItemContainerChanged(ItemContainerId.INVENTORY).hasChatMessage("You've caught a spined larupia!").requiredItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).onItemContainerDifference(itemsDifference -> {
+            new OnItemContainerChanged(ItemContainerId.INVENTORY).hasChatMessage("You've caught a spined larupia!").requiredItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).onInventoryDifference(itemsDifference -> {
                 if (itemsDifference.hasItem(ItemID.TATTY_LARUPIA_FUR)) {
                     storage.remove(ItemID.LARUPIA_FUR, 1);
                 }
             }),
             new OnChatMessage("You've caught a horned graahk!").requiredItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).addToStorage(ItemID.GRAAHK_FUR),
-            new OnItemContainerChanged(ItemContainerId.INVENTORY).hasChatMessage("You've caught a horned graahk!").requiredItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).onItemContainerDifference(itemsDifference -> {
+            new OnItemContainerChanged(ItemContainerId.INVENTORY).hasChatMessage("You've caught a horned graahk!").requiredItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).onInventoryDifference(itemsDifference -> {
                 if (itemsDifference.hasItem(ItemID.TATTY_GRAAHK_FUR)) {
                     storage.remove(ItemID.GRAAHK_FUR, 1);
                 }
             }),
             new OnChatMessage("You've caught a sabre-?toothed kyatt!").requiredItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).addToStorage(ItemID.KYATT_FUR),
-            new OnItemContainerChanged(ItemContainerId.INVENTORY).hasChatMessage("You've caught a sabre-?toothed kyatt!").requiredItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).onItemContainerDifference(itemsDifference -> {
+            new OnItemContainerChanged(ItemContainerId.INVENTORY).hasChatMessage("You've caught a sabre-?toothed kyatt!").requiredItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).onInventoryDifference(itemsDifference -> {
                 if (itemsDifference.hasItem(ItemID.TATTY_KYATT_FUR)) {
                     storage.remove(ItemID.KYATT_FUR, 1);
                 }

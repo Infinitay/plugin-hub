@@ -27,6 +27,7 @@ import tictac7x.charges.item.overlays.ChargedItemOverlay;
 import tictac7x.charges.items.*;
 import tictac7x.charges.items.barrows.*;
 import tictac7x.charges.store.AdvancedMenuEntry;
+import tictac7x.charges.store.ItemContainerId;
 import tictac7x.charges.store.Store;
 
 import javax.inject.Inject;
@@ -123,13 +124,13 @@ import java.util.*;
 )
 
 public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener, MouseListener, MouseWheelListener {
-	private final String pluginVersion = "v0.5.21";
+	private final String pluginVersion = "v0.5.22";
 	private final String pluginMessage = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + pluginVersion + ":<br>" +
-		"<colHIGHLIGHT>* Amulet of blood fury added.<br>" +
-		"<colHIGHLIGHT>* Ring of forging added.<br>" +
-		"<colHIGHLIGHT>* Castle wars bracelet added.<br>" +
-		"<colHIGHLIGHT>* Auto-charging tracking for most of the items."
+		"<colHIGHLIGHT>* Huasca herbs support for herb sack.<br>" +
+		"<colHIGHLIGHT>* All storage items at bank have proper empty/fill menu options.<br>" +
+		"<colHIGHLIGHT>* Auto-charges support for some missing items.<br>" +
+		"<colHIGHLIGHT>* Log basket and forestry kit nature offerings support."
 	;
 
 	private final int VARBIT_MINUTES = 8354;
@@ -239,6 +240,7 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 			// Capes
 			new C_ArdougneCloak(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new C_Coffin(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new C_ForestryBasket(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new C_ForestryKit(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new C_MagicCape(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 
@@ -298,6 +300,7 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 			new U_OgreBellows(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_QuetzalWhistle(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_PlankSack(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new U_ReagentPouch(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_SeedBox(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_SoulBearer(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_StrangeOldLockpick(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
@@ -375,7 +378,7 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 
 	@Subscribe
 	public void onChatMessage(final ChatMessage event) {
-		store.setLastChatMessage(event);
+		store.setLastChatMessages(event);
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onChatMessage(event));
 
 //		System.out.println("MESSAGE | " +
@@ -716,6 +719,11 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 	public static String getCleanChatMessage(final ChatMessage event) {
 		return getCleanText(event.getMessage());
 	}
+
+	public static String menuOptionEmptyToBank = "Empty to bank";
+	public static String menuOptionFillFromBank = "Fill from bank";
+	public static String menuOptionEmptyToInventory = "Empty to inventory";
+	public static String menuOptionFillFromInventory = "Fill from inventory";
 
 	public static int getNumberFromCommaString(final String charges) {
 		return Integer.parseInt(charges.replaceAll(",", "").replaceAll("\\.", ""));

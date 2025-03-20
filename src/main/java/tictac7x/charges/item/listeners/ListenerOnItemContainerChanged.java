@@ -10,6 +10,7 @@ import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.ChargedItemWithStorage;
+import tictac7x.charges.item.storage.StorageItems;
 import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
@@ -61,8 +62,18 @@ public class ListenerOnItemContainerChanged extends ListenerBase {
                 triggerUsed = true;
             }
 
-            if (trigger.onItemContainerDifference.isPresent()) {
-                trigger.onItemContainerDifference.get().accept(chargedItem.store.getInventoryItemsDifference());
+            if (trigger.onInventoryDifference.isPresent()) {
+                trigger.onInventoryDifference.get().accept(chargedItem.store.getInventoryItemsDifference());
+                triggerUsed = true;
+            }
+
+            if (trigger.onBankDifference.isPresent()) {
+                trigger.onBankDifference.get().accept(chargedItem.store.getBankItemsDifference());
+                triggerUsed = true;
+            }
+
+            if (trigger.itemsConsumer.isPresent()) {
+                trigger.itemsConsumer.get().accept(new StorageItems(event));
                 triggerUsed = true;
             }
 

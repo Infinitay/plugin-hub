@@ -16,7 +16,6 @@ import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.storage.StorableItem;
 import tictac7x.charges.item.triggers.*;
-import tictac7x.charges.store.ItemWithQuantity;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.store.WidgetId;
 
@@ -73,17 +72,17 @@ public class U_PlankSack extends ChargedItemWithStorage {
             }),
 
             // Empty to inventory.
-            new OnItemContainerChanged(INVENTORY).emptyStorageToInventory().onMenuOption("Empty"),
+            new OnItemContainerChanged(INVENTORY).emptyStorageToInventory().onMenuOption("Empty", TicTac7xChargesImprovedPlugin.menuOptionEmptyToInventory),
 
             // Fill from inventory.
-            new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().onMenuOption("Fill"),
+            new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().onMenuOption("Fill", TicTac7xChargesImprovedPlugin.menuOptionFillFromInventory),
 
             // Use plank on sack.
             new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().onUseStorageItemOnChargedItem(storage.getStorableItems()),
 
             // Replace "Use" with proper Fill/Empty option.
-            new OnMenuEntryAdded("Use").replaceOptionConsumer(() -> getMenuOptionForUse()).isWidgetVisible(WidgetId.BANK),
-            new OnMenuEntryAdded("Use").replaceOptionConsumer(() -> getMenuOptionForUse()).isWidgetVisible(WidgetId.BANK),
+            new OnMenuEntryAdded("Use").replaceOptionConsumer(() -> getMenuOptionForUse()).isWidgetVisible(WidgetId.BANK, WidgetId.DEPOSIT_BOX),
+            new OnMenuEntryAdded("Use").replaceOptionConsumer(() -> getMenuOptionForUse()).isWidgetVisible(WidgetId.BANK, WidgetId.DEPOSIT_BOX),
 
             // Hallowed Sepulchre
             new OnXpDrop(Skill.CONSTRUCTION).xpAmountConsumer((xp) -> {
@@ -254,12 +253,12 @@ public class U_PlankSack extends ChargedItemWithStorage {
                         break;
                 }
             }),
-            new OnItemContainerChanged(INVENTORY).onItemContainerDifference(itemsDifference -> {
+            new OnItemContainerChanged(INVENTORY).onInventoryDifference(itemsDifference -> {
                 if (!sawmillLogId.isPresent() || !sawmillPlankId.isPresent()) return;
 
-                final int logsDifference = itemsDifference.getItemQuantity(sawmillLogId.get());
-                final int planksDifference = itemsDifference.getItemQuantity(sawmillPlankId.get());
-                final int vouchersDifference = itemsDifference.getItemQuantity(ItemID.SAWMILL_VOUCHER);
+                final int logsDifference = itemsDifference.count(sawmillLogId.get());
+                final int planksDifference = itemsDifference.count(sawmillPlankId.get());
+                final int vouchersDifference = itemsDifference.count(ItemID.SAWMILL_VOUCHER);
 
                 storage.add(this.sawmillPlankId.get(), Math.abs(logsDifference) + Math.abs(vouchersDifference) - Math.abs(planksDifference));
 
@@ -337,15 +336,8 @@ public class U_PlankSack extends ChargedItemWithStorage {
     }
 
     private String getMenuOptionForUse() {
-        if (
-            store.inventoryContainsItem(ItemID.PLANK) ||
-            store.inventoryContainsItem(ItemID.OAK_PLANK) ||
-            store.inventoryContainsItem(ItemID.TEAK_PLANK) ||
-            store.inventoryContainsItem(ItemID.MAHOGANY_PLANK)
-        ) {
-            return "Fill";
-        }
-
-        return "Empty";
+        return storage.isStorableItemInInventory()
+            ? TicTac7xChargesImprovedPlugin.menuOptionFillFromInventory
+            : TicTac7xChargesImprovedPlugin.menuOptionEmptyToInventory;
     }
 }

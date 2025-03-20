@@ -16,12 +16,12 @@ import tictac7x.charges.TicTac7xChargesImprovedPlugin;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.storage.StorageItem;
+import tictac7x.charges.item.storage.StorageItems;
 import tictac7x.charges.item.triggers.OnResetDaily;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 
 import java.util.*;
-import java.util.function.Consumer;
 
 public class Store {
     private final Client client;
@@ -33,7 +33,8 @@ public class Store {
 
     private Optional<ChargedItemBase[]> chargedItems = Optional.empty();
     private List<Integer> dailyResetItemIds = new ArrayList<>();
-    private Optional<String> lastChatMessage = Optional.empty();
+    private int lastChatMessagesTick = 0;
+    private List<String> lastChatMessages = new ArrayList<>();
     public Optional<ItemContainer> inventory = Optional.empty();
     public Optional<ItemContainer> equipment = Optional.empty();
     public Optional<ItemContainer> bank = Optional.empty();
@@ -53,14 +54,27 @@ public class Store {
         this.configManager = configManager;
     }
 
-    public Optional<String> getLastChatMessage() {
-        return this.lastChatMessage;
+    public List<String> getLastChatMessages() {
+        return lastChatMessages;
     }
 
-    public void setLastChatMessage(final ChatMessage event) {
-        if (event.getType() == ChatMessageType.GAMEMESSAGE || event.getType() == ChatMessageType.DIALOG || event.getType() == ChatMessageType.SPAM) {
-            lastChatMessage = Optional.of(TicTac7xChargesImprovedPlugin.getCleanChatMessage(event));
+    public void setLastChatMessages(final ChatMessage event) {
+        switch (event.getType()) {
+            case GAMEMESSAGE:
+            case DIALOG:
+            case SPAM:
+                break;
+            default:
+                return;
         }
+
+        final int tick = client.getTickCount();
+        if (tick != lastChatMessagesTick) {
+            lastChatMessages = new ArrayList<>();
+            lastChatMessagesTick = tick;
+        }
+
+        lastChatMessages.add(TicTac7xChargesImprovedPlugin.getCleanChatMessage(event));
     }
 
     public void setChargedItems(final ChargedItemBase[] chargedItems) {
@@ -117,7 +131,7 @@ public class Store {
 
             previousInventoryItems = new ArrayList<>();
             for (final StorageItem storageItem : currentInventoryItems) {
-                previousInventoryItems.add(new StorageItem(storageItem.itemId, storageItem.quantity));
+                previousInventoryItems.add(new StorageItem(storageItem.itemId, storageItem.getQuantity()));
             }
 
             currentInventoryItems = new ArrayList<>();
@@ -132,7 +146,7 @@ public class Store {
 
             previousBankItems = new ArrayList<>();
             for (final StorageItem storageItem : currentBankItems) {
-                previousBankItems.add(new StorageItem(storageItem.itemId, storageItem.quantity));
+                previousBankItems.add(new StorageItem(storageItem.itemId, storageItem.getQuantity()));
             }
 
             currentBankItems = new ArrayList<>();
@@ -159,7 +173,7 @@ public class Store {
             Optional<Integer> equipmentItemId = Optional.empty();
             boolean equipmentItemDynamic = false;
 
-            // Bank has least priority.
+            // Bank has the least priority.
             if (checkBank && bank.isPresent()) {
                 for (final Item item : bank.get().getItems()) {
                     for (final TriggerItem triggerItem : chargedItem.items) {
@@ -370,7 +384,7 @@ public class Store {
 
         for (final StorageItem storageItem : currentInventoryItems) {
             if (storageItem.itemId == itemId) {
-                quantity += storageItem.quantity;
+                quantity += storageItem.getQuantity();
             }
         }
 
@@ -396,7 +410,7 @@ public class Store {
 
         for (final StorageItem storageItem : previousInventoryItems) {
             if (storageItem.itemId == itemId) {
-                quantity += storageItem.quantity;
+                quantity += storageItem.getQuantity();
             }
         }
 
@@ -484,8 +498,8 @@ public class Store {
         return false;
     }
 
-    public ItemsDifference getInventoryItemsDifference() {
-        final List<ItemWithQuantity> itemsDifference = new ArrayList<>();
+    public StorageItems getInventoryItemsDifference() {
+        final StorageItems itemsDifference = new StorageItems();
 
         final Map<Integer, Integer> quantitiesNew = new HashMap<>();
         final Map<Integer, Integer> quantitiesBefore = new HashMap<>();
@@ -498,9 +512,9 @@ public class Store {
 
             for (final StorageItem itemOld : previousInventoryItems) {
                 if (quantitiesBefore.containsKey(itemOld.itemId)) {
-                    quantitiesBefore.put(itemOld.itemId, quantitiesBefore.get(itemOld.itemId) + itemOld.quantity);
+                    quantitiesBefore.put(itemOld.itemId, quantitiesBefore.get(itemOld.itemId) + itemOld.getQuantity());
                 } else {
-                    quantitiesBefore.put(itemOld.itemId, itemOld.quantity);
+                    quantitiesBefore.put(itemOld.itemId, itemOld.getQuantity());
                 }
             }
         }
@@ -508,55 +522,58 @@ public class Store {
         for (final int itemId : quantitiesNew.keySet()) {
             final int quantity = quantitiesNew.get(itemId) - quantitiesBefore.getOrDefault(itemId, 0);
             if (quantity != 0) {
-                itemsDifference.add(new ItemWithQuantity(itemId, quantitiesNew.get(itemId) - quantitiesBefore.getOrDefault(itemId, 0)));
+                itemsDifference.put(new StorageItem(itemId, quantitiesNew.get(itemId) - quantitiesBefore.getOrDefault(itemId, 0)));
             }
         }
 
         for (final int itemId : quantitiesBefore.keySet()) {
             if (!quantitiesNew.containsKey(itemId)) {
-                itemsDifference.add(new ItemWithQuantity(itemId, -quantitiesBefore.get(itemId)));
+                itemsDifference.put(new StorageItem(itemId, -quantitiesBefore.get(itemId)));
             }
         }
 
-        return new ItemsDifference(itemsDifference);
+        return itemsDifference;
     }
 
-    public ItemsDifference getBankItemsDifference() {
-        final List<ItemWithQuantity> itemsDifference = new ArrayList<>();
+    public StorageItems getBankItemsDifference() {
+        final StorageItems itemsDifference = new StorageItems();
 
         final Map<Integer, Integer> quantitiesNew = new HashMap<>();
         final Map<Integer, Integer> quantitiesBefore = new HashMap<>();
 
         if (bank.isPresent()) {
             for (final Item itemNew : bank.get().getItems()) {
-                if (isInvalidItem(itemNew)) continue;
+                if (isInvalidItem(itemNew) || quantitiesNew.containsKey(itemNew.getId())) continue;
                 quantitiesNew.put(itemNew.getId(), bank.get().count(itemNew.getId()));
             }
 
             for (final StorageItem itemOld : previousBankItems) {
                 if (quantitiesBefore.containsKey(itemOld.itemId)) {
-                    quantitiesBefore.put(itemOld.itemId, quantitiesBefore.get(itemOld.itemId) + itemOld.quantity);
+                    quantitiesBefore.put(itemOld.itemId, quantitiesBefore.get(itemOld.itemId) + itemOld.getQuantity());
                 } else {
-                    quantitiesBefore.put(itemOld.itemId, itemOld.quantity);
+                    quantitiesBefore.put(itemOld.itemId, itemOld.getQuantity());
                 }
             }
         }
 
         for (final int itemId : quantitiesNew.keySet()) {
-            itemsDifference.add(new ItemWithQuantity(itemId, quantitiesNew.get(itemId) - quantitiesBefore.getOrDefault(itemId, 0)));
+            final int quantity = quantitiesNew.get(itemId) - quantitiesBefore.getOrDefault(itemId, 0);
+            if (quantity != 0) {
+                itemsDifference.put(new StorageItem(itemId, quantitiesNew.get(itemId) - quantitiesBefore.getOrDefault(itemId, 0)));
+            }
         }
 
         for (final int itemId : quantitiesBefore.keySet()) {
             if (!quantitiesNew.containsKey(itemId)) {
-                itemsDifference.add(new ItemWithQuantity(itemId, -quantitiesBefore.get(itemId)));
+                itemsDifference.put(new StorageItem(itemId, -quantitiesBefore.get(itemId)));
             }
         }
 
-        return new ItemsDifference(itemsDifference);
+        return itemsDifference;
     }
 
     private boolean isInvalidItem(final Item item) {
-        return item == null | item.getId() == -1 || item.getId() == 6512;
+        return item == null || item.getId() == -1 || item.getId() == 6512;
     }
 
     public void addConsumerToNextTickQueue(final Runnable consumer) {

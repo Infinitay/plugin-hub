@@ -85,7 +85,12 @@ public class C_ForestryKit extends ChargedItemWithStorage {
 
             // Use ration when choping.
             new OnChatMessage("You consume a Forester's ration to fuel a mighty chop.").consumer(() -> {
-                storage.remove(ItemID.FORESTERS_RATION, 1);
+                storage.removeAndPrioritizeInventory(ItemID.FORESTERS_RATION, 1);
+            }),
+
+            // Nature offering used.
+            new OnChatMessage("The nature offerings enabled you to chop an extra log").consumer(() -> {
+                storage.removeAndPrioritizeInventory(ItemID.NATURE_OFFERINGS, 1);
             }),
 
             // Out of rations.

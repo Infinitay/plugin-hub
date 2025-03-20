@@ -18,6 +18,7 @@ import tictac7x.charges.item.storage.StorableItem;
 import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.item.triggers.*;
 import tictac7x.charges.store.Store;
+import tictac7x.charges.store.WidgetId;
 
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -62,8 +63,6 @@ public class U_LogBasket extends ChargedItemWithStorage {
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.LOG_BASKET),
             new TriggerItem(ItemID.OPEN_LOG_BASKET),
-            new TriggerItem(ItemID.FORESTRY_BASKET),
-            new TriggerItem(ItemID.OPEN_FORESTRY_BASKET),
         };
         this.triggers = new TriggerBase[] {
             // Check while empty.
@@ -93,28 +92,38 @@ public class U_LogBasket extends ChargedItemWithStorage {
             }).onItemClick(),
 
             // Miscellania support.
-            new OnChatMessage("You get some maple logs and give them to Lumberjack Leif.").requiredItem(ItemID.OPEN_LOG_BASKET, ItemID.OPEN_FORESTRY_BASKET).addToStorage(ItemID.MAPLE_LOGS, 0),
+            new OnChatMessage("You get some maple logs and give them to Lumberjack Leif.").requiredItem(ItemID.OPEN_LOG_BASKET).addToStorage(ItemID.MAPLE_LOGS, 0),
 
             // Chop.
             new OnChatMessage("You get (?<logs>some .+).").matcherConsumer(m -> {
                 lastLogs = getStorageItemFromName(m.group("logs"));
                 storage.add(lastLogs, 1);
                 infernalQuantityTracker++;
-            }).requiredItem(ItemID.OPEN_LOG_BASKET, ItemID.OPEN_FORESTRY_BASKET),
+            }).requiredItem(ItemID.OPEN_LOG_BASKET),
+
+            // Extra logs from nature offerings.
+            new OnChatMessage("The nature offerings enabled you to chop an extra log.").requiredItem(ItemID.OPEN_LOG_BASKET).runConsumerOnNextGameTick(() -> {
+                if (lastLogs.isPresent()) {
+                    storage.add(lastLogs.get().itemId, 1);
+                }
+            }),
 
             new OnItemPickup(storage.getStorableItems()).isByOne().requiredItem(ItemID.OPEN_LOG_BASKET).pickUpToStorage(),
 
             // Fill from inventory.
             new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().onMenuOption("Fill"),
 
-            // Empty to inventory.
+            // Fully empty to inventory.
+            new OnChatMessage("You empty your basket.").emptyStorage(),
+
+            // Partially empty to inventory.
             new OnItemContainerChanged(INVENTORY).onMenuOption("Continue").hasChatMessage("You empty as many logs as you can carry.").emptyStorageToInventory(),
 
             // Use log on basket.
             new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().onUseStorageItemOnChargedItem(storage.getStorableItems()),
 
             // Empty to bank.
-            new OnItemContainerChanged(BANK).emptyStorageToBank().onMenuOption("Empty"),
+            new OnItemContainerChanged(BANK).emptyStorageToBank().onMenuOption("Empty", TicTac7xChargesImprovedPlugin.menuOptionEmptyToBank),
 
             // Leprechaun.
             new OnMenuOptionClicked("Continue").consumer(() -> {
@@ -123,6 +132,9 @@ public class U_LogBasket extends ChargedItemWithStorage {
                     storage.clear();
                 }
             }),
+
+            // Replace "Empty" with proper Empty to bank option.
+            new OnMenuEntryAdded("Empty").replaceOption(TicTac7xChargesImprovedPlugin.menuOptionEmptyToBank).isWidgetVisible(WidgetId.BANK, WidgetId.DEPOSIT_BOX),
 
             // Hide destroy.
             new OnMenuEntryAdded("Destroy").hide(),
@@ -133,8 +145,7 @@ public class U_LogBasket extends ChargedItemWithStorage {
                     storage.remove(lastLogs, 1);
                     infernalQuantityTracker--;
                 }
-            }).requiredItem(ItemID.OPEN_LOG_BASKET, ItemID.OPEN_FORESTRY_BASKET),
+            }).requiredItem(ItemID.OPEN_LOG_BASKET),
         };
     }
-
 }
