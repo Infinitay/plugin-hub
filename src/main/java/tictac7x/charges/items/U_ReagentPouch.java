@@ -19,6 +19,8 @@ import tictac7x.charges.item.triggers.*;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.store.WidgetId;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static tictac7x.charges.store.ItemContainerId.INVENTORY;
@@ -81,15 +83,14 @@ public class U_ReagentPouch extends ChargedItemWithStorage {
             // Check.
             new OnChatMessage("You look in your Reagent pouch and see:").emptyStorage(),
             new OnChatMessage("(?<amount>.+) x (?<item>.+)").matcherConsumer(m -> {
-                final Optional<StorageItem> item = getStorageItemFromName(m.group("item"));
-                final int amount = Integer.parseInt(m.group("amount"));
-                if (item.isPresent()) storage.put(item.get().itemId, amount);
+                final Optional<StorageItem> item = getStorageItemFromName(m.group("item"), Integer.parseInt(m.group("amount")));
+                storage.put(item);
             }).hasChatMessage("You look in your Reagent pouch and see:"),
 
             // Pick up.
             new OnChatMessage("You put the (?<item>.+) into your Reagent pouch.").matcherConsumer(m -> {
-                final Optional<StorageItem> item = getStorageItemFromName(m.group("item"));
-                if (item.isPresent()) storage.add(item.get().itemId, 1);
+                final Optional<StorageItem> item = getStorageItemFromName(m.group("item"), 1);
+                storage.add(item);
             }),
 
             // Empty to bank.
@@ -99,25 +100,34 @@ public class U_ReagentPouch extends ChargedItemWithStorage {
             new OnItemContainerChanged(INVENTORY).emptyStorageToInventory().onMenuOption("Empty"),
 
             // Fill from inventory.
-            new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().onInventoryDifference(inventoryDifference -> {
-                if (!store.inventoryStorage.isPresent()) return;
+            new OnItemContainerChanged(INVENTORY).onInventoryDifference(inventoryDifference -> {
                 for (final StorageItem inventoryDifferenceItem : inventoryDifference.getItems()) {
                     // Item was put into the reagent pouch, but there is more in inventory, meaning that item is filled to maximum.
-                    if (store.inventoryStorage.get().hasItem(inventoryDifferenceItem.itemId)) {
-                        storage.put(inventoryDifferenceItem.itemId, 26);
+                    if (store.inventory.hasItem(inventoryDifferenceItem.getId())) {
+                        storage.put(inventoryDifferenceItem.getId(), 26);
                     }
                 }
             }).onMenuOption("Fill", TicTac7xChargesImprovedPlugin.menuOptionFillFromInventory),
 
+            new OnMenuOptionClicked("Fill", TicTac7xChargesImprovedPlugin.menuOptionFillFromInventory).consumer(() -> {
+                for (final StorageItem item : store.inventory.getItems()) {
+                    storage.add(item);
+                }
+            }),
+
             // Replace "Use" with proper Fill/Empty option.
-            new OnMenuEntryAdded("Use").replaceOptionConsumer(() -> getMenuOptionForUse()).isWidgetVisible(WidgetId.BANK, WidgetId.DEPOSIT_BOX),
-            new OnMenuEntryAdded("Use").replaceOptionConsumer(() -> getMenuOptionForUse()).isWidgetVisible(WidgetId.BANK, WidgetId.DEPOSIT_BOX),
+            new OnMenuEntryAdded("Use").replaceOptionConsumer(this::getMenuOptionForUse).isWidgetVisible(WidgetId.BANK, WidgetId.DEPOSIT_BOX),
 
             // Mix potions.
             new OnChatMessage("You mix the (?<item>.+) into (your|the unfinished)( antifire)? (potion|antidote\\+\\+).*").matcherConsumer((m) -> {
-                final Optional<StorageItem> item = getStorageItemFromName(m.group("item"));
-                if (item.isPresent()) storage.remove(item.get().itemId, 1);
+                final Optional<StorageItem> item = getStorageItemFromName(m.group("item"), 1);
+                storage.remove(item);
             }).requiredItem(ItemID.OPEN_REAGENT_POUCH),
+
+            // Pick
+            new OnChatMessage("You pick some whiteberries").requiredItem(ItemID.OPEN_REAGENT_POUCH).consumer(() -> {
+                storage.add(ItemID.WHITE_BERRIES, 1);
+            }),
         };
     }
 

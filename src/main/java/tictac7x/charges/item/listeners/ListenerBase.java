@@ -12,10 +12,9 @@ import tictac7x.charges.item.ChargedItemWithStatus;
 import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.item.triggers.TriggerBase;
-import tictac7x.charges.store.AdvancedMenuEntry;
+import tictac7x.charges.customEvents.CustomMenuOptionClicked;
 
 import java.util.Optional;
-import java.util.regex.Matcher;
 
 public abstract class ListenerBase {
     protected final Client client;
@@ -155,7 +154,7 @@ public abstract class ListenerBase {
         // Use storage item on charged item check.
         if (trigger.onUseStorageItemOnChargedItem.isPresent() && chargedItem instanceof ChargedItemWithStorage) {
             boolean isValid = false;
-            loopChecker: for (final AdvancedMenuEntry menuEntry : chargedItem.store.menuOptionsClicked) {
+            loopChecker: for (final CustomMenuOptionClicked menuEntry : chargedItem.store.menuOptionsClicked) {
                 if (!menuEntry.target.contains(" -> ")) {
                     continue;
                 };
@@ -168,8 +167,8 @@ public abstract class ListenerBase {
                 }
                 for (final StorageItem storeableItem : ((ChargedItemWithStorage) chargedItem).storage.getStorableItems()) {
                     if (
-                        itemOne.equals(itemManager.getItemComposition(storeableItem.itemId).getName()) ||
-                        itemTwo.equals(itemManager.getItemComposition(storeableItem.itemId).getName())
+                        itemOne.equals(itemManager.getItemComposition(storeableItem.getId()).getName()) ||
+                        itemTwo.equals(itemManager.getItemComposition(storeableItem.getId()).getName())
                     ) {
                         isValid = true;
                         break loopChecker;
@@ -185,11 +184,11 @@ public abstract class ListenerBase {
         // Use charged item on storage item check.
         if (trigger.onUseChargedItemOnStorageItem.isPresent() && chargedItem instanceof ChargedItemWithStorage) {
             boolean useCheck = false;
-            useCheckLooper: for (final AdvancedMenuEntry menuEntry : chargedItem.store.menuOptionsClicked) {
+            useCheckLooper: for (final CustomMenuOptionClicked menuEntry : chargedItem.store.menuOptionsClicked) {
                 if (!menuEntry.option.equals("Use") || !menuEntry.target.contains(" -> ") || !menuEntry.target.split(" -> ")[0].equals(itemManager.getItemComposition(chargedItem.itemId).getName())) continue;
 
                 for (final StorageItem storageItem : ((ChargedItemWithStorage) chargedItem).getStorage().getItems()) {
-                    if (menuEntry.target.split(" -> ")[1].equals(itemManager.getItemComposition(storageItem.itemId).getName())) {
+                    if (menuEntry.target.split(" -> ")[1].equals(itemManager.getItemComposition(storageItem.getId()).getName())) {
                         useCheck = true;
                         break useCheckLooper;
                     }
@@ -245,6 +244,11 @@ public abstract class ListenerBase {
         }
 
         if (trigger.emptyStorageToInventory.isPresent() && !(chargedItem instanceof ChargedItemWithStorage)) {
+            return false;
+        }
+
+        // Specific item equipped check.
+        if (trigger.itemEquipped.isPresent() && !chargedItem.store.equipmentContainsItem(trigger.itemEquipped.get())) {
             return false;
         }
 

@@ -47,7 +47,7 @@ public class C_ForestryBasket extends ChargedItemWithStorage {
         final Store store,
         final Gson gson
     ) {
-        super(TicTac7xChargesImprovedConfig.forestry_kit, ItemID.FORESTRY_BASKET, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
+        super(TicTac7xChargesImprovedConfig.forestry_basket, ItemID.FORESTRY_BASKET, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
 
         this.storage = storage.storableItems(
             // Log basket.
@@ -120,12 +120,12 @@ public class C_ForestryBasket extends ChargedItemWithStorage {
 
             // Get leaves while chopping wood.
             new OnChatMessage("Some (?<leaves>.+) leaves fall to the ground and you place them into your Forestry kit.").matcherConsumer(m -> {
-                storage.add(getStorageItemFromName(m.group("leaves")), 1);
+                storage.add(getStorageItemFromName(m.group("leaves"), 1));
             }),
 
             // Get leaves from event.
             new OnChatMessage("You've been awarded (?<amount>.+) piles of (?<leaves>.+) leaves which you put into your Forestry kit.").matcherConsumer(m -> {
-                storage.add(getStorageItemFromName(m.group("leaves")), Integer.parseInt(m.group("amount")));
+                storage.add(getStorageItemFromName(m.group("leaves"), Integer.parseInt(m.group("amount"))));
             }),
 
             // Get bark from an event.
@@ -190,7 +190,7 @@ public class C_ForestryBasket extends ChargedItemWithStorage {
                 final Matcher matcher = pattern.matcher(s);
 
                 while (matcher.find()) {
-                    storage.put(getStorageItemFromName(matcher.group("logs")), Integer.parseInt(matcher.group("quantity")));
+                    storage.put(getStorageItemFromName(matcher.group("logs"), Integer.parseInt(matcher.group("quantity"))));
                 }
 
                 infernalQuantityTracker = getQuantity();
@@ -201,15 +201,15 @@ public class C_ForestryBasket extends ChargedItemWithStorage {
 
             // Chop.
             new OnChatMessage("You get (?<logs>some .+).").matcherConsumer(m -> {
-                lastLogs = getStorageItemFromName(m.group("logs"));
-                storage.add(lastLogs, 1);
+                lastLogs = getStorageItemFromName(m.group("logs"), 1);
+                storage.add(lastLogs);
                 infernalQuantityTracker++;
             }).requiredItem(ItemID.OPEN_FORESTRY_BASKET),
 
             // Extra logs from nature offerings.
             new OnChatMessage("The nature offerings enabled you to chop an extra log.").requiredItem(ItemID.OPEN_FORESTRY_BASKET).runConsumerOnNextGameTick(() -> {
                 if (lastLogs.isPresent()) {
-                    storage.add(lastLogs.get().itemId, 1);
+                    storage.add(lastLogs.get().getId(), 1);
                 }
             }),
 
@@ -230,7 +230,7 @@ public class C_ForestryBasket extends ChargedItemWithStorage {
             // Fill from bank.
             new OnItemContainerChanged(BANK).onMenuOption(menuOptionFillLeavesFromBank).onBankDifference(itemsDifference -> {
                 for (final StorageItem item : itemsDifference.getItems()) {
-                    switch (item.itemId) {
+                    switch (item.getId()) {
                         case ItemID.LEAVES:
                         case ItemID.OAK_LEAVES:
                         case ItemID.WILLOW_LEAVES:
@@ -241,7 +241,7 @@ public class C_ForestryBasket extends ChargedItemWithStorage {
                         default:
                             continue;
                     }
-                    storage.add(item.itemId, Math.abs(item.getQuantity()));
+                    storage.add(item.getId(), Math.abs(item.getQuantity()));
                 }
             }),
 
@@ -262,7 +262,7 @@ public class C_ForestryBasket extends ChargedItemWithStorage {
             // Infernal axe support.
             new OnXpDrop(Skill.FIREMAKING).onMenuOption("Chop down", "Cut").consumer(() -> {
                 if (infernalQuantityTracker < 29 && lastLogs.isPresent()) {
-                    storage.remove(lastLogs, 1);
+                    storage.remove(lastLogs.get().getId(), 1);
                     infernalQuantityTracker--;
                 }
             }).requiredItem(ItemID.OPEN_FORESTRY_BASKET),
@@ -359,7 +359,7 @@ public class C_ForestryBasket extends ChargedItemWithStorage {
         for (final StorageItem storageItem : storage.getStorage().getItems()) {
             if (storageItem.getQuantity() == 0) continue;
 
-            switch (storageItem.itemId) {
+            switch (storageItem.getId()) {
                 case ItemID.LOGS:
                 case ItemID.ACHEY_TREE_LOGS:
                 case ItemID.OAK_LOGS:
@@ -383,7 +383,7 @@ public class C_ForestryBasket extends ChargedItemWithStorage {
         for (final StorageItem storageItem : storage.getStorage().getItems()) {
             if (storageItem.getQuantity() == 0) continue;
 
-            switch (storageItem.itemId) {
+            switch (storageItem.getId()) {
                 case ItemID.LEAVES:
                 case ItemID.OAK_LEAVES:
                 case ItemID.WILLOW_LEAVES:

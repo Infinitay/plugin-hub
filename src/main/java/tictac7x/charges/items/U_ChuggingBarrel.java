@@ -118,7 +118,7 @@ public class U_ChuggingBarrel extends ChargedItemWithStorage {
         );
 
         this.items = new TriggerItem[]{
-            new TriggerItem(ItemID.CHUGGING_BARREL_DISASSEMBLED).fixedCharges(0),
+            new TriggerItem(ItemID.CHUGGING_BARREL_DISASSEMBLED),
             new TriggerItem(ItemID.CHUGGING_BARREL),
         };
 
@@ -127,9 +127,9 @@ public class U_ChuggingBarrel extends ChargedItemWithStorage {
             new OnItemContainerChanged(ItemContainerId.CHUGGING_BARREL).updateStorage(),
 
             // Drink.
-                new OnMenuOptionClicked("Drink").runConsumerOnNextGameTick(() -> {
+            new OnAnimationChanged(11645).consumer(() -> {
                 for (final StorageItem storageItem : storage.getStorage().getItems()) {
-                    storageItem.decreaseQuantity(1);
+                    storage.put(storageItem.getId(), storageItem.getQuantity() - 1);
                 }
             }),
 
