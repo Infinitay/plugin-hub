@@ -2,7 +2,8 @@ package tictac7x.charges.items;
 
 import com.google.gson.Gson;
 import net.runelite.api.Client;
-import net.runelite.api.ItemID;
+import net.runelite.api.Skill;
+import tictac7x.charges.store.ItemId;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static tictac7x.charges.TicTac7xChargesImprovedPlugin.getNumberFromWordRepresentation;
 import static tictac7x.charges.store.ItemContainerId.INVENTORY;
 
 public class U_ReagentPouch extends ChargedItemWithStorage {
@@ -38,42 +40,42 @@ public class U_ReagentPouch extends ChargedItemWithStorage {
         final Store store,
         final Gson gson
     ) {
-        super(TicTac7xChargesImprovedConfig.reagent_pouch, ItemID.REAGENT_POUCH, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
+        super(TicTac7xChargesImprovedConfig.reagent_pouch, ItemId.REAGENT_POUCH, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
         storage.emptyIsNegative().setMaximumIndividualQuantity(26).storableItems(
-            new StorableItem(ItemID.EYE_OF_NEWT).checkName("Eye of newt"),
-            new StorableItem(ItemID.LIMPWURT_ROOT).checkName("Limpwurt root"),
-            new StorableItem(ItemID.RED_SPIDERS_EGGS).checkName("Red spider's eggs", "eggs"),
-            new StorableItem(ItemID.TOADS_LEGS).checkName("Toad's legs", "toad legs"),
-            new StorableItem(ItemID.SNAPE_GRASS).checkName("Snape grass"),
-            new StorableItem(ItemID.MORT_MYRE_FUNGUS).checkName("Mort myre fungus", "Mort Myre fungi"),
-            new StorableItem(ItemID.WHITE_BERRIES).checkName("White berries"),
-            new StorableItem(ItemID.JANGERBERRIES).checkName("Jangerberries"),
-            new StorableItem(ItemID.POISON_IVY_BERRIES).checkName("Poison ivy berries"),
-            new StorableItem(ItemID.POTATO_CACTUS).checkName("Potato cactus"),
-            new StorableItem(ItemID.CACTUS_SPINE).checkName("Cactus spine"),
-            new StorableItem(ItemID.ASHES).checkName("Ashes"),
-            new StorableItem(ItemID.CHOCOLATE_DUST).checkName("Chocolate dust"),
-            new StorableItem(ItemID.DRAGON_SCALE_DUST).checkName("Dragon scale dust", "dragon scale"),
-            new StorableItem(ItemID.GOAT_HORN_DUST).checkName("Goat horn dust", "ground desert goat horn"),
-            new StorableItem(ItemID.GORAK_CLAW_POWDER).checkName("Gorak claw powder"),
-            new StorableItem(ItemID.KEBBIT_TEETH_DUST).checkName("Kebbit teeth dust", "ground kebbit teeth"),
-            new StorableItem(ItemID.SILVER_DUST).checkName("Silver dust"),
-            new StorableItem(ItemID.UNICORN_HORN_DUST).checkName("Unicorn horn dust", "unicorn horn"),
-            new StorableItem(ItemID.WINE_OF_ZAMORAK).checkName("Wine of zamorak", "wine"),
-            new StorableItem(ItemID.ALDARIUM).checkName("Aldarium"),
-            new StorableItem(ItemID.YEW_ROOTS).checkName("Yew roots"),
-            new StorableItem(ItemID.MAGIC_ROOTS).checkName("Magic roots"),
-            new StorableItem(ItemID.CRUSHED_NEST).checkName("Crushed nest", "crushed bird nest"),
-            new StorableItem(ItemID.CRUSHED_SUPERIOR_DRAGON_BONES).checkName("Crushed superior dragon bones"),
-            new StorableItem(ItemID.NAIL_BEAST_NAILS).checkName("Nail beast nails"),
-            new StorableItem(ItemID.LILY_OF_THE_SANDS).checkName("Lily of the sands"),
-            new StorableItem(ItemID.CAVIAR).checkName("Caviar"),
-            new StorableItem(ItemID.ROE).checkName("Roe")
+            new StorableItem(ItemId.EYE_OF_NEWT).checkName("Eye of newt"),
+            new StorableItem(ItemId.LIMPWURT_ROOT).checkName("Limpwurt root"),
+            new StorableItem(ItemId.RED_SPIDERS_EGGS).checkName("Red spider's eggs", "eggs"),
+            new StorableItem(ItemId.TOADS_LEGS).checkName("Toad's legs", "toad legs"),
+            new StorableItem(ItemId.SNAPE_GRASS).checkName("Snape grass"),
+            new StorableItem(ItemId.MORT_MYRE_FUNGUS).checkName("Mort myre fungus", "Mort Myre fungi"),
+            new StorableItem(ItemId.WHITE_BERRIES).checkName("White berries"),
+            new StorableItem(ItemId.JANGERBERRIES).checkName("Jangerberries"),
+            new StorableItem(ItemId.POISON_IVY_BERRIES).checkName("Poison ivy berries"),
+            new StorableItem(ItemId.POTATO_CACTUS).checkName("Potato cactus"),
+            new StorableItem(ItemId.CACTUS_SPINE).checkName("Cactus spine"),
+            new StorableItem(ItemId.ASHES).checkName("Ashes"),
+            new StorableItem(ItemId.CHOCOLATE_DUST).checkName("Chocolate dust"),
+            new StorableItem(ItemId.DRAGON_SCALE_DUST).checkName("Dragon scale dust", "dragon scale"),
+            new StorableItem(ItemId.GOAT_HORN_DUST).checkName("Goat horn dust", "ground desert goat horn"),
+            new StorableItem(ItemId.GORAK_CLAW_POWDER).checkName("Gorak claw powder"),
+            new StorableItem(ItemId.KEBBIT_TEETH_DUST).checkName("Kebbit teeth dust", "ground kebbit teeth"),
+            new StorableItem(ItemId.SILVER_DUST).checkName("Silver dust"),
+            new StorableItem(ItemId.UNICORN_HORN_DUST).checkName("Unicorn horn dust", "unicorn horn"),
+            new StorableItem(ItemId.WINE_OF_ZAMORAK).checkName("Wine of zamorak", "wine"),
+            new StorableItem(ItemId.ALDARIUM).checkName("Aldarium"),
+            new StorableItem(ItemId.YEW_ROOTS).checkName("Yew roots"),
+            new StorableItem(ItemId.MAGIC_ROOTS).checkName("Magic roots"),
+            new StorableItem(ItemId.CRUSHED_NEST).checkName("Crushed nest", "crushed bird nest"),
+            new StorableItem(ItemId.CRUSHED_SUPERIOR_DRAGON_BONES).checkName("Crushed superior dragon bones"),
+            new StorableItem(ItemId.NAIL_BEAST_NAILS).checkName("Nail beast nails"),
+            new StorableItem(ItemId.LILY_OF_THE_SANDS).checkName("Lily of the sands"),
+            new StorableItem(ItemId.CAVIAR).checkName("Caviar"),
+            new StorableItem(ItemId.ROE).checkName("Roe")
         );
 
         this.items = new TriggerItem[]{
-            new TriggerItem(ItemID.REAGENT_POUCH),
-            new TriggerItem(ItemID.OPEN_REAGENT_POUCH),
+            new TriggerItem(ItemId.REAGENT_POUCH),
+            new TriggerItem(ItemId.REAGENT_POUCH_OPEN),
         };
 
         this.triggers = new TriggerBase[] {
@@ -122,11 +124,17 @@ public class U_ReagentPouch extends ChargedItemWithStorage {
             new OnChatMessage("You mix the (?<item>.+) into (your|the unfinished)( antifire)? (potion|antidote\\+\\+).*").matcherConsumer((m) -> {
                 final Optional<StorageItem> item = getStorageItemFromName(m.group("item"), 1);
                 storage.remove(item);
-            }).requiredItem(ItemID.OPEN_REAGENT_POUCH),
+            }).requiredItem(ItemId.REAGENT_POUCH_OPEN),
 
-            // Pick
-            new OnChatMessage("You pick some whiteberries").requiredItem(ItemID.OPEN_REAGENT_POUCH).consumer(() -> {
-                storage.add(ItemID.WHITE_BERRIES, 1);
+            // Pick whiteberries
+            new OnChatMessage("You pick some whiteberries").requiredItem(ItemId.REAGENT_POUCH_OPEN).consumer(() -> {
+                storage.add(ItemId.WHITE_BERRIES, 1);
+            }),
+            // Harvest snape grass
+            new OnXpDrop(Skill.FARMING).onMenuOption("Harvest").onMenuTarget("Snape grass plant").addToStorage(ItemId.SNAPE_GRASS, 1),
+            // Pick mort myre fungus
+            new OnChatMessage("You pick (?<quantity>.+) mushrooms? from the log.").matcherConsumer(m -> {
+                storage.add(ItemId.MORT_MYRE_FUNGUS, getNumberFromWordRepresentation(m.group("quantity")));
             }),
         };
     }

@@ -2,7 +2,9 @@ package tictac7x.charges.items;
 
 import com.google.gson.Gson;
 import net.runelite.api.Client;
-import net.runelite.api.ItemID;
+import tictac7x.charges.item.storage.StorableItem;
+import tictac7x.charges.item.triggers.*;
+import tictac7x.charges.store.*;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
@@ -12,13 +14,6 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.TicTac7xChargesImprovedPlugin;
 import tictac7x.charges.item.ChargedItemWithStorage;
-import tictac7x.charges.item.triggers.OnChatMessage;
-import tictac7x.charges.item.triggers.OnMenuEntryAdded;
-import tictac7x.charges.item.triggers.TriggerBase;
-import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.Charges;
-import tictac7x.charges.store.Store;
-import tictac7x.charges.store.WidgetId;
 
 public class U_SeedBox extends ChargedItemWithStorage {
     public U_SeedBox(
@@ -33,45 +28,109 @@ public class U_SeedBox extends ChargedItemWithStorage {
         final Store store,
         final Gson gson
     ) {
-        super(TicTac7xChargesImprovedConfig.seed_box, ItemID.SEED_BOX, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
+        super(TicTac7xChargesImprovedConfig.seed_box, ItemId.SEED_BOX, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
+
         this.items = new TriggerItem[]{
-            new TriggerItem(ItemID.SEED_BOX),
-            new TriggerItem(ItemID.OPEN_SEED_BOX),
+            new TriggerItem(ItemId.SEED_BOX),
+            new TriggerItem(ItemId.SEED_BOX_OPEN),
         };
+
+        this.storage.storableItems(
+            new StorableItem(ItemId.POTATO_SEED).checkName("potato"),
+            new StorableItem(ItemId.ONION_SEED).checkName("onion"),
+            new StorableItem(ItemId.CABBAGE_SEED).checkName("cabbage"),
+            new StorableItem(ItemId.TOMATO_SEED).checkName("tomato"),
+            new StorableItem(ItemId.SWEETCORN_SEED).checkName("sweetcorn"),
+            new StorableItem(ItemId.STRAWBERRY_SEED).checkName("strawberry"),
+            new StorableItem(ItemId.WATERMELON_SEED).checkName("watermelon"),
+            new StorableItem(ItemId.SNAPE_GRASS_SEED).checkName("snape"),
+            new StorableItem(ItemId.BARLEY_SEED).checkName("barley"),
+            new StorableItem(ItemId.HAMMERSTONE_SEED).checkName("hammerstone"),
+            new StorableItem(ItemId.ASGARNIAN_SEED).checkName("asgarnian"),
+            new StorableItem(ItemId.JUTE_SEED).checkName("jute"),
+            new StorableItem(ItemId.YANILLIAN_SEED).checkName("vanillian"),
+            new StorableItem(ItemId.KRANDORIAN_SEED).checkName("krandorian"),
+            new StorableItem(ItemId.WILDBLOOD_SEED).checkName("wildblood"),
+            new StorableItem(ItemId.ACORN).checkName("acorn"),
+            new StorableItem(ItemId.WILLOW_SEED).checkName("willow"),
+            new StorableItem(ItemId.MAPLE_SEED).checkName("maple"),
+            new StorableItem(ItemId.YEW_SEED).checkName("yew"),
+            new StorableItem(ItemId.MAGIC_SEED).checkName("magic"),
+            new StorableItem(ItemId.REDWOOD_TREE_SEED).checkName("redwood"),
+            new StorableItem(ItemId.PINEAPPLE_SEED).checkName("pineapple"),
+            new StorableItem(ItemId.APPLE_TREE_SEED).checkName("apple"),
+            new StorableItem(ItemId.BANANA_TREE_SEED).checkName("banana"),
+            new StorableItem(ItemId.ORANGE_TREE_SEED).checkName("orange"),
+            new StorableItem(ItemId.CURRY_TREE_SEED).checkName("curry"),
+            new StorableItem(ItemId.PAPAYA_TREE_SEED).checkName("papaya"),
+            new StorableItem(ItemId.PALM_TREE_SEED).checkName("palm"),
+            new StorableItem(ItemId.DRAGONFRUIT_TREE_SEED).checkName("dragonfruit"),
+            new StorableItem(ItemId.REDBERRY_SEED).checkName("redberry"),
+            new StorableItem(ItemId.CADAVABERRY_SEED).checkName("cadavaberry"),
+            new StorableItem(ItemId.DWELLBERRY_SEED).checkName("dwellberry"),
+            new StorableItem(ItemId.JANGERBERRY_SEED).checkName("jangerberry"),
+            new StorableItem(ItemId.WHITEBERRY_SEED).checkName("whiteberry"),
+            new StorableItem(ItemId.POISON_IVY_SEED).checkName("poison ivy"),
+            new StorableItem(ItemId.MARIGOLD_SEED).checkName("marigold"),
+            new StorableItem(ItemId.ROSEMARY_SEED).checkName("rosemary"),
+            new StorableItem(ItemId.NASTURTIUM_SEED).checkName("nasturtium"),
+            new StorableItem(ItemId.WOAD_SEED).checkName("woad"),
+            new StorableItem(ItemId.LIMPWURT_SEED).checkName("limpwurt"),
+            new StorableItem(ItemId.WHITE_LILY_SEED).checkName("white lily"),
+            new StorableItem(ItemId.GUAM_SEED).checkName("guam"),
+            new StorableItem(ItemId.MARRENTILL_SEED).checkName("marrentill"),
+            new StorableItem(ItemId.TARROMIN_SEED).checkName("tarromin"),
+            new StorableItem(ItemId.HARRALANDER_SEED).checkName("harralander"),
+            new StorableItem(ItemId.RANARR_SEED).checkName("ranarr"),
+            new StorableItem(ItemId.TOADFLAX_SEED).checkName("toadflax"),
+            new StorableItem(ItemId.IRIT_SEED).checkName("irit"),
+            new StorableItem(ItemId.AVANTOE_SEED).checkName("avantoe"),
+            new StorableItem(ItemId.HUASCA_SEED).checkName("huasca"),
+            new StorableItem(ItemId.KWUARM_SEED).checkName("kwuarm"),
+            new StorableItem(ItemId.SNAPDRAGON_SEED).checkName("snapdragon"),
+            new StorableItem(ItemId.CADANTINE_SEED).checkName("cadantine"),
+            new StorableItem(ItemId.LANTADYME_SEED).checkName("lantadyme"),
+            new StorableItem(ItemId.DWARF_WEED_SEED).checkName("dwarf weed"),
+            new StorableItem(ItemId.TORSTOL_SEED).checkName("torstol"),
+            new StorableItem(ItemId.SEAWEED_SPORE).checkName("seaweed spore"),
+            new StorableItem(ItemId.TEAK_SEED).checkName("teak"),
+            new StorableItem(ItemId.GRAPE_SEED).checkName("grape"),
+            new StorableItem(ItemId.MUSHROOM_SPORE).checkName("mushroom spore"),
+            new StorableItem(ItemId.MAHOGANY_SEED).checkName("mahogany"),
+            new StorableItem(ItemId.POTATO_CACTUS_SEED).checkName("potato cactus"),
+            new StorableItem(ItemId.CACTUS_SEED).checkName("cactus"),
+            new StorableItem(ItemId.BELLADONNA_SEED).checkName("belladonna"),
+            new StorableItem(ItemId.HESPORI_SEED).checkName("hespori"),
+            new StorableItem(ItemId.CALQUAT_TREE_SEED).checkName("calquat"),
+            new StorableItem(ItemId.CRYSTAL_ACORN).checkName("crystal acorn"),
+            new StorableItem(ItemId.KRONOS_SEED).checkName("kronos"),
+            new StorableItem(ItemId.IASOR_SEED).checkName("iasor"),
+            new StorableItem(ItemId.ATTAS_SEED).checkName("attas"),
+            new StorableItem(ItemId.SPIRIT_SEED).checkName("spirit"),
+            new StorableItem(ItemId.CELASTRUS_SEED).checkName("celastrus")
+        );
+
         this.triggers = new TriggerBase[] {
             // Check or empty.
             new OnChatMessage("(The|Your) seed box is( now| already)? empty.").emptyStorage(),
 
             // Empty into inventory.
             new OnChatMessage("Emptied (?<quantity>.+) x (?<seed>.+)( seed)? to your inventory.").matcherConsumer(m -> {
-                final int seed = getSeedIdFromName(m.group("seed"));
-                final int quantity = Integer.parseInt(m.group("quantity"));
-                storage.remove(seed, quantity);
+                storage.remove(getStorageItemFromName(m.group("seed"), Integer.parseInt(m.group("quantity"))));
             }),
 
             // Store.
             new OnChatMessage("Stored (?<quantity>.+) x (?<seed>.+)( seed)? in your seed box.").matcherConsumer(m -> {
-                final int seed = getSeedIdFromName(m.group("seed"));
-                final int quantity = Integer.parseInt(m.group("quantity"));
-                storage.add(seed, quantity);
+                storage.add(getStorageItemFromName(m.group("seed"), Integer.parseInt(m.group("quantity"))));
             }),
 
             // Pickup.
             new OnChatMessage("You put (?<quantity>.+) x (?<seed>.+)( seed)? straight into your open seed box.").matcherConsumer(m -> {
-                final int seed = getSeedIdFromName(m.group("seed"));
-                final int quantity = Integer.parseInt(m.group("quantity"));
-                storage.put(seed, quantity);
+                storage.add(getStorageItemFromName(m.group("seed"), Integer.parseInt(m.group("quantity"))));
             }),
-
-            // Check first message.
-            new OnChatMessage("The seed box contains:").emptyStorage(),
 
             // Check.
-            new OnChatMessage("^(?<quantity>.+) x (?<seed>.+)( seed)?.").matcherConsumer(m -> {
-                final int seed = getSeedIdFromName(m.group("seed"));
-                final int quantity = Integer.parseInt(m.group("quantity"));
-                storage.put(seed, quantity);
-            }),
+            new OnItemContainerChanged(ItemContainerId.SEED_BOX).updateStorage(),
 
             // Replace "Empty" with proper "Empty to bank".
             new OnMenuEntryAdded("Empty").replaceOption(TicTac7xChargesImprovedPlugin.menuOptionEmptyToBank).isWidgetVisible(WidgetId.BANK, WidgetId.DEPOSIT_BOX),
@@ -85,161 +144,161 @@ public class U_SeedBox extends ChargedItemWithStorage {
         switch (seed.toLowerCase().replace(" seed", "")) {
             // Allotments.
             case "potato":
-                return ItemID.POTATO_SEED;
+                return ItemId.POTATO_SEED;
             case "onion":
-                return ItemID.ONION_SEED;
+                return ItemId.ONION_SEED;
             case "cabbage":
-                return ItemID.CABBAGE_SEED;
+                return ItemId.CABBAGE_SEED;
             case "tomato":
-                return ItemID.TOMATO_SEED;
+                return ItemId.TOMATO_SEED;
             case "sweetcorn":
-                return ItemID.SWEETCORN_SEED;
+                return ItemId.SWEETCORN_SEED;
             case "strawberry":
-                return ItemID.STRAWBERRY_SEED;
+                return ItemId.STRAWBERRY_SEED;
             case "watermelon":
-                return ItemID.WATERMELON_SEED;
+                return ItemId.WATERMELON_SEED;
             case "snape grass":
-                return ItemID.SNAPE_GRASS_SEED;
+                return ItemId.SNAPE_GRASS_SEED;
 
             // Hops.
             case "barley":
-                return ItemID.BARLEY_SEED;
+                return ItemId.BARLEY_SEED;
             case "hammerstone":
-                return ItemID.HAMMERSTONE_SEED;
+                return ItemId.HAMMERSTONE_SEED;
             case "asgarnian":
-                return ItemID.ASGARNIAN_SEED;
+                return ItemId.ASGARNIAN_SEED;
             case "jute":
-                return ItemID.JUTE_SEED;
+                return ItemId.JUTE_SEED;
             case "yanillian":
-                return ItemID.YANILLIAN_SEED;
+                return ItemId.YANILLIAN_SEED;
             case "krandorian":
-                return ItemID.KRANDORIAN_SEED;
+                return ItemId.KRANDORIAN_SEED;
             case "wildblood":
-                return ItemID.WILDBLOOD_SEED;
+                return ItemId.WILDBLOOD_SEED;
 
             // Trees.
             case "acorn":
-                return ItemID.ACORN;
+                return ItemId.ACORN;
             case "willow":
-                return ItemID.WILLOW_SEED;
+                return ItemId.WILLOW_SEED;
             case "maple":
-                return ItemID.MAPLE_SEED;
+                return ItemId.MAPLE_SEED;
             case "yew":
-                return ItemID.YEW_SEED;
+                return ItemId.YEW_SEED;
             case "magic":
-                return ItemID.MAGIC_SEED;
+                return ItemId.MAGIC_SEED;
             case "redwood tree":
-                return ItemID.REDWOOD_TREE_SEED;
+                return ItemId.REDWOOD_TREE_SEED;
 
             // Fruit trees.
             case "apple tree":
-                return ItemID.APPLE_TREE_SEED;
+                return ItemId.APPLE_TREE_SEED;
             case "banana tree":
-                return ItemID.BANANA_TREE_SEED;
+                return ItemId.BANANA_TREE_SEED;
             case "orange tree":
-                return ItemID.ORANGE_TREE_SEED;
+                return ItemId.ORANGE_TREE_SEED;
             case "curry tree":
-                return ItemID.CURRY_TREE_SEED;
+                return ItemId.CURRY_TREE_SEED;
             case "pineapple":
-                return ItemID.PINEAPPLE_SEED;
+                return ItemId.PINEAPPLE_SEED;
             case "papaya tree":
-                return ItemID.PAPAYA_TREE_SEED;
+                return ItemId.PAPAYA_TREE_SEED;
             case "palm tree":
-                return ItemID.PALM_TREE_SEED;
+                return ItemId.PALM_TREE_SEED;
             case "dragonfruit tree":
-                return ItemID.DRAGONFRUIT_TREE_SEED;
+                return ItemId.DRAGONFRUIT_TREE_SEED;
 
             // Bushes.
             case "redberry":
-                return ItemID.REDBERRY_SEED;
+                return ItemId.REDBERRY_SEED;
             case "cadavaberry":
-                return ItemID.CADAVABERRY_SEED;
+                return ItemId.CADAVABERRY_SEED;
             case "dwellberry":
-                return ItemID.DWELLBERRY_SEED;
+                return ItemId.DWELLBERRY_SEED;
             case "jangerberry":
-                return ItemID.JANGERBERRY_SEED;
+                return ItemId.JANGERBERRY_SEED;
             case "whiteberry":
-                return ItemID.WHITEBERRY_SEED;
+                return ItemId.WHITEBERRY_SEED;
             case "poison ivy":
-                return ItemID.POISON_IVY_SEED;
+                return ItemId.POISON_IVY_SEED;
 
             // Flowers.
             case "marigold":
-                return ItemID.MARIGOLD_SEED;
+                return ItemId.MARIGOLD_SEED;
             case "rosemary":
-                return ItemID.ROSEMARY_SEED;
+                return ItemId.ROSEMARY_SEED;
             case "nasturtium":
-                return ItemID.NASTURTIUM_SEED;
+                return ItemId.NASTURTIUM_SEED;
             case "woad":
-                return ItemID.WOAD_SEED;
+                return ItemId.WOAD_SEED;
             case "limpwurt":
-                return ItemID.LIMPWURT_SEED;
+                return ItemId.LIMPWURT_SEED;
             case "white lily":
-                return ItemID.WHITE_LILY_SEED;
+                return ItemId.WHITE_LILY_SEED;
 
             // Herbs.
             case "guam":
-                return ItemID.GUAM_SEED;
+                return ItemId.GUAM_SEED;
             case "marrentill":
-                return ItemID.MARRENTILL_SEED;
+                return ItemId.MARRENTILL_SEED;
             case "tarromin":
-                return ItemID.TARROMIN_SEED;
+                return ItemId.TARROMIN_SEED;
             case "harralander":
-                return ItemID.HARRALANDER_SEED;
+                return ItemId.HARRALANDER_SEED;
             case "ranarr":
-                return ItemID.RANARR_SEED;
+                return ItemId.RANARR_SEED;
             case "toadflax":
-                return ItemID.TOADFLAX_SEED;
+                return ItemId.TOADFLAX_SEED;
             case "irit":
-                return ItemID.IRIT_SEED;
+                return ItemId.IRIT_SEED;
             case "avantoe":
-                return ItemID.AVANTOE_SEED;
+                return ItemId.AVANTOE_SEED;
             case "kwuarm":
-                return ItemID.KWUARM_SEED;
+                return ItemId.KWUARM_SEED;
             case "snapdragon":
-                return ItemID.SNAPDRAGON_SEED;
+                return ItemId.SNAPDRAGON_SEED;
             case "cadantine":
-                return ItemID.CADANTINE_SEED;
+                return ItemId.CADANTINE_SEED;
             case "lantadyme":
-                return ItemID.LANTADYME_SEED;
+                return ItemId.LANTADYME_SEED;
             case "dwarf weed":
-                return ItemID.DWARF_WEED_SEED;
+                return ItemId.DWARF_WEED_SEED;
             case "torstol":
-                return ItemID.TORSTOL_SEED;
+                return ItemId.TORSTOL_SEED;
 
             // Special seeds.
             case "seaweed spore":
-                return ItemID.SEAWEED_SPORE;
+                return ItemId.SEAWEED_SPORE;
             case "teak":
-                return ItemID.TEAK_SEED;
+                return ItemId.TEAK_SEED;
             case "grape":
-                return ItemID.GRAPE_SEED;
+                return ItemId.GRAPE_SEED;
             case "mushroom spore":
-                return ItemID.MUSHROOM_SPORE;
+                return ItemId.MUSHROOM_SPORE;
             case "mahogany":
-                return ItemID.MAHOGANY_SEED;
+                return ItemId.MAHOGANY_SEED;
             case "cactus":
-                return ItemID.CACTUS_SEED;
+                return ItemId.CACTUS_SEED;
             case "belladonna":
-                return ItemID.BELLADONNA_SEED;
+                return ItemId.BELLADONNA_SEED;
             case "potato cactus":
-                return ItemID.POTATO_CACTUS_SEED;
+                return ItemId.POTATO_CACTUS_SEED;
             case "hespori":
-                return ItemID.HESPORI_SEED;
+                return ItemId.HESPORI_SEED;
             case "calquat tree":
-                return ItemID.CALQUAT_TREE_SEED;
+                return ItemId.CALQUAT_TREE_SEED;
             case "crystal acorn":
-                return ItemID.CRYSTAL_ACORN;
+                return ItemId.CRYSTAL_ACORN;
             case "kronos":
-                return ItemID.KRONOS_SEED;
+                return ItemId.KRONOS_SEED;
             case "iasor":
-                return ItemID.IASOR_SEED;
+                return ItemId.IASOR_SEED;
             case "attas":
-                return ItemID.ATTAS_SEED;
+                return ItemId.ATTAS_SEED;
             case "spirit":
-                return ItemID.SPIRIT_SEED;
+                return ItemId.SPIRIT_SEED;
             case "celastrus":
-                return ItemID.CELASTRUS_SEED;
+                return ItemId.CELASTRUS_SEED;
         }
 
         return Charges.UNKNOWN;

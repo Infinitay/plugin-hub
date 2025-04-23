@@ -1,10 +1,7 @@
 package tictac7x.charges;
 
 import net.runelite.client.config.*;
-import tictac7x.charges.store.Charges;
-import tictac7x.charges.store.CombatTimeDegradableStyle;
-import tictac7x.charges.store.ItemActivity;
-import tictac7x.charges.store.ItemOverlayLocation;
+import tictac7x.charges.store.*;
 
 import java.awt.Color;
 
@@ -56,8 +53,8 @@ public interface TicTac7xChargesImprovedConfig extends Config {
     String amulet_of_chemistry = "amulet_of_chemistry";
     String binding_necklace = "binding_necklace";
     String bracelet_of_clay = "bracelet_of_clay";
-    String bracelet_of_expeditious = "bracelet_of_expeditious";
-    String bracelet_of_flamtaer = "bracelet_of_flamtaer";
+    String bracelet_of_slaughter = "bracelet_of_slaughter";
+    String expeditious_bracelet = "expeditious_bracelet";
     String burning_amulet = "burning_amulet";
     String camulet = "camulet";
     String castle_wars_bracelet = "castle_wars_bracelet";
@@ -70,7 +67,10 @@ public interface TicTac7xChargesImprovedConfig extends Config {
     String escape_crystal_status = "escape_crystal_status";
     String escape_crystal_inactivity_period = "escape_crystal_inactivity_period";
     String escape_crystal_time_remaining_warning = "escape_crystal_time_remaining_warning";
+    String escape_crystal_time_remaining_unit = "escape_crystal_time_remaining_unit";
     String explorers_ring = "explorers_ring";
+    String flamtaer_bracelet = "flamtaer_bracelet";
+    String games_necklace = "games_necklace";
     String giantsoul_amulet = "giantsoul_amulet";
     String necklace_of_passage = "necklace_of_passage";
     String pendant_of_ates = "pendant_of_ates";
@@ -85,7 +85,6 @@ public interface TicTac7xChargesImprovedConfig extends Config {
     String ring_of_suffering_status = "ring_of_suffering_status";
     String ring_of_the_elements = "ring_of_the_elements";
     String skills_necklace = "skills_necklace";
-    String slaughter_bracelet = "slaughter_bracelet";
     String slayer_ring = "slayer_ring";
     String xerics_talisman = "xerics_talisman";
 
@@ -123,6 +122,7 @@ public interface TicTac7xChargesImprovedConfig extends Config {
     String master_scroll_book = "master_scroll_book";
     String meat_pouch = "meat_pouch";
     String huntsmans_kit = "huntsmans_kit";
+    String imp_in_a_box = "imp_in_a_box";
     String ogre_bellows = "ogre_bellows";
     String plank_sack = "plank_sack";
     String quetzal_whistle = "quetzal_whistle";
@@ -294,11 +294,19 @@ public interface TicTac7xChargesImprovedConfig extends Config {
 
         @ConfigItem(
             keyName = escape_crystal_time_remaining_warning,
-            name = "Time remaining warning",
-            description = "How many seconds before you are warned before Escape crystal activates",
+            name = "Time remaining alert",
+            description = "How many time before you are warned before Escape crystal activates",
             position = 4,
             section = escape_crystal_section
         ) default int getEscapeCrystalTimeRemainingWarning() { return 5; }
+
+        @ConfigItem(
+            keyName = escape_crystal_time_remaining_unit,
+            name = "Time remaining unit",
+            description = "What unit to use for escape crystal activation (ticks is more precise)",
+            position = 5,
+            section = escape_crystal_section
+        ) default EscapeCrystalTimeRemainingUnit getEscapeCrystalTimeRemainingUnit() { return EscapeCrystalTimeRemainingUnit.TICKS; }
 
     @ConfigSection(
         name = "Infoboxes",
@@ -418,6 +426,13 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             description = "",
             section = infoboxes
         ) default boolean huntsmansKitInfobox() { return true; }
+
+        @ConfigItem(
+            keyName = imp_in_a_box + infobox,
+            name = "Imp in a box",
+            description = "",
+            section = infoboxes
+        ) default boolean impInABoxInfobox() { return true; }
 
         @ConfigItem(
             keyName = bow_of_faerdhinen + infobox,
@@ -560,21 +575,28 @@ public interface TicTac7xChargesImprovedConfig extends Config {
         ) default boolean braceletOfClayInfobox() { return true; }
 
         @ConfigItem(
-            keyName = bracelet_of_expeditious + infobox,
+            keyName = expeditious_bracelet + infobox,
             name = "Expeditious bracelet",
             description = "",
             section = infoboxes
         ) default boolean expeditiousBraceletInfobox() { return true; }
 
         @ConfigItem(
-            keyName = bracelet_of_flamtaer + infobox,
+            keyName = flamtaer_bracelet + infobox,
             name = "Flamtaer bracelet",
             description = "",
             section = infoboxes
         ) default boolean flamtaerBraceletInfobox() { return true; }
 
         @ConfigItem(
-            keyName = slaughter_bracelet + infobox,
+            keyName = games_necklace + infobox,
+            name = "Games necklace",
+            description = "",
+            section = infoboxes
+        ) default boolean gamesNecklaceInfobox() { return true; }
+
+        @ConfigItem(
+            keyName = bracelet_of_slaughter + infobox,
             name = "Bracelet of slaughter",
             description = "",
             section = infoboxes
@@ -1211,6 +1233,13 @@ public interface TicTac7xChargesImprovedConfig extends Config {
         ) default boolean huntsmansKitOverlay() { return true; }
 
         @ConfigItem(
+            keyName = imp_in_a_box + overlay,
+            name = "Imp in a box",
+            description = "",
+            section = overlays
+        ) default boolean impInABoxOverlay() { return true; }
+
+        @ConfigItem(
             keyName = arclight + overlay,
             name = "Arclight",
             description = "",
@@ -1274,21 +1303,28 @@ public interface TicTac7xChargesImprovedConfig extends Config {
         ) default boolean braceletOfClayOverlay() { return true; }
 
         @ConfigItem(
-            keyName = bracelet_of_expeditious + overlay,
+            keyName = expeditious_bracelet + overlay,
             name = "Expeditious bracelet",
             description = "",
             section = overlays
         ) default boolean expeditiousBraceletOverlay() { return true; }
 
         @ConfigItem(
-            keyName = bracelet_of_flamtaer + overlay,
+            keyName = flamtaer_bracelet + overlay,
             name = "Flamtaer bracelet",
             description = "",
             section = overlays
         ) default boolean flamtaerBraceletOverlay() { return true; }
 
         @ConfigItem(
-            keyName = slaughter_bracelet + overlay,
+            keyName = games_necklace + overlay,
+            name = "Games necklace",
+            description = "",
+            section = overlays
+        ) default boolean gamesNecklaceOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = bracelet_of_slaughter + overlay,
             name = "Bracelet of slaughter",
             description = "",
             section = overlays
@@ -1894,7 +1930,7 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             name = version,
             description = "Version of the plugin for update message",
             section = debug,
-            position = 1
+            position = -4
         ) default String getVersion() { return ""; }
 
         @ConfigItem(
@@ -1902,24 +1938,24 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             name = "Date",
             description = "Date to check for charges reset when logging in",
             section = debug,
-            position = 2
+            position = -3
         ) default String getResetDate() { return ""; }
-
-        @ConfigItem(
-            keyName = storage_bank,
-            name = storage_bank,
-            description = "All player bank items to check for daily resets",
-            section = debug,
-            position = 3
-        ) default String getStorageBank() { return ""; }
 
         @ConfigItem(
             keyName = debug_ids,
             name = "Debug IDs",
             description = "Shows animation and graphics ids within ingame messages to add support for new items",
             section = debug,
-            position = 4
+            position = -2
         ) default boolean showDebugIds() { return false; }
+
+        @ConfigItem(
+            keyName = storage_bank,
+            name = storage_bank,
+            description = "All player bank items to check for daily resets",
+            section = debug,
+            position = 1
+        ) default String getStorageBank() { return ""; }
 
         @ConfigItem(
             keyName = barrows_gear + "_ahrims_hood",
@@ -1999,9 +2035,9 @@ public interface TicTac7xChargesImprovedConfig extends Config {
         ) default String getBottomlessCompostBucketStorage() { return ""; }
 
         @ConfigItem(
-            keyName = slaughter_bracelet,
-            name = slaughter_bracelet,
-            description = slaughter_bracelet,
+            keyName = bracelet_of_slaughter,
+            name = bracelet_of_slaughter,
+            description = bracelet_of_slaughter,
             section = debug
         ) default int getBraceletOfSlaughterCharges() { return Charges.UNKNOWN; }
 
@@ -2041,9 +2077,9 @@ public interface TicTac7xChargesImprovedConfig extends Config {
         ) default int getCrystalBowCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
-            keyName = bracelet_of_expeditious,
-            name = bracelet_of_expeditious,
-            description = bracelet_of_expeditious,
+            keyName = expeditious_bracelet,
+            name = expeditious_bracelet,
+            description = expeditious_bracelet,
             section = debug
         ) default int getBraceletOfExpeditiousCharges() { return Charges.UNKNOWN; }
 

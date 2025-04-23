@@ -1,4 +1,4 @@
-# Item Charges Improved - v0.6
+# Item Charges Improved - v0.6.1
 
 Show charges of various items that are in inventory or equipped
 
@@ -36,8 +36,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - Amulet of chemistry
 - Binding necklace
 - Bracelet of clay
-- Bracelet of expeditious
-- Bracelet of flamtaer
+- Bracelet of slaughter
 - Burning amulet
 - Camulet
 - Castle wars bracelet
@@ -47,7 +46,10 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - Dodgy necklace
 - Efaritay's aid
 - Escape crystal
+- Expeditious bracelet
 - Explorer's ring
+- Flamtaer bracelet
+- Games necklace
 - Giantsoul amulet
 - Necklace of passage
 - Pendant of ates
@@ -61,7 +63,6 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - Ring of suffering
 - Ring of the elements
 - Skills necklace
-- Slaughter bracelet
 - Slayer ring
 - Xeric's talisman
 
@@ -74,6 +75,36 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - Tome of earth
 - Tome of fire
 - Tome of water
+
+### Utilities
+- Ash sanctifier
+- Bonecrusher
+- Bottomless compost bucket
+- Chugging barrel
+- Coal bag
+- Colossal Pouch
+- Crystal saw
+- Fish barrel
+- Fungicide spray
+- Fur pouches
+- Gem bag
+- Gricoller's can
+- Herb sack
+- Huntsman's kit
+- Imp in a box
+- Jar generator
+- Log basket
+- Master scroll book
+- Meat pouches
+- Ogre bellows
+- Plank sack
+- Reagent pouch
+- Seed box
+- Soul bearer
+- Strange old lockpick
+- Tackle box
+- Teleport crystal
+- Waterskins
 
 ### Weapons
 - Arclight
@@ -93,44 +124,4 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - Venator bow
 - Warped sceptre
 - Western banner
-
-
-
-
-
-
-
-
-
-
-
-### Utilities
-
-- Ash sanctifier
-- Bonecrusher
-- Bottomless compost bucket
-- Chugging barrel
-- Coal bag
-- Colossal Pouch
-- Crystal saw
-- Fish barrel
-- Fungicide spray
-- Fur pouches
-- Gem bag
-- Gricoller's can
-- Herb sack
-- Huntsman's kit
-- Jar generator
-- Log basket
-- Master scroll book
-- Meat pouches
-- Ogre bellows
-- Plank sack
-- Reagent pouch
-- Seed box
-- Soul bearer
-- Strange old lockpick
-- Tackle box
-- Teleport crystal
-- Waterskins
 

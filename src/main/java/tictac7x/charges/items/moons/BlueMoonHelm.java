@@ -2,7 +2,7 @@ package tictac7x.charges.items.moons;
 
 import com.google.gson.Gson;
 import net.runelite.api.Client;
-import net.runelite.api.ItemID;
+import tictac7x.charges.store.ItemId;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
@@ -10,7 +10,6 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
-import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnCombat;
 import tictac7x.charges.item.triggers.TriggerBase;
@@ -30,13 +29,12 @@ public class BlueMoonHelm extends _MoonItem {
             final Store store,
             final Gson gson
     ) {
-        super("blue_helm", ItemID.BLUE_MOON_HELM, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
+        super("blue_helm", ItemId.BLUE_MOON_HELM, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
-            new TriggerItem(ItemID.BLUE_MOON_HELM).fixedCharges(3000),
-            new TriggerItem(ItemID.BLUE_MOON_HELM_29041),
-            new TriggerItem(ItemID.BLUE_MOON_HELM_29041),
-            new TriggerItem(ItemID.BLUE_MOON_HELM_BROKEN).fixedCharges(0),
+            new TriggerItem(ItemId.BLUE_MOON_HELM).fixedCharges(3000),
+            new TriggerItem(ItemId.BLUE_MOON_HELM_DEGRADED),
+            new TriggerItem(ItemId.BLUE_MOON_HELM_BROKEN).fixedCharges(0),
         };
 
         this.triggers = new TriggerBase[]{

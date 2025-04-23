@@ -11,6 +11,8 @@ import net.runelite.client.ui.JagexColors;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import net.runelite.client.util.ColorUtil;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
+import tictac7x.charges.customEvents.CustomChatMessage;
+import tictac7x.charges.customEvents.CustomHitsplatApplied;
 import tictac7x.charges.item.listeners.*;
 import tictac7x.charges.customEvents.CustomItemContainerChanged;
 import tictac7x.charges.item.triggers.TriggerBase;
@@ -21,6 +23,8 @@ import tictac7x.charges.store.Store;
 
 import javax.annotation.Nonnull;
 import java.awt.Color;
+
+import static tictac7x.charges.TicTac7xChargesImprovedPlugin.INFINITE_SYMBOL;
 
 public abstract class ChargedItemBase {
     public final String configKey;
@@ -56,6 +60,7 @@ public abstract class ChargedItemBase {
     private final ListenerOnMenuOptionClicked listenerOnMenuOptionClicked;
     private final ListenerOnScriptPreFired listenerOnScriptPreFired;
     private final ListenerOnCombat listenerOnCombat;
+    private final ListenerOnGameTick listenerOnGameTick;
 
     public boolean inInventory = false;
     public boolean inEquipment = false;
@@ -102,6 +107,7 @@ public abstract class ChargedItemBase {
         listenerOnMenuOptionClicked = new ListenerOnMenuOptionClicked(client, itemManager, this, notifier, config);
         listenerOnScriptPreFired = new ListenerOnScriptPreFired(client, itemManager, this, notifier, config);
         listenerOnCombat = new ListenerOnCombat(client, itemManager, this, notifier, config);
+        listenerOnGameTick = new ListenerOnGameTick(client, itemManager, this, notifier, config);
     }
 
     public abstract String getCharges(final int itemId);
@@ -167,7 +173,7 @@ public abstract class ChargedItemBase {
 
     protected String getChargesMinified(final int charges) {
         // Unlimited.
-        if (charges == Charges.UNLIMITED) return "∞";
+        if (charges == Charges.UNLIMITED) return INFINITE_SYMBOL;
 
         // Unknown.
         if (charges == Charges.UNKNOWN) return "?";
@@ -184,13 +190,13 @@ public abstract class ChargedItemBase {
         return thousands + (thousands < 10 && hundreds > 0 ? "." + hundreds : "") + "K";
     }
 
-    public void onChatMessage(final ChatMessage event) {
-        if (event.getMessage().contains("The banker charges") || inInventoryOrEquipment()) {
+    public void onChatMessage(final CustomChatMessage event) {
+        if (event.message.contains("The banker charges") || inInventoryOrEquipment()) {
             listenerOnChatMessage.trigger(event);
         }
     }
 
-    public void onHitsplatApplied(final HitsplatApplied event) {
+    public void onHitsplatApplied(final CustomHitsplatApplied event) {
         if (!inInventoryOrEquipment()) return;
         listenerOnHitsplatApplied.trigger(event);
     }
@@ -260,5 +266,10 @@ public abstract class ChargedItemBase {
     public void onCombat() {
         if (!inInventoryOrEquipment()) return;
         listenerOnCombat.trigger();
+    }
+
+    public void onGameTick(final GameTick event) {
+        if (!inInventoryOrEquipment()) return;
+        listenerOnGameTick.trigger(event);
     }
 }

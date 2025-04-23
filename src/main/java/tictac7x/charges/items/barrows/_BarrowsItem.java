@@ -2,7 +2,6 @@ package tictac7x.charges.items.barrows;
 
 import com.google.gson.Gson;
 import net.runelite.api.Client;
-import net.runelite.api.Skill;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
@@ -18,11 +17,8 @@ import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.Store;
 
 public class _BarrowsItem extends ChargedItem {
-    private final int totalRepairCost;
-
     public _BarrowsItem(
         final String itemName,
-        final int totalRepairCost,
         final int itemId,
         final Client client,
         final ClientThread clientThread,
@@ -49,25 +45,23 @@ public class _BarrowsItem extends ChargedItem {
             store,
             gson
         );
-        this.totalRepairCost = totalRepairCost;
 
         this.triggers = new TriggerBase[]{
+            // Check.
             new OnChatMessage(itemName + ": (?<percentage>.+)% remaining until the next degradation.").matcherConsumer((m) -> {
                 final int percentage = Integer.parseInt(m.group("percentage"));
+                final int chargesUsedInCurrentTier = (100 - percentage) * 250 / 100;
 
                 for (final CustomMenuOptionClicked menuOptionClicked : store.menuOptionsClicked) {
-                    if (menuOptionClicked.target.contains("100")) {
-                        setCharges(1000 - (percentage * 250 / 100));
-                    } else if (menuOptionClicked.target.contains("75")) {
-                        setCharges(750 - (percentage * 250 / 100));
-                    } else if (menuOptionClicked.target.contains("50")) {
-                        setCharges(500 - (percentage * 250 / 100));
-                    } else if (menuOptionClicked.target.contains("25")) {
-                        setCharges(250 - (percentage * 250 / 100));
+                    if (menuOptionClicked.target.contains(itemManager.getItemComposition(itemId).getName())) {
+                        final int currentTierMaxCharges = Integer.parseInt(menuOptionClicked.target.replaceAll("\\D", "")) * 10;
+                        setCharges(currentTierMaxCharges - chargesUsedInCurrentTier);
+                        return;
                     }
                 }
             }),
 
+            // Degrade in combat.
             new OnCombat(90).isEquipped().decreaseCharges(1),
         };
     }

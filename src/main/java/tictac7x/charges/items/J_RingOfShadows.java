@@ -2,7 +2,9 @@ package tictac7x.charges.items;
 
 import com.google.gson.Gson;
 import net.runelite.api.Client;
-import net.runelite.api.ItemID;
+import tictac7x.charges.item.triggers.OnAnimationChanged;
+import tictac7x.charges.store.AnimationId;
+import tictac7x.charges.store.ItemId;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
@@ -29,14 +31,15 @@ public class J_RingOfShadows extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(TicTac7xChargesImprovedConfig.ring_of_shadows, ItemID.RING_OF_SHADOWS, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
+        super(TicTac7xChargesImprovedConfig.ring_of_shadows, ItemId.RING_OF_SHADOWS, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
-            new TriggerItem(ItemID.RING_OF_SHADOWS_UNCHARGED).fixedCharges(0),
-            new TriggerItem(ItemID.RING_OF_SHADOWS)
+            new TriggerItem(ItemId.RING_OF_SHADOWS_UNCHARGED).fixedCharges(0),
+            new TriggerItem(ItemId.RING_OF_SHADOWS)
         };
 
         this.triggers = new TriggerBase[] {
+            // Check.
             new OnChatMessage("Your ring of shadows has (?<charges>.+) charges? remaining.").setDynamicallyCharges(),
 
             // Charge.
@@ -45,7 +48,8 @@ public class J_RingOfShadows extends ChargedItem {
             // Charge.
             new OnChatMessage("You add .+ charges? to the ring of shadows. It now has (?<charges>.+) charges?.").setDynamicallyCharges(),
 
-            // TODO - teleport
+            // Teleport.
+            new OnAnimationChanged(AnimationId.RING_OF_SHADOWS_TELEPORT).decreaseCharges(1),
 
             // Auto-charge.
             new OnChatMessage("The banker charges your Ring of shadows using (?<bloodrune>.+)x Blood rune.*").matcherConsumer(m -> {

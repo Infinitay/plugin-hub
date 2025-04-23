@@ -2,7 +2,7 @@ package tictac7x.charges.items;
 
 import com.google.gson.Gson;
 import net.runelite.api.Client;
-import net.runelite.api.ItemID;
+import tictac7x.charges.store.ItemId;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
@@ -26,7 +26,6 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static tictac7x.charges.store.ItemContainerId.BANK;
 import static tictac7x.charges.store.ItemContainerId.INVENTORY;
 
 public class U_FishBarrel extends ChargedItemWithStorage {
@@ -44,65 +43,65 @@ public class U_FishBarrel extends ChargedItemWithStorage {
         final Store store,
         final Gson gson
     ) {
-        super(TicTac7xChargesImprovedConfig.fish_barrel, ItemID.FISH_BARREL, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
-        storage = storage.setMaximumTotalQuantity(28).storableItems(
-            // Small net
-            new StorableItem(ItemID.RAW_SHRIMPS).checkName("Shrimp"),
-            new StorableItem(ItemID.RAW_ANCHOVIES).checkName("Anchovies"),
-            new StorableItem(ItemID.RAW_MONKFISH).checkName("Monkfish"),
-
-            // Big net
-            new StorableItem(ItemID.RAW_MACKEREL).checkName("Mackerel"),
-            new StorableItem(ItemID.RAW_COD).checkName("Cod"),
-            new StorableItem(ItemID.RAW_BASS).checkName("Bass"),
-
-            // Rod
-            new StorableItem(ItemID.RAW_SARDINE).checkName("Sardine"),
-            new StorableItem(ItemID.RAW_HERRING).checkName("Herring"),
-            new StorableItem(ItemID.RAW_TROUT).checkName("Trout"),
-            new StorableItem(ItemID.RAW_PIKE).checkName("Pike"),
-            new StorableItem(ItemID.RAW_SLIMY_EEL).checkName("Slimy swamp eel"),
-            new StorableItem(ItemID.RAW_SLIMY_EEL).checkName("Slimy eel"),
-            new StorableItem(ItemID.RAW_SALMON).checkName("Salmon"),
-            new StorableItem(ItemID.RAW_RAINBOW_FISH).checkName("Rainbow fish"),
-            new StorableItem(ItemID.RAW_CAVE_EEL).checkName("Cave eel"),
-            new StorableItem(ItemID.RAW_LAVA_EEL).checkName("Lava eel"),
-            new StorableItem(ItemID.INFERNAL_EEL).checkName("Infernal eel"),
-            new StorableItem(ItemID.RAW_ANGLERFISH).checkName("Anglerfish"),
-            new StorableItem(ItemID.SACRED_EEL).checkName("Sacred eel"),
-
-            // Harpoon
-            new StorableItem(ItemID.RAW_TUNA).checkName("Tuna"),
-            new StorableItem(ItemID.RAW_SWORDFISH).checkName("Swordfish"),
-            new StorableItem(ItemID.RAW_SHARK).checkName("Shark"),
-
-            // Aerial
-            new StorableItem(ItemID.BLUEGILL).checkName("Bluegill"),
-            new StorableItem(ItemID.COMMON_TENCH).checkName("Common tench"),
-            new StorableItem(ItemID.MOTTLED_EEL).checkName("Mottled eel"),
-            new StorableItem(ItemID.GREATER_SIREN).checkName("Greater siren"),
-
-            // Cage
-            new StorableItem(ItemID.RAW_LOBSTER).checkName("Lobster"),
-            new StorableItem(ItemID.RAW_DARK_CRAB).checkName("Dark crab"),
-
-            // Barbarian
-            new StorableItem(ItemID.LEAPING_TROUT).checkName("Leaping trout"),
-            new StorableItem(ItemID.LEAPING_SALMON).checkName("Leaping salmon"),
-            new StorableItem(ItemID.LEAPING_STURGEON).checkName("Leaping sturgeon"),
-
-            // Other
-            new StorableItem(ItemID.RAW_KARAMBWAN).checkName("Karambwan"),
-            new StorableItem(ItemID.RAW_SEA_TURTLE).checkName("Sea turtle"),
-            new StorableItem(ItemID.RAW_MANTA_RAY).checkName("Manta ray")
-        );
+        super(TicTac7xChargesImprovedConfig.fish_barrel, ItemId.FISH_BARREL, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
-            new TriggerItem(ItemID.FISH_BARREL),
-            new TriggerItem(ItemID.OPEN_FISH_BARREL),
-            new TriggerItem(ItemID.FISH_SACK_BARREL),
-            new TriggerItem(ItemID.OPEN_FISH_SACK_BARREL),
+            new TriggerItem(ItemId.FISH_BARREL),
+            new TriggerItem(ItemId.FISH_BARREL_OPEN),
+            new TriggerItem(ItemId.FISH_SACK_BARREL),
+            new TriggerItem(ItemId.FISH_SACK_BARREL_OPEN),
         };
+
+        storage = storage.setMaximumTotalQuantity(28).storableItems(
+            // Small net
+            new StorableItem(ItemId.RAW_SHRIMPS).checkName("Shrimp"),
+            new StorableItem(ItemId.RAW_ANCHOVIES).checkName("Anchovies"),
+            new StorableItem(ItemId.RAW_MONKFISH).checkName("Monkfish"),
+
+            // Big net
+            new StorableItem(ItemId.RAW_MACKEREL).checkName("Mackerel"),
+            new StorableItem(ItemId.RAW_COD).checkName("Cod"),
+            new StorableItem(ItemId.RAW_BASS).checkName("Bass"),
+
+            // Rod
+            new StorableItem(ItemId.RAW_SARDINE).checkName("Sardine"),
+            new StorableItem(ItemId.RAW_HERRING).checkName("Herring"),
+            new StorableItem(ItemId.RAW_TROUT).checkName("Trout"),
+            new StorableItem(ItemId.RAW_PIKE).checkName("Pike"),
+            new StorableItem(ItemId.RAW_SLIMY_EEL).checkName("Slimy swamp eel", "Slimy eel"),
+            new StorableItem(ItemId.RAW_SALMON).checkName("Salmon"),
+            new StorableItem(ItemId.RAW_RAINBOW_FISH).checkName("Rainbow fish"),
+            new StorableItem(ItemId.RAW_CAVE_EEL).checkName("Cave eel"),
+            new StorableItem(ItemId.RAW_LAVA_EEL).checkName("Lava eel"),
+            new StorableItem(ItemId.INFERNAL_EEL).checkName("Infernal eel"),
+            new StorableItem(ItemId.RAW_ANGLERFISH).checkName("Anglerfish"),
+            new StorableItem(ItemId.SACRED_EEL).checkName("Sacred eel"),
+
+            // Harpoon
+            new StorableItem(ItemId.RAW_TUNA).checkName("Tuna"),
+            new StorableItem(ItemId.RAW_SWORDFISH).checkName("Swordfish"),
+            new StorableItem(ItemId.RAW_SHARK).checkName("Shark"),
+
+            // Aerial
+            new StorableItem(ItemId.BLUEGILL).checkName("Bluegill"),
+            new StorableItem(ItemId.COMMON_TENCH).checkName("Common tench"),
+            new StorableItem(ItemId.MOTTLED_EEL).checkName("Mottled eel"),
+            new StorableItem(ItemId.GREATER_SIREN).checkName("Greater siren"),
+
+            // Cage
+            new StorableItem(ItemId.RAW_LOBSTER).checkName("Lobster"),
+            new StorableItem(ItemId.RAW_DARK_CRAB).checkName("Dark crab"),
+
+            // Barbarian
+            new StorableItem(ItemId.LEAPING_TROUT).checkName("Leaping trout"),
+            new StorableItem(ItemId.LEAPING_SALMON).checkName("Leaping salmon"),
+            new StorableItem(ItemId.LEAPING_STURGEON).checkName("Leaping sturgeon"),
+
+            // Other
+            new StorableItem(ItemId.RAW_KARAMBWAN).checkName("Karambwan"),
+            new StorableItem(ItemId.RAW_SEA_TURTLE).checkName("Sea turtle"),
+            new StorableItem(ItemId.RAW_MANTA_RAY).checkName("Manta ray")
+        );
 
         this.triggers = new TriggerBase[]{
             // Check or empty already empty.
@@ -112,11 +111,11 @@ public class U_FishBarrel extends ChargedItemWithStorage {
             new OnChatMessage("You catch (a|an|some) (?<fish>.+).").matcherConsumer(m -> {
                 lastCaughtFish = getStorageItemFromName(m.group("fish"), 1);
                 storage.add(lastCaughtFish);
-            }).requiredItem(ItemID.OPEN_FISH_BARREL, ItemID.OPEN_FISH_SACK_BARREL),
+            }).requiredItem(ItemId.FISH_BARREL_OPEN, ItemId.FISH_SACK_BARREL_OPEN),
 
             // Extra fish.
-            new OnChatMessage(".* enabled you to catch an extra fish.").requiredItem(ItemID.OPEN_FISH_BARREL, ItemID.OPEN_FISH_SACK_BARREL).consumer(() -> {
-                storage.add(lastCaughtFish.get().getId(), 1);
+            new OnChatMessage(".* enabled you to catch an extra fish.").requiredItem(ItemId.FISH_BARREL_OPEN, ItemId.FISH_SACK_BARREL_OPEN).consumer(() -> {
+                storage.add(lastCaughtFish);
             }),
 
             // Replace "Empty" with proper "Empty to bank".

@@ -2,7 +2,7 @@ package tictac7x.charges.items;
 
 import com.google.gson.Gson;
 import net.runelite.api.Client;
-import net.runelite.api.ItemID;
+import tictac7x.charges.store.ItemId;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
@@ -29,13 +29,13 @@ public class U_StrangeOldLockpick extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(TicTac7xChargesImprovedConfig.strange_old_lockpick, ItemID.STRANGE_OLD_LOCKPICK, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
+        super(TicTac7xChargesImprovedConfig.strange_old_lockpick, ItemId.STRANGE_OLD_LOCKPICK, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
-            new TriggerItem(ItemID.STRANGE_OLD_LOCKPICK),
-            new TriggerItem(ItemID.STRANGE_OLD_LOCKPICK_FULL).fixedCharges(50)
+            new TriggerItem(ItemId.STRANGE_OLD_LOCKPICK).fixedCharges(50),
+            new TriggerItem(ItemId.STRANGE_OLD_LOCKPICK_DEGRADED),
         };
-        
+
         this.triggers = new TriggerBase[] {
             new OnChatMessage("Your Strange old lockpick( now)? has (?<charges>.+) charges? remaining.").setDynamicallyCharges(),
             new OnChatMessage("The Strange old lockpick crumbles to dust as you use it one last time.").notification("Your strange old lockpick crumbles to dust."),

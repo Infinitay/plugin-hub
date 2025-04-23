@@ -2,7 +2,8 @@ package tictac7x.charges.items;
 
 import com.google.gson.Gson;
 import net.runelite.api.Client;
-import net.runelite.api.ItemID;
+import tictac7x.charges.store.AnimationId;
+import tictac7x.charges.store.ItemId;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
@@ -27,10 +28,10 @@ public class W_SlayerStaffE extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(TicTac7xChargesImprovedConfig.slayer_staff_e, ItemID.SLAYERS_STAFF_E, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
+        super(TicTac7xChargesImprovedConfig.slayer_staff_e, ItemId.SLAYER_STAFF_ENCHANTED, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
-            new TriggerItem(ItemID.SLAYERS_STAFF_E)
+            new TriggerItem(ItemId.SLAYER_STAFF_ENCHANTED)
         };
 
         this.triggers = new TriggerBase[] {
@@ -41,7 +42,7 @@ public class W_SlayerStaffE extends ChargedItem {
             new OnChatMessage("Your staff has (?<charges>.+) charges?.").setDynamicallyCharges(),
 
             // Attack.
-            new OnAnimationChanged(1576).isEquipped().decreaseCharges(1),
+            new OnAnimationChanged(AnimationId.SLAYER_STAFF_CAST).isEquipped().decreaseCharges(1),
         };
     }
 }

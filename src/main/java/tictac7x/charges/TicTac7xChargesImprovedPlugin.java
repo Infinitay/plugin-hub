@@ -21,6 +21,9 @@ import net.runelite.client.ui.overlay.OverlayManager;
 import net.runelite.client.ui.overlay.infobox.InfoBox;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import net.runelite.client.ui.overlay.tooltip.TooltipManager;
+import net.runelite.client.util.OSType;
+import tictac7x.charges.customEvents.CustomChatMessage;
+import tictac7x.charges.customEvents.CustomHitsplatApplied;
 import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.overlays.ChargedItemInfobox;
 import tictac7x.charges.item.overlays.ChargedItemOverlay;
@@ -30,6 +33,7 @@ import tictac7x.charges.items.barrows.*;
 import tictac7x.charges.customEvents.CustomMenuOptionClicked;
 import tictac7x.charges.items.moons.*;
 import tictac7x.charges.store.Store;
+import tictac7x.charges.store.VarbitId;
 
 import javax.inject.Inject;
 import java.awt.event.KeyEvent;
@@ -43,6 +47,7 @@ import java.util.*;
 @PluginDescriptor(
 	name = "Item Charges Improved",
 	description = "Show charges of various items",
+	conflicts = "Item Charges",
 	tags = {
 		"charges",
 		"barrows",
@@ -125,17 +130,15 @@ import java.util.*;
 )
 
 public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener, MouseListener, MouseWheelListener {
-	private final String pluginVersion = "v0.6";
+	private final String pluginVersion = "v0.6.1";
 	private final String pluginMessage =
 		"<colHIGHLIGHT>Item Charges Improved " + pluginVersion + ":<br>" +
-		"<colHIGHLIGHT>* Amulet of chemistry added.<br>" +
-		"<colHIGHLIGHT>* Moon gear added.<br>" +
-		"<colHIGHLIGHT>* In combat charges tracking support added for barrows and moon gear.<br>" +
-		"<colHIGHLIGHT>* Combat time degradable items styles can be changed to charges/percentages/time.<br>" +
-		"<colHIGHLIGHT>* Chugging barrel and Efaritay's aid fixes."
+		"<colHIGHLIGHT>* Games necklace added.<br>" +
+		"<colHIGHLIGHT>* Imp in a box added.<br>" +
+		"<colHIGHLIGHT>* Barrows charges formula fixed.<br>" +
+		"<colHIGHLIGHT>* Escape crystal now uses ticks by default for more precise remaining time.<br>" +
+		"<colHIGHLIGHT>* Seed box fixes, reagent pouch improvements."
 	;
-
-	private final int VARBIT_MINUTES = 8354;
 
 	@Inject
 	private Client client;
@@ -177,7 +180,7 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 	private Gson gson;
 
 	@Provides
-	TicTac7xChargesImprovedConfig provideConfig(ConfigManager configManager) {
+	TicTac7xChargesImprovedConfig provideConfig(final ConfigManager configManager) {
 		return configManager.getConfig(TicTac7xChargesImprovedConfig.class);
 	}
 
@@ -186,9 +189,10 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 	private ChargedItemOverlay overlayChargedItems;
 
 	private ChargedItemBase[] chargedItems;
-	private List<InfoBox> chargedItemsInfoboxes = new ArrayList<>();
+	private final List<InfoBox> chargedItemsInfoboxes = new ArrayList<>();
 
 	private final ZoneId timezone = ZoneId.of("Europe/London");
+	public static final String INFINITE_SYMBOL = OSType.getOSType() == OSType.MacOS ? "inf" : "∞";
 
 	@Override
 	protected void startUp() {
@@ -233,9 +237,7 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 			new J_AmuletOfBloodFury(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_BindingNecklace(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_BraceletOfClay(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_BraceletOfExpeditious(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_BraceletOfFlamtaer(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_SlaughterBracelet(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new J_BraceletOfSlaughter(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_BurningAmulet(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_Camulet(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_CastleWarsBracelet(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
@@ -243,6 +245,9 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 			new J_DigsitePendant(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_EfaritaysAid(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_EscapeCrystal(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new J_ExpeditiousBracelet(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new J_FlamtaerBracelet(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new J_GamesNecklace(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_GiantsoulAmulet(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_NecklaceOfPassage(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_PhoenixNecklace(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
@@ -288,6 +293,7 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 			new U_GricollersCan(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_HerbSack(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_HuntsmansKit(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new U_ImpInABox(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_JarGenerator(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_LogBasket(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_MasterScrollBook(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
@@ -395,14 +401,9 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 
 	@Subscribe
 	public void onChatMessage(final ChatMessage event) {
-		store.setLastChatMessages(event);
-		Arrays.stream(chargedItems).forEach(infobox -> infobox.onChatMessage(event));
-
-//		System.out.println("MESSAGE | " +
-//			"type: " + event.getType().name() +
-//			", message: " + getCleanChatMessage(event) +
-//			", sender: " + event.getSender()
-//		);
+		final CustomChatMessage chatMessage = new CustomChatMessage(event);
+		store.onChatMessage(chatMessage);
+		Arrays.stream(chargedItems).forEach(infobox -> infobox.onChatMessage(chatMessage));
 	}
 
 	@Subscribe
@@ -431,17 +432,9 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 
 	@Subscribe
 	public void onHitsplatApplied(final HitsplatApplied event) {
-		store.onHitSplatApplied(event);
-
-		Arrays.stream(chargedItems).forEach(infobox -> infobox.onHitsplatApplied(event));
-
-//		System.out.println("HITSPLAT | " +
-//			"actor: " + (event.getActor() == client.getLocalPlayer() ? "self" : "enemy -> " + event.getActor().getName()) +
-//			", type: " + event.getHitsplat().getHitsplatType() +
-//			", amount:" + event.getHitsplat().getAmount() +
-//			", others: " + event.getHitsplat().isOthers() +
-//			", mine: " + event.getHitsplat().isMine()
-//		);
+		final CustomHitsplatApplied hitsplatApplied = new CustomHitsplatApplied(event, client);
+		store.onHitSplatApplied(hitsplatApplied);
+		Arrays.stream(chargedItems).forEach(infobox -> infobox.onHitsplatApplied(hitsplatApplied));
 	}
 
 	@Subscribe
@@ -470,12 +463,7 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 
 	@Subscribe
 	public void onMenuOptionClicked(final MenuOptionClicked event) {
-		int impostorId = -1;
-		try {
-			impostorId = client.getObjectDefinition(event.getMenuEntry().getIdentifier()).getImpostor().getId();
-		} catch (final Exception ignored) {}
-
-		final CustomMenuOptionClicked customMenuOptionClicked = new CustomMenuOptionClicked(event, impostorId);
+		final CustomMenuOptionClicked customMenuOptionClicked = new CustomMenuOptionClicked(event, client);
 
 		if (
 			// Menu option not found.
@@ -530,9 +518,7 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 //		} catch (final Exception ignored) {}
 //		System.out.println("SCRIPT FIRED | " + scriptDebug);
 
-		for (final ChargedItemBase chargedItem : chargedItems) {
-			chargedItem.onScriptPreFired(event);
-		}
+		Arrays.stream(chargedItems).forEach(infobox -> infobox.onScriptPreFired(event));
 	}
 
 	@Subscribe
@@ -582,7 +568,7 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onVarbitChanged(event));
 
 		// If server minutes are 0, it's a new day!
-		if (event.getVarbitId() == VARBIT_MINUTES && client.getGameState() == GameState.LOGGED_IN && event.getValue() == 0) {
+		if (event.getVarbitId() == VarbitId.MINUTES && client.getGameState() == GameState.LOGGED_IN && event.getValue() == 0) {
 			checkForChargesReset();
 		}
 
@@ -607,8 +593,9 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 	}
 
 	@Subscribe
-	public void onGameTick(final GameTick gametick) {
-		store.onGameTick(gametick);
+	public void onGameTick(final GameTick event) {
+		store.onGameTick(event);
+		Arrays.stream(chargedItems).forEach(infobox -> infobox.onGameTick(event));
 	}
 
 	@Subscribe
@@ -625,7 +612,7 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 	}
 
 	private void onUserAction() {
-		Arrays.stream(chargedItems).forEach(infobox -> infobox.onUserAction());
+		Arrays.stream(chargedItems).forEach(ChargedItemBase::onUserAction);
 	}
 
 	private void checkForChargesReset() {
@@ -633,7 +620,7 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 		if (date.equals(config.getResetDate())) return;
 
 		configManager.setConfiguration(TicTac7xChargesImprovedConfig.group, TicTac7xChargesImprovedConfig.date, date);
-		Arrays.stream(chargedItems).forEach(infobox -> infobox.onResetDaily());
+		Arrays.stream(chargedItems).forEach(ChargedItemBase::onResetDaily);
 
 		if (config.showDailyReset()) {
 			chatMessageManager.queue(QueuedMessage.builder()

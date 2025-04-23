@@ -2,7 +2,7 @@ package tictac7x.charges.items;
 
 import com.google.gson.Gson;
 import net.runelite.api.Client;
-import net.runelite.api.ItemID;
+import tictac7x.charges.store.ItemId;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
@@ -16,8 +16,8 @@ import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Store;
 
-public class J_BraceletOfExpeditious extends ChargedItem {
-    public J_BraceletOfExpeditious(
+public class J_ExpeditiousBracelet extends ChargedItem {
+    public J_ExpeditiousBracelet(
         final Client client,
         final ClientThread clientThread,
         final ConfigManager configManager,
@@ -29,10 +29,10 @@ public class J_BraceletOfExpeditious extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(TicTac7xChargesImprovedConfig.bracelet_of_expeditious, ItemID.EXPEDITIOUS_BRACELET, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
+        super(TicTac7xChargesImprovedConfig.expeditious_bracelet, ItemId.EXPEDITIOUS_BRACELET, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
-            new TriggerItem(ItemID.EXPEDITIOUS_BRACELET).needsToBeEquipped(),
+            new TriggerItem(ItemId.EXPEDITIOUS_BRACELET).needsToBeEquipped(),
         };
 
         this.triggers = new TriggerBase[] {
