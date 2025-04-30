@@ -41,12 +41,6 @@ public interface TicTac7xChargesImprovedConfig extends Config {
 
     // Potions
     String potion_ = "potion_";
-    String ruby_harvest_mix = "ruby_harvest_mix";
-    String sapphire_glacialis_mix = "sapphire_glacialis_mix";
-    String snowy_knight_mix = "snowy_knight_mix";
-    String black_warlock_mix = "black_warlock_mix";
-    String sunlight_moth_mix = "sunlight_moth_mix";
-    String moonlight_moth_mix = "moonlight_moth_mix";
 
     // Jewelery
     String alchemists_amulet = "alchemists_amulet";

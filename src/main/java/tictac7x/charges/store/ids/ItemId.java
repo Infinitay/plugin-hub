@@ -763,6 +763,9 @@ public class ItemId {
     public static final int MAGIC_POTION_3 = ItemID._3DOSE1MAGIC;
     public static final int MAGIC_POTION_4 = ItemID._4DOSE1MAGIC;
     public static final int STAMINA_POTION_1 = ItemID._1DOSESTAMINA;
+    public static final int STAMINA_POTION_2 = ItemID._2DOSESTAMINA;
+    public static final int STAMINA_POTION_3 = ItemID._3DOSESTAMINA;
+    public static final int STAMINA_POTION_4 = ItemID._4DOSESTAMINA;
     public static final int ZAMORAK_BREW_1 = ItemID._1DOSEPOTIONOFZAMORAK;
     public static final int ZAMORAK_BREW_2 = ItemID._2DOSEPOTIONOFZAMORAK;
     public static final int ZAMORAK_BREW_3 = ItemID._3DOSEPOTIONOFZAMORAK;
@@ -783,10 +786,10 @@ public class ItemId {
     public static final int BATTLEMAGE_POTION_2 = ItemID._2DOSEBATTLEMAGE;
     public static final int BATTLEMAGE_POTION_3 = ItemID._3DOSEBATTLEMAGE;
     public static final int BATTLEMAGE_POTION_4 = ItemID._4DOSEBATTLEMAGE;
-    public static final int SARADOMIN_BREW_1 = ItemID.BR_1DOSEPOTIONOFSARADOMIN;
-    public static final int SARADOMIN_BREW_2 = ItemID.BR_2DOSEPOTIONOFSARADOMIN;
-    public static final int SARADOMIN_BREW_3 = ItemID.BR_3DOSEPOTIONOFSARADOMIN;
-    public static final int SARADOMIN_BREW_4 = ItemID.BR_4DOSEPOTIONOFSARADOMIN;
+    public static final int SARADOMIN_BREW_1 = ItemID._1DOSEPOTIONOFSARADOMIN;
+    public static final int SARADOMIN_BREW_2 = ItemID._2DOSEPOTIONOFSARADOMIN;
+    public static final int SARADOMIN_BREW_3 = ItemID._3DOSEPOTIONOFSARADOMIN;
+    public static final int SARADOMIN_BREW_4 = ItemID._4DOSEPOTIONOFSARADOMIN;
     public static final int SERUM_207_1 = ItemID.MORT_SERUM1;
     public static final int SERUM_207_2 = ItemID.MORT_SERUM2;
     public static final int SERUM_207_3 = ItemID.MORT_SERUM3;

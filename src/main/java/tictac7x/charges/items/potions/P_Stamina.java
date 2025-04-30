@@ -8,9 +8,9 @@ public class P_Stamina extends _Potion {
     public P_Stamina(final Provider provider) {
         super("stamina", new TriggerItem[]{
             new TriggerItem(ItemId.STAMINA_POTION_1).fixedCharges(1),
-            new TriggerItem(ItemId.STAMINA_POTION_1).fixedCharges(2),
-            new TriggerItem(ItemId.STAMINA_POTION_1).fixedCharges(3),
-            new TriggerItem(ItemId.STAMINA_POTION_1).fixedCharges(4),
+            new TriggerItem(ItemId.STAMINA_POTION_2).fixedCharges(2),
+            new TriggerItem(ItemId.STAMINA_POTION_3).fixedCharges(3),
+            new TriggerItem(ItemId.STAMINA_POTION_4).fixedCharges(4),
         }, provider);
     }
 }
