@@ -28,12 +28,27 @@ import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.overlays.ChargedItemInfobox;
 import tictac7x.charges.item.overlays.ChargedItemOverlay;
 import tictac7x.charges.customEvents.CustomItemContainerChanged;
-import tictac7x.charges.items.*;
 import tictac7x.charges.items.barrows.*;
 import tictac7x.charges.customEvents.CustomMenuOptionClicked;
+import tictac7x.charges.items.boots.B_FremennikSeaBoots;
+import tictac7x.charges.items.capes.*;
+import tictac7x.charges.items.crystal.A_CrystalBody;
+import tictac7x.charges.items.crystal.A_CrystalHelm;
+import tictac7x.charges.items.crystal.A_CrystalLegs;
+import tictac7x.charges.items.helms.H_CircletOfWater;
+import tictac7x.charges.items.helms.H_KandarinHeadgear;
+import tictac7x.charges.items.jewelry.*;
 import tictac7x.charges.items.moons.*;
+import tictac7x.charges.items.potions.*;
+import tictac7x.charges.items.potions.P_Overload;
+import tictac7x.charges.items.potions.cox.*;
+import tictac7x.charges.items.potions.toa.*;
+import tictac7x.charges.items.shields.*;
+import tictac7x.charges.items.utils.*;
+import tictac7x.charges.items.weapons.*;
+import tictac7x.charges.store.Provider;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.store.VarbitId;
+import tictac7x.charges.store.ids.VarbitId;
 
 import javax.inject.Inject;
 import java.awt.event.KeyEvent;
@@ -47,6 +62,7 @@ import java.util.*;
 @PluginDescriptor(
 	name = "Item Charges Improved",
 	description = "Show charges of various items",
+	conflicts = "Item charges",
 	tags = {
 		"charges",
 		"barrows",
@@ -124,19 +140,20 @@ import java.util.*;
 		"pouch",
 		"pursuit",
 		"book",
-		"scroll"
+		"scroll",
+		"potion"
 	}
 )
 
 public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener, MouseListener, MouseWheelListener {
-	private final String pluginVersion = "v0.6.2";
+	private final String pluginVersion = "v0.6.3";
 	private final String pluginMessage =
 		"<colHIGHLIGHT>Item Charges Improved " + pluginVersion + ":<br>" +
-		"<colHIGHLIGHT>* Games necklace added.<br>" +
-		"<colHIGHLIGHT>* Imp in a box added.<br>" +
-		"<colHIGHLIGHT>* Barrows charges formula fixed.<br>" +
-		"<colHIGHLIGHT>* Escape crystal now uses ticks by default for more precise remaining time.<br>" +
-		"<colHIGHLIGHT>* Seed box fixes, reagent pouch improvements."
+		"<colHIGHLIGHT>* Potion doses added.<br>" +
+		"<colHIGHLIGHT>* Ring of wealth added.<br>" +
+		"<colHIGHLIGHT>* Combat bracelet added.<br>" +
+		"<colHIGHLIGHT>* Amulet of glory added.<br>" +
+		"<colHIGHLIGHT>* Blood essence added."
 	;
 
 	@Inject
@@ -183,6 +200,7 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 		return configManager.getConfig(TicTac7xChargesImprovedConfig.class);
 	}
 
+	private Provider provider;
 	private Store store;
 
 	private ChargedItemOverlay overlayChargedItems;
@@ -201,177 +219,302 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 		mouseManager.registerMouseWheelListener(this);
 
 		store = new Store(client, itemManager, configManager);
+		provider = new Provider(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, this, config, store, gson);
 
 		chargedItems = new ChargedItemBase[]{
 			// Crystal armor set
-			new A_CrystalBody(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new A_CrystalHelm(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new A_CrystalLegs(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new A_CrystalBody(provider),
+			new A_CrystalHelm(provider),
+			new A_CrystalLegs(provider),
 
 			// Boots
-			new B_FremennikSeaBoots(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new B_FremennikSeaBoots(provider),
 
 			// Capes
-			new C_ArdougneCloak(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new C_Coffin(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new C_ForestryBasket(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new C_ForestryKit(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new C_MagicCape(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-
-			// Foods
-			new F_BlackWarlockMix(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new F_MoonlightMothMix(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new F_RubyHarvestMix(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new F_SapphireGlacialisMix(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new F_SnowyKnightMix(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new F_SunlightMothMix(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new C_ArdougneCloak(provider),
+			new C_Coffin(provider),
+			new C_ForestryBasket(provider),
+			new C_ForestryKit(provider),
+			new C_MagicCape(provider),
 
 			// Helms
-			new H_CircletOfWater(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new H_KandarinHeadgear(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new H_CircletOfWater(provider),
+			new H_KandarinHeadgear(provider),
 
-			// Jewellery
-			new J_AlchemistsAmulet(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_AmuletOfChemistry(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_AmuletOfBloodFury(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_BindingNecklace(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_BraceletOfClay(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_BraceletOfSlaughter(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_BurningAmulet(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_Camulet(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_CastleWarsBracelet(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_DesertAmulet(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_DigsitePendant(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_EfaritaysAid(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_EscapeCrystal(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_ExpeditiousBracelet(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_FlamtaerBracelet(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_GamesNecklace(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_GiantsoulAmulet(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_NecklaceOfPassage(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_PhoenixNecklace(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_DodgyNecklace(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_PendantOfAtes(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_CelestialRing(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_RingOfDueling(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_RingOfForging(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_RingOfTheElements(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_RingOfEndurance(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_ExplorersRing(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_RingOfPursuit(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_RingOfRecoil(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_RingOfShadows(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_SlayerRing(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_RingOfSuffering(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_SkillsNecklace(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_XericsTalisman(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			// Jewelery
+			new J_AlchemistsAmulet(provider),
+			new J_AmuletOfBloodFury(provider),
+			new J_AmuletOfChemistry(provider),
+			new J_AmuletOfGlory(provider),
+			new U_BloodEssence(provider),
+			new J_BindingNecklace(provider),
+			new J_BraceletOfClay(provider),
+			new J_BraceletOfSlaughter(provider),
+			new J_BurningAmulet(provider),
+			new J_Camulet(provider),
+			new J_CastleWarsBracelet(provider),
+			new J_DesertAmulet(provider),
+			new J_DigsitePendant(provider),
+			new J_EfaritaysAid(provider),
+			new J_EscapeCrystal(provider),
+			new J_ExpeditiousBracelet(provider),
+			new J_FlamtaerBracelet(provider),
+			new J_GamesNecklace(provider),
+			new J_GiantsoulAmulet(provider),
+			new J_NecklaceOfPassage(provider),
+			new J_PhoenixNecklace(provider),
+			new J_DodgyNecklace(provider),
+			new J_PendantOfAtes(provider),
+			new J_CombatBracelet(provider),
+			new J_CelestialRing(provider),
+			new J_RingOfDueling(provider),
+			new J_RingOfForging(provider),
+			new J_RingOfWealth(provider),
+			new J_RingOfTheElements(provider),
+			new J_RingOfEndurance(provider),
+			new J_ExplorersRing(provider),
+			new J_RingOfPursuit(provider),
+			new J_RingOfRecoil(provider),
+			new J_RingOfShadows(provider),
+			new J_SlayerRing(provider),
+			new J_RingOfSuffering(provider),
+			new J_SkillsNecklace(provider),
+			new J_XericsTalisman(provider),
+
+			// Potions
+			new P_Absorption(provider),
+			new P_Agility(provider),
+			new P_AgilityMix(provider),
+			new P_AncientBrew(provider),
+			new P_AncientBrewMix(provider),
+			new P_Antidote(provider),
+			new P_AntidoteMix(provider),
+			new P_AntidotePlusPlus(provider),
+			new P_Antifire(provider),
+			new P_AntifireMix(provider),
+			new P_Antipoison(provider),
+			new P_AntipoisonMix(provider),
+			new P_Antivenom(provider),
+			new P_AntivenomPlus(provider),
+			new P_Attack(provider),
+			new P_AttackMix(provider),
+			new P_Bastion(provider),
+			new P_Battlemage(provider),
+			new P_BlackWarlockMix(provider),
+			new P_BlightedSuperRestore(provider),
+			new P_Combat(provider),
+			new P_CombatMix(provider),
+			new P_Defence(provider),
+			new P_DefenceMix(provider),
+			new P_DivineBastion(provider),
+			new P_DivineBattlemage(provider),
+			new P_DivineMagic(provider),
+			new P_DivineRanging(provider),
+			new P_DivineSuperAttack(provider),
+			new P_DivineSuperCombat(provider),
+			new P_DivineSuperDefence(provider),
+			new P_DivineSuperStrength(provider),
+			new P_Egniol(provider),
+			new P_Energy(provider),
+			new P_EnergyMix(provider),
+			new P_ExtendedAntifire(provider),
+			new P_ExtendedAntifireMix(provider),
+			new P_ExtendedAntivenom(provider),
+			new P_ExtendedSuperAntifire(provider),
+			new P_ExtendedSuperAntifireMix(provider),
+			new P_Fishing(provider),
+			new P_FishingMix(provider),
+			new P_ForgottenBrew(provider),
+			new P_Goading(provider),
+			new P_GuthixBalance(provider),
+			new P_Hunter(provider),
+			new P_HuntingMix(provider),
+			new P_Magic(provider),
+			new P_MagicEssence(provider),
+			new P_MagicEssenceMix(provider),
+			new P_MagicMix(provider),
+			new P_MenaphiteRemedy(provider),
+			new P_Moonlight(provider),
+			new P_MoonlightMothMix(provider),
+			new P_Overload(provider),
+			new P_Prayer(provider),
+			new P_PrayerMix(provider),
+			new P_PrayerRegeneration(provider),
+			new P_Ranging(provider),
+			new P_RangingMix(provider),
+			new P_RelycimsBalm(provider),
+			new P_RelycimsMix(provider),
+			new P_Restore(provider),
+			new P_RestoreMix(provider),
+			new P_RubyHarvestMix(provider),
+			new P_SanfewSerum(provider),
+			new P_SapphireGlacialisMix(provider),
+			new P_SaradominBrew(provider),
+			new P_Serum_207(provider),
+			new P_Serum_208(provider),
+			new P_SnowyKnightMix(provider),
+			new P_Stamina(provider),
+			new P_StaminaMix(provider),
+			new P_Strength(provider),
+			new P_StrengthMix(provider),
+			new P_SunlightMothMix(provider),
+			new P_SuperAntifire(provider),
+			new P_SuperAntifireMix(provider),
+			new P_SuperAntipoison(provider),
+			new P_SuperAntipoisonMix(provider),
+			new P_SuperAttack(provider),
+			new P_SuperAttackMix(provider),
+			new P_SuperCombat(provider),
+			new P_SuperCompost(provider),
+			new P_SuperDefence(provider),
+			new P_SuperDefenceMix(provider),
+			new P_SuperEnergy(provider),
+			new P_SuperEnergyMix(provider),
+			new P_SuperMagic(provider),
+			new P_SuperRanging(provider),
+			new P_SuperRestore(provider),
+			new P_SuperRestoreMix(provider),
+			new P_SuperStrength(provider),
+			new P_SuperStrengthMix(provider),
+			new P_ZamorakBrew(provider),
+			new P_ZamorakMix(provider),
+			// COX potions
+			new P_Elder(provider),
+			new P_ElderMinus(provider),
+			new P_ElderPlus(provider),
+			new P_Kodai(provider),
+			new P_KodaiMinus(provider),
+			new P_KodaiPlus(provider),
+			new tictac7x.charges.items.potions.cox.P_Overload(provider),
+			new P_OverloadMinus(provider),
+			new P_OverloadPlus(provider),
+			new P_PrayerEnhance(provider),
+			new P_PrayerEnhanceMinus(provider),
+			new P_PrayerEnhancePlus(provider),
+			new P_Revitalisation(provider),
+			new P_RevitalisationMinus(provider),
+			new P_RevitalisationPlus(provider),
+			new P_Twisted(provider),
+			new P_TwistedMinus(provider),
+			new P_TwistedPlus(provider),
+			new P_XericsAid(provider),
+			new P_XericsAidMinus(provider),
+			new P_XericsAidPlus(provider),
+			// TOA potions
+			new P_Ambrosia(provider),
+			new P_BlessedCrystalScarab(provider),
+			new P_LiquidAdrenaline(provider),
+			new P_Nectar(provider),
+			new P_SilkDressing(provider),
+			new P_SmellingSalts(provider),
+			new P_TearsOfElidinis(provider),
 
 			// Shields
-			new S_Chronicle(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new S_CrystalShield(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new S_DragonfireShield(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new S_FaladorShield(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new S_KharedstMemoirs(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new S_TomeOfEarth(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new S_TomeOfFire(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new S_TomeOfWater(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new S_Chronicle(provider),
+			new S_CrystalShield(provider),
+			new S_DragonfireShield(provider),
+			new S_FaladorShield(provider),
+			new S_KharedstMemoirs(provider),
+			new S_TomeOfEarth(provider),
+			new S_TomeOfFire(provider),
+			new S_TomeOfWater(provider),
 
 			// Utilities
-			new U_AshSanctifier(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new U_BoneCrusher(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new U_BottomlessCompostBucket(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new U_ChuggingBarrel(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new U_CoalBag(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new U_CrystalSaw(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new U_ColossalPouch(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new U_FishBarrel(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new U_FlamtaerBag(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new U_FungicideSpray(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new U_FurPouch(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new U_GemBag(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new U_GricollersCan(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new U_HerbSack(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new U_HuntsmansKit(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new U_ImpInABox(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new U_JarGenerator(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new U_LogBasket(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new U_MasterScrollBook(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new U_MeatPouch(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new U_OgreBellows(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new U_QuetzalWhistle(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new U_PlankSack(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new U_ReagentPouch(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new U_SeedBox(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new U_SoulBearer(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new U_StrangeOldLockpick(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new U_TackleBox(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new U_TeleportCrystal(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new U_EternalTeleportCrystal(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new U_Waterskin(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new U_AshSanctifier(provider),
+			new U_BoneCrusher(provider),
+			new U_BottomlessCompostBucket(provider),
+			new U_ChuggingBarrel(provider),
+			new U_CoalBag(provider),
+			new U_CrystalSaw(provider),
+			new U_ColossalPouch(provider),
+			new U_FishBarrel(provider),
+			new U_FlamtaerBag(provider),
+			new U_FungicideSpray(provider),
+			new U_FurPouch(provider),
+			new U_GemBag(provider),
+			new U_GricollersCan(provider),
+			new U_HerbSack(provider),
+			new U_HuntsmansKit(provider),
+			new U_ImpInABox(provider),
+			new U_JarGenerator(provider),
+			new U_LogBasket(provider),
+			new U_MasterScrollBook(provider),
+			new U_MeatPouch(provider),
+			new U_OgreBellows(provider),
+			new U_QuetzalWhistle(provider),
+			new U_PlankSack(provider),
+			new U_ReagentPouch(provider),
+			new U_SeedBox(provider),
+			new U_SoulBearer(provider),
+			new U_StrangeOldLockpick(provider),
+			new U_TackleBox(provider),
+			new U_TeleportCrystal(provider),
+			new U_EternalTeleportCrystal(provider),
+			new U_Waterskin(provider),
 
 			// Weapons
-			new W_Arclight(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new W_BowOfFaerdhinen(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new W_BryophytasStaff(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new W_CrystalBow(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new W_CrystalHalberd(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new W_EnchantedLyre(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new W_IbansStaff(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new W_PharaohsSceptre(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new W_SanguinestiStaff(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new W_ScytheOfVitur(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new W_SkullSceptre(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new W_SlayerStaffE(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new W_TridentOfTheSeas(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new W_TridentOfTheSeasE(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new W_TridentOfTheSwamp(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new W_TridentOfTheSwampE(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new W_TumekensShadow(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new W_VenatorBow(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new W_WarpedSceptre(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new W_WesternBanner(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new W_Arclight(provider),
+			new W_BowOfFaerdhinen(provider),
+			new W_BryophytasStaff(provider),
+			new W_CrystalBow(provider),
+			new W_CrystalHalberd(provider),
+			new W_EnchantedLyre(provider),
+			new W_IbansStaff(provider),
+			new W_PharaohsSceptre(provider),
+			new W_SanguinestiStaff(provider),
+			new W_ScytheOfVitur(provider),
+			new W_SkullSceptre(provider),
+			new W_SlayerStaffE(provider),
+			new W_TridentOfTheSeas(provider),
+			new W_TridentOfTheSeasE(provider),
+			new W_TridentOfTheSwamp(provider),
+			new W_TridentOfTheSwampE(provider),
+			new W_TumekensShadow(provider),
+			new W_VenatorBow(provider),
+			new W_WarpedSceptre(provider),
+			new W_WesternBanner(provider),
 
 			// Barrows armor sets
-			new AhrimsHood(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new AhrimsRobetop(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new AhrimsRobeskirt(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new AhrimsStaff(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new AhrimsHood(provider),
+			new AhrimsRobetop(provider),
+			new AhrimsRobeskirt(provider),
+			new AhrimsStaff(provider),
 
-			new DharoksHelm(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new DharoksPlatebody(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new DharoksPlatelegs(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new DharoksGreataxe(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new DharoksHelm(provider),
+			new DharoksPlatebody(provider),
+			new DharoksPlatelegs(provider),
+			new DharoksGreataxe(provider),
 
-			new GuthansHelm(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new GuthansPlatebody(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new GuthansChainskirt(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new GuthansWarspear(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new GuthansHelm(provider),
+			new GuthansPlatebody(provider),
+			new GuthansChainskirt(provider),
+			new GuthansWarspear(provider),
 
-			new KarilsCoif(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new KarilsLeathertop(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new KarilsLeatherskirt(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new KarilsCrossbow(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new KarilsCoif(provider),
+			new KarilsLeathertop(provider),
+			new KarilsLeatherskirt(provider),
+			new KarilsCrossbow(provider),
 
-			new ToragsHelm(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new ToragsPlatebody(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new ToragsPlatelegs(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new ToragsHammers(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new ToragsHelm(provider),
+			new ToragsPlatebody(provider),
+			new ToragsPlatelegs(provider),
+			new ToragsHammers(provider),
 
-			new VeracsHelm(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new VeracsBrassard(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new VeracsPlateskirt(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new VeracsFlail(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new VeracsHelm(provider),
+			new VeracsBrassard(provider),
+			new VeracsPlateskirt(provider),
+			new VeracsFlail(provider),
 
 			// Moons armor set.
-			new BloodMoonHelm(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new BloodMoonChestplate(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new BloodMoonTassets(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new BlueMoonHelm(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new BlueMoonChestplate(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new BlueMoonTassets(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new EclipseMoonHelm(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new EclipseMoonChestplate(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new EclipseMoonTassets(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new BloodMoonHelm(provider),
+			new BloodMoonChestplate(provider),
+			new BloodMoonTassets(provider),
+			new BlueMoonHelm(provider),
+			new BlueMoonChestplate(provider),
+			new BlueMoonTassets(provider),
+			new EclipseMoonHelm(provider),
+			new EclipseMoonChestplate(provider),
+			new EclipseMoonTassets(provider),
 		};
 
 		store.setChargedItems(chargedItems);
@@ -382,7 +525,7 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 
 		// Items infoboxes.
 		for (final ChargedItemBase chargedItem : chargedItems) {
-			final ChargedItemInfobox chargedItemInfobox = new ChargedItemInfobox(chargedItem, itemManager, infoBoxManager, configManager, config, this);
+			final ChargedItemInfobox chargedItemInfobox = new ChargedItemInfobox(provider, chargedItem);
 			chargedItemsInfoboxes.add(chargedItemInfobox);
 			infoBoxManager.addInfoBox(chargedItemInfobox);
 		}
@@ -636,12 +779,12 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 		final Optional<String> necklaceOfPassageInfobox = Optional.ofNullable(configManager.getConfiguration(TicTac7xChargesImprovedConfig.group, "necklage_of_passage_infobox"));
 
 		if (necklaceOfPassageOverlay.isPresent()) {
-			configManager.setConfiguration(TicTac7xChargesImprovedConfig.group, TicTac7xChargesImprovedConfig.necklace_of_passage + TicTac7xChargesImprovedConfig.overlay, necklaceOfPassageOverlay.get().equals("true"));
+			configManager.setConfiguration(TicTac7xChargesImprovedConfig.group, TicTac7xChargesImprovedConfig.necklace_of_passage + TicTac7xChargesImprovedConfig._overlay, necklaceOfPassageOverlay.get().equals("true"));
 			configManager.unsetConfiguration(TicTac7xChargesImprovedConfig.group, "necklage_of_passage_overlay");
 		}
 
 		if (necklaceOfPassageInfobox.isPresent()) {
-			configManager.setConfiguration(TicTac7xChargesImprovedConfig.group, TicTac7xChargesImprovedConfig.necklace_of_passage + TicTac7xChargesImprovedConfig.infobox, necklaceOfPassageInfobox.get().equals("true"));
+			configManager.setConfiguration(TicTac7xChargesImprovedConfig.group, TicTac7xChargesImprovedConfig.necklace_of_passage + TicTac7xChargesImprovedConfig._infobox, necklaceOfPassageInfobox.get().equals("true"));
 			configManager.unsetConfiguration(TicTac7xChargesImprovedConfig.group, "necklage_of_passage_infobox");
 		}
 	}
