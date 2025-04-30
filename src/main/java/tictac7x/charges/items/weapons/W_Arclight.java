@@ -9,7 +9,7 @@ import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
 
-import static tictac7x.charges.store.HitsplatTarget.ENEMY;
+import static tictac7x.charges.store.enums.HitsplatTarget.ENEMY;
 
 public class W_Arclight extends ChargedItem {
     public W_Arclight(final Provider provider) {

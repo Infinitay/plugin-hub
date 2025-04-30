@@ -4,7 +4,7 @@ import tictac7x.charges.store.ids.ItemId;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.*;
-import tictac7x.charges.store.Charges;
+import tictac7x.charges.store.ids.ChargeId;
 import tictac7x.charges.store.Provider;
 
 public class W_WesternBanner extends ChargedItem {
@@ -13,7 +13,7 @@ public class W_WesternBanner extends ChargedItem {
 
         this.items = new TriggerItem[]{
             new TriggerItem(ItemId.WESTERN_BANNER_3),
-            new TriggerItem(ItemId.WESTERN_BANNER_4).fixedCharges(Charges.UNLIMITED),
+            new TriggerItem(ItemId.WESTERN_BANNER_4).fixedCharges(ChargeId.UNLIMITED),
         };
 
         this.triggers = new TriggerBase[]{

@@ -8,7 +8,7 @@ import tictac7x.charges.item.ChargedItemWithStatus;
 import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.item.triggers.TriggerBase;
-import tictac7x.charges.customEvents.CustomMenuOptionClicked;
+import tictac7x.charges.events.CustomMenuOptionClicked;
 import tictac7x.charges.store.Provider;
 
 import java.util.Optional;

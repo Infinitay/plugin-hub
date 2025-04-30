@@ -1,8 +1,8 @@
 package tictac7x.charges.item.triggers;
 
-import tictac7x.charges.store.CombatStyle;
-import tictac7x.charges.store.HitsplatGroup;
-import tictac7x.charges.store.HitsplatTarget;
+import tictac7x.charges.store.enums.CombatStyle;
+import tictac7x.charges.store.enums.HitsplatGroup;
+import tictac7x.charges.store.enums.HitsplatTarget;
 
 import java.util.Optional;
 

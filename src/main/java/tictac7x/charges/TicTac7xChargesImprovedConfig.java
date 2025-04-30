@@ -1,14 +1,36 @@
 package tictac7x.charges;
 
 import net.runelite.client.config.*;
-import tictac7x.charges.store.*;
-
+import tictac7x.charges.store.ids.ChargeId;
 import java.awt.Color;
 
 import static tictac7x.charges.TicTac7xChargesImprovedConfig.group;
 
 @ConfigGroup(group)
 public interface TicTac7xChargesImprovedConfig extends Config {
+    enum EscapeCrystalTimeRemainingUnit {
+        SECONDS,
+        TICKS,
+    }
+
+    enum CombatTimeDegradableStyle {
+        CHARGES,
+        PERCENTAGE,
+        TIME,
+    }
+
+    enum ItemOverlayLocation {
+        BOTTOM_LEFT,
+        BOTTOM_RIGHT,
+        TOP_LEFT,
+        TOP_RIGHT,
+    }
+
+    enum ItemActivity {
+        DEACTIVATED,
+        ACTIVATED
+    }
+
     String group = "tictac7x-charges";
     String version = "version";
     String storage_bank = "storage_bank";
@@ -1947,28 +1969,28 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             name = barrows_gear_ + "_ahrims_hood",
             description = barrows_gear_ + "_ahrims_hood",
             section = debug
-        ) default int ahrimsHoodCharges() { return Charges.UNKNOWN; }
+        ) default int ahrimsHoodCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = ring_of_pursuit,
             name = ring_of_pursuit,
             description = ring_of_pursuit,
             section = debug
-        ) default int ringOfPursuitCharges() { return Charges.UNKNOWN; }
+        ) default int ringOfPursuitCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = arclight,
             name = arclight,
             description = arclight,
             section = debug
-        ) default int getArclightCharges() { return Charges.UNKNOWN; }
+        ) default int getArclightCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = ash_sanctifier,
             name = ash_sanctifier,
             description = ash_sanctifier,
             section = debug
-        ) default int getAshSanctifierCharges() { return Charges.UNKNOWN; }
+        ) default int getAshSanctifierCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = ash_sanctifier_status,
@@ -1982,21 +2004,21 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             name = binding_necklace,
             description = binding_necklace,
             section = debug
-        ) default int getBindingNecklaceCharges() { return Charges.UNKNOWN; }
+        ) default int getBindingNecklaceCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = bonecrusher,
             name = bonecrusher,
             description = bonecrusher,
             section = debug
-        ) default int getBoneCrusherCharges() { return Charges.UNKNOWN; }
+        ) default int getBoneCrusherCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = efaritays_aid,
             name = efaritays_aid,
             description = efaritays_aid,
             section = debug
-        ) default int getEfaritaysAidCharges() { return Charges.UNKNOWN; }
+        ) default int getEfaritaysAidCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = bonecrusher_status,
@@ -2010,7 +2032,7 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             name = kharedsts_memoirs,
             description = kharedsts_memoirs,
             section = debug
-        ) default int getKharedstsMemoirsCharges() { return Charges.UNKNOWN; }
+        ) default int getKharedstsMemoirsCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = bottomless_compost_bucket + _storage,
@@ -2024,56 +2046,56 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             name = bracelet_of_slaughter,
             description = bracelet_of_slaughter,
             section = debug
-        ) default int getBraceletOfSlaughterCharges() { return Charges.UNKNOWN; }
+        ) default int getBraceletOfSlaughterCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = bryophytas_staff,
             name = bryophytas_staff,
             description = bryophytas_staff,
             section = debug
-        ) default int getBryophytasStaffCharges() { return Charges.UNKNOWN; }
+        ) default int getBryophytasStaffCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = celestial_ring,
             name = celestial_ring,
             description = celestial_ring,
             section = debug
-        ) default int getCelestialRingCharges() { return Charges.UNKNOWN; }
+        ) default int getCelestialRingCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = chronicle,
             name = chronicle,
             description = chronicle,
             section = debug
-        ) default int getChronicleCharges() { return Charges.UNKNOWN; }
+        ) default int getChronicleCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = crystal_shield,
             name = crystal_shield,
             description = crystal_shield,
             section = debug
-        ) default int getCrystalShieldCharges() { return Charges.UNKNOWN; }
+        ) default int getCrystalShieldCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = crystal_bow,
             name = crystal_bow,
             description = crystal_bow,
             section = debug
-        ) default int getCrystalBowCharges() { return Charges.UNKNOWN; }
+        ) default int getCrystalBowCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = expeditious_bracelet,
             name = expeditious_bracelet,
             description = expeditious_bracelet,
             section = debug
-        ) default int getBraceletOfExpeditiousCharges() { return Charges.UNKNOWN; }
+        ) default int getBraceletOfExpeditiousCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = falador_shield,
             name = falador_shield,
             description = falador_shield,
             section = debug
-        ) default int getFaladorShieldCharges() { return Charges.UNKNOWN; }
+        ) default int getFaladorShieldCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = fish_barrel + _storage,
@@ -2094,28 +2116,28 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             name = gricollers_can,
             description = gricollers_can,
             section = debug
-        ) default int getGricollersCanCharges() { return Charges.UNKNOWN; }
+        ) default int getGricollersCanCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = ibans_staff,
             name = ibans_staff,
             description = ibans_staff,
             section = debug
-        ) default int getIbansStaffCharges() { return Charges.UNKNOWN; }
+        ) default int getIbansStaffCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = moons_gear_ + "_eclipse_chestplate",
             name = moons_gear_ + "_eclipse_chestplate",
             description = moons_gear_ + "_eclipse_chestplate",
             section = debug
-        ) default int getEclipseMoonChestplateCharges() { return Charges.UNKNOWN; }
+        ) default int getEclipseMoonChestplateCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = pharaohs_sceptre,
             name = pharaohs_sceptre,
             description = pharaohs_sceptre,
             section = debug
-        ) default int getPharaohsSceptreCharges() { return Charges.UNKNOWN; }
+        ) default int getPharaohsSceptreCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = reagent_pouch + _storage,
@@ -2129,14 +2151,14 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             name = ring_of_forging,
             description = ring_of_forging,
             section = debug
-        ) default int getRingOfForgingCharges() { return Charges.UNKNOWN; }
+        ) default int getRingOfForgingCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = ring_of_suffering,
             name = ring_of_suffering,
             description = ring_of_suffering,
             section = debug
-        ) default int getRingOfSufferingCharges() { return Charges.UNKNOWN; }
+        ) default int getRingOfSufferingCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = ring_of_suffering_status,
@@ -2150,63 +2172,63 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             name = sanguinesti_staff,
             description = sanguinesti_staff,
             section = debug
-        ) default int getSanguinestiStaffCharges() { return Charges.UNKNOWN; }
+        ) default int getSanguinestiStaffCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = scythe_of_vitur,
             name = scythe_of_vitur,
             description = scythe_of_vitur,
             section = debug
-        ) default int getScytheOfViturCharges() { return Charges.UNKNOWN; }
+        ) default int getScytheOfViturCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = skull_sceptre,
             name = skull_sceptre,
             description = skull_sceptre,
             section = debug
-        ) default int getSkullSceptreCharges() { return Charges.UNKNOWN; }
+        ) default int getSkullSceptreCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = soul_bearer,
             name = soul_bearer,
             description = soul_bearer,
             section = debug
-        ) default int getSoulBearerCharges() { return Charges.UNKNOWN; }
+        ) default int getSoulBearerCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = trident_of_the_seas,
             name = trident_of_the_seas,
             description = trident_of_the_seas,
             section = debug
-        ) default int getTridentOfTheSeasCharges() { return Charges.UNKNOWN; }
+        ) default int getTridentOfTheSeasCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = xerics_talisman,
             name = xerics_talisman,
             description = xerics_talisman,
             section = debug
-        ) default int getXericsTalismanCharges() { return Charges.UNKNOWN; }
+        ) default int getXericsTalismanCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = dragonfire_shield,
             name = dragonfire_shield,
             description = dragonfire_shield,
             section = debug
-        ) default int getDragonfireShieldCharges() { return Charges.UNKNOWN; }
+        ) default int getDragonfireShieldCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = camulet,
             name = camulet,
             description = camulet,
             section = debug
-        ) default int getCamuletCharges() { return Charges.UNKNOWN; }
+        ) default int getCamuletCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = circlet_of_water,
             name = circlet_of_water,
             description = circlet_of_water,
             section = debug
-        ) default int getCircletOfWaterCharges() { return Charges.UNKNOWN; }
+        ) default int getCircletOfWaterCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = chugging_barrel + _storage,
@@ -2220,21 +2242,21 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             name = teleport_crystal,
             description = teleport_crystal,
             section = debug
-        ) default int getTeleportCrystalCharges() { return Charges.UNKNOWN; }
+        ) default int getTeleportCrystalCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = bracelet_of_clay,
             name = bracelet_of_clay,
             description = bracelet_of_clay,
             section = debug
-        ) default int getBraceletOfClayCharges() { return Charges.UNKNOWN; }
+        ) default int getBraceletOfClayCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = coffin,
             name = coffin,
             description = coffin,
             section = debug
-        ) default int getCoffinCharges() { return Charges.UNKNOWN; }
+        ) default int getCoffinCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = huntsmans_kit + _storage,
@@ -2269,14 +2291,14 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             name = ardougne_cloak,
             description = ardougne_cloak,
             section = debug
-        ) default int getArdougneCloakCharges() { return Charges.UNKNOWN; }
+        ) default int getArdougneCloakCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = magic_cape,
             name = magic_cape,
             description = magic_cape,
             section = debug
-        ) default int getMagicCapeCharges() { return Charges.UNKNOWN; }
+        ) default int getMagicCapeCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = meat_pouch + _storage,
@@ -2297,7 +2319,7 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             name = seed_box,
             description = seed_box,
             section = debug
-        ) default int getSeedBoxCharges() { return Charges.UNKNOWN; }
+        ) default int getSeedBoxCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = seed_box + _storage,
@@ -2311,42 +2333,42 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             name = crystal_helm,
             description = crystal_helm,
             section = debug
-        ) default int getCrystalHelmCharges() { return Charges.UNKNOWN; }
+        ) default int getCrystalHelmCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = crystal_body,
             name = crystal_body,
             description = crystal_body,
             section = debug
-        ) default int getCrystalBodyCharges() { return Charges.UNKNOWN; }
+        ) default int getCrystalBodyCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = crystal_legs,
             name = crystal_legs,
             description = crystal_legs,
             section = debug
-        ) default int getCrystalLegsCharges() { return Charges.UNKNOWN; }
+        ) default int getCrystalLegsCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = crystal_halberd,
             name = crystal_halberd,
             description = crystal_halberd,
             section = debug
-        ) default int getCrystalHalberdCharges() { return Charges.UNKNOWN; }
+        ) default int getCrystalHalberdCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = ring_of_shadows,
             name = ring_of_shadows,
             description = ring_of_shadows,
             section = debug
-        ) default int getRingOfShadowsCharges() { return Charges.UNKNOWN; }
+        ) default int getRingOfShadowsCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = coal_bag,
             name = coal_bag,
             description = coal_bag,
             section = debug
-        ) default int getCoalBagCharges() { return Charges.UNKNOWN; }
+        ) default int getCoalBagCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = colossal_pouch + _storage,
@@ -2381,49 +2403,49 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             name = escape_crystal_inactivity_period,
             description = escape_crystal_inactivity_period,
             section = debug
-        ) default int getEscapeCrystalInactivityPeriod() { return Charges.UNKNOWN; }
+        ) default int getEscapeCrystalInactivityPeriod() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = strange_old_lockpick,
             name = strange_old_lockpick,
             description = strange_old_lockpick,
             section = debug
-        ) default int getStrangeOldLockCharges() { return Charges.UNKNOWN; }
+        ) default int getStrangeOldLockCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = desert_amulet,
             name = desert_amulet,
             description = desert_amulet,
             section = debug
-        ) default int getDesertAmuletCharges() { return Charges.UNKNOWN; }
+        ) default int getDesertAmuletCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = tome_of_fire,
             name = tome_of_fire,
             description = tome_of_fire,
             section = debug
-        ) default int getTomeOfFireCharges() { return Charges.UNKNOWN; }
+        ) default int getTomeOfFireCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = dodgy_necklace,
             name = dodgy_necklace,
             description = dodgy_necklace,
             section = debug
-        ) default int getDodgyNecklaceCharges() { return Charges.UNKNOWN; }
+        ) default int getDodgyNecklaceCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = kandarin_headgear,
             name = kandarin_headgear,
             description = kandarin_headgear,
             section = debug
-        ) default int getKandarinHeadgearCharges() { return Charges.UNKNOWN; }
+        ) default int getKandarinHeadgearCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = fremennik_sea_boots,
             name = fremennik_sea_boots,
             description = fremennik_sea_boots,
             section = debug
-        ) default int getFremennikSeaBootsCharges() { return Charges.UNKNOWN; }
+        ) default int getFremennikSeaBootsCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = fur_pouch + _storage,
@@ -2437,7 +2459,7 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             name = jar_generator,
             description = jar_generator,
             section = debug
-        ) default int getJarGeneratorCharges() { return Charges.UNKNOWN; }
+        ) default int getJarGeneratorCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = explorers_ring + _storage,
@@ -2451,56 +2473,56 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             name = enchanted_lyre,
             description = enchanted_lyre,
             section = debug
-        ) default int getEnchantedLyreCharges() { return Charges.UNKNOWN; }
+        ) default int getEnchantedLyreCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = ring_of_the_elements,
             name = ring_of_the_elements,
             description = ring_of_the_elements,
             section = debug
-        ) default int getRingOfElementsCharges() { return Charges.UNKNOWN; }
+        ) default int getRingOfElementsCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = ring_of_endurance,
             name = ring_of_endurance,
             description = ring_of_endurance,
             section = debug
-        ) default int getRingOfEnduranceCharges() { return Charges.UNKNOWN; }
+        ) default int getRingOfEnduranceCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = plank_sack,
             name = plank_sack,
             description = plank_sack,
             section = debug
-        ) default int getPlankSackCharges() { return Charges.UNKNOWN; }
+        ) default int getPlankSackCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = slayer_staff_e,
             name = slayer_staff_e,
             description = slayer_staff_e,
             section = debug
-        ) default int getSlayerStaffECharges() { return Charges.UNKNOWN; }
+        ) default int getSlayerStaffECharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = warped_sceptre,
             name = warped_sceptre,
             description = warped_sceptre,
             section = debug
-        ) default int getWarpedSceptreCharges() { return Charges.UNKNOWN; }
+        ) default int getWarpedSceptreCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = crystal_saw,
             name = crystal_saw,
             description = crystal_saw,
             section = debug
-        ) default int getCrystalSawCharges() { return Charges.UNKNOWN; }
+        ) default int getCrystalSawCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = quetzal_whistle,
             name = quetzal_whistle,
             description = quetzal_whistle,
             section = debug
-        ) default int getQuetzalWhistleCharges() { return Charges.UNKNOWN; }
+        ) default int getQuetzalWhistleCharges() { return ChargeId.UNKNOWN; }
 
         @ConfigItem(
             keyName = tackle_box + _storage,
@@ -2514,5 +2536,5 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             name = amulet_of_chemistry,
             description = amulet_of_chemistry,
             section = debug
-        ) default int getAmuletOfChemistryCharges() { return Charges.UNKNOWN; }
+        ) default int getAmuletOfChemistryCharges() { return ChargeId.UNKNOWN; }
 }

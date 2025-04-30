@@ -6,7 +6,7 @@ import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStorageMultipleCharges;
 import tictac7x.charges.item.storage.StorableItem;
 import tictac7x.charges.item.triggers.*;
-import tictac7x.charges.store.Charges;
+import tictac7x.charges.store.ids.ChargeId;
 import tictac7x.charges.store.Provider;
 
 class ExplorersRingStorageItemId {
@@ -58,14 +58,14 @@ public class J_ExplorersRing extends ChargedItemWithStorageMultipleCharges {
                 storage.clear();
                 storage.put(ExplorersRingStorageItemId.ALCHEMY, 30);
                 storage.put(ExplorersRingStorageItemId.ENERGY_RESTORES, 4);
-                storage.put(ExplorersRingStorageItemId.TELEPORTS, Charges.UNLIMITED);
+                storage.put(ExplorersRingStorageItemId.TELEPORTS, ChargeId.UNLIMITED);
             }),
 
             new OnResetDaily().specificItem(ItemId.EXPLORERS_RING_4).consumer(() -> {
                 storage.clear();
                 storage.put(ExplorersRingStorageItemId.ALCHEMY, 30);
                 storage.put(ExplorersRingStorageItemId.ENERGY_RESTORES, 3);
-                storage.put(ExplorersRingStorageItemId.TELEPORTS, Charges.UNLIMITED);
+                storage.put(ExplorersRingStorageItemId.TELEPORTS, ChargeId.UNLIMITED);
             }),
         };
     }
@@ -104,7 +104,7 @@ public class J_ExplorersRing extends ChargedItemWithStorageMultipleCharges {
                 break;
             case ItemId.EXPLORERS_RING_3:
             case ItemId.EXPLORERS_RING_4:
-                storage.put(ExplorersRingStorageItemId.TELEPORTS, Charges.UNLIMITED);
+                storage.put(ExplorersRingStorageItemId.TELEPORTS, ChargeId.UNLIMITED);
                 break;
         }
     }

@@ -7,7 +7,7 @@ import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnHitsplatApplied;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.HitsplatTarget;
+import tictac7x.charges.store.enums.HitsplatTarget;
 import tictac7x.charges.store.Provider;
 
 public class S_CrystalShield extends ChargedItem {

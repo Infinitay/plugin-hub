@@ -1,4 +1,4 @@
-package tictac7x.charges.store;
+package tictac7x.charges.store.enums;
 
 public enum HitsplatTarget {
     SELF,

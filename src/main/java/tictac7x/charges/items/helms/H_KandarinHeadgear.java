@@ -8,7 +8,7 @@ import tictac7x.charges.item.triggers.OnGraphicChanged;
 import tictac7x.charges.item.triggers.OnResetDaily;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.Charges;
+import tictac7x.charges.store.ids.ChargeId;
 import tictac7x.charges.store.Provider;
 
 public class H_KandarinHeadgear extends ChargedItem {
@@ -17,7 +17,7 @@ public class H_KandarinHeadgear extends ChargedItem {
 
         this.items = new TriggerItem[]{
             new TriggerItem(ItemId.KANDARIN_HEADGEAR_3),
-            new TriggerItem(ItemId.KANDARIN_HEADGEAR_4).fixedCharges(Charges.UNLIMITED),
+            new TriggerItem(ItemId.KANDARIN_HEADGEAR_4).fixedCharges(ChargeId.UNLIMITED),
         };
 
         this.triggers = new TriggerBase[] {

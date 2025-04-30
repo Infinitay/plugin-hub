@@ -1,6 +1,6 @@
 package tictac7x.charges.item.storage;
 
-import tictac7x.charges.customEvents.CustomItemContainerChanged;
+import tictac7x.charges.events.CustomItemContainerChanged;
 
 import java.util.*;
 

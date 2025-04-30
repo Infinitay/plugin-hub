@@ -2,7 +2,7 @@ package tictac7x.charges.item;
 
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.Charges;
+import tictac7x.charges.store.ids.ChargeId;
 import tictac7x.charges.store.Provider;
 
 import java.util.Optional;
@@ -22,7 +22,7 @@ public class ChargedItem extends ChargedItemBase {
             }
         }
 
-        if (getChargesFromConfig() == Charges.UNLIMITED) {
+        if (getChargesFromConfig() == ChargeId.UNLIMITED) {
             return INFINITE_SYMBOL;
         }
 
@@ -48,7 +48,7 @@ public class ChargedItem extends ChargedItemBase {
         }
 
         try {
-            if (getChargesFromConfig() == Charges.UNKNOWN && fixedItemsFound) {
+            if (getChargesFromConfig() == ChargeId.UNKNOWN && fixedItemsFound) {
                 return equipmentFixedCharges > 0 ?
                     getChargesMinified(equipmentFixedCharges) :
                     getChargesMinified(totalFixedCharges);
@@ -61,7 +61,7 @@ public class ChargedItem extends ChargedItemBase {
     public void setCharges(int charges) {
         charges =
             // Unlimited
-            charges == Charges.UNLIMITED ? charges :
+            charges == ChargeId.UNLIMITED ? charges :
 
             // 0 -> charges
             Math.max(0, charges);
@@ -83,13 +83,13 @@ public class ChargedItem extends ChargedItemBase {
         final Optional<String> charges = Optional.ofNullable(provider.configManager.getConfiguration(TicTac7xChargesImprovedConfig.group, configKey));
 
         if (!charges.isPresent()) {
-            return Charges.UNKNOWN;
+            return ChargeId.UNKNOWN;
         }
 
         try {
             return Integer.parseInt(charges.get());
         } catch (final Exception ignored) {
-            return Charges.UNKNOWN;
+            return ChargeId.UNKNOWN;
         }
     }
 }

@@ -7,7 +7,7 @@ import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnResetDaily;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.Charges;
+import tictac7x.charges.store.ids.ChargeId;
 import tictac7x.charges.store.Provider;
 
 public class J_DesertAmulet extends ChargedItem {
@@ -17,7 +17,7 @@ public class J_DesertAmulet extends ChargedItem {
         this.items = new TriggerItem[]{
             new TriggerItem(ItemId.DESERT_AMULET_2),
             new TriggerItem(ItemId.DESERT_AMULET_3),
-            new TriggerItem(ItemId.DESERT_AMULET_4).fixedCharges(Charges.UNLIMITED),
+            new TriggerItem(ItemId.DESERT_AMULET_4).fixedCharges(ChargeId.UNLIMITED),
         };
 
         this.triggers = new TriggerBase[]{

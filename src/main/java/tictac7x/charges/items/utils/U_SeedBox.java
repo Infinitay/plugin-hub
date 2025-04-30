@@ -6,6 +6,7 @@ import tictac7x.charges.store.*;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.TicTac7xChargesImprovedPlugin;
 import tictac7x.charges.item.ChargedItemWithStorage;
+import tictac7x.charges.store.ids.ChargeId;
 import tictac7x.charges.store.ids.ItemContainerId;
 import tictac7x.charges.store.ids.ItemId;
 import tictac7x.charges.store.ids.WidgetId;
@@ -285,6 +286,6 @@ public class U_SeedBox extends ChargedItemWithStorage {
                 return ItemId.CELASTRUS_SEED;
         }
 
-        return Charges.UNKNOWN;
+        return ChargeId.UNKNOWN;
     }
 }

@@ -4,7 +4,7 @@ import tictac7x.charges.store.ids.ItemId;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.*;
-import tictac7x.charges.store.HitsplatTarget;
+import tictac7x.charges.store.enums.HitsplatTarget;
 import tictac7x.charges.store.Provider;
 
 public class J_RingOfRecoil extends ChargedItem {

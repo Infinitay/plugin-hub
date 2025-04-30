@@ -1,7 +1,7 @@
 package tictac7x.charges.item.triggers;
 
-import tictac7x.charges.store.DynamicReplaceTarget;
-import tictac7x.charges.store.ReplaceTarget;
+import tictac7x.charges.store.utils.DynamicReplaceTarget;
+import tictac7x.charges.store.utils.ReplaceTarget;
 
 import java.util.Optional;
 import java.util.concurrent.Callable;

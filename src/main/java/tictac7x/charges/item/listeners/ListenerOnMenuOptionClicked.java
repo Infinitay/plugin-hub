@@ -3,7 +3,7 @@ package tictac7x.charges.item.listeners;
 import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.triggers.OnMenuOptionClicked;
 import tictac7x.charges.item.triggers.TriggerBase;
-import tictac7x.charges.customEvents.CustomMenuOptionClicked;
+import tictac7x.charges.events.CustomMenuOptionClicked;
 import tictac7x.charges.store.Provider;
 
 public class ListenerOnMenuOptionClicked extends ListenerBase {

@@ -5,10 +5,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
-import tictac7x.charges.customEvents.CustomItemContainerChanged;
+import tictac7x.charges.events.CustomItemContainerChanged;
 import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.Charges;
+import tictac7x.charges.store.ids.ChargeId;
 import tictac7x.charges.store.Provider;
 
 import java.util.Optional;
@@ -121,7 +121,7 @@ public class Storage {
         final Optional<StorageItem> item = getItem(itemId);
 
         // Don't decrease quantity of unlimited storage item.
-        if (item.isPresent() && item.get().getQuantity() == Charges.UNLIMITED) {
+        if (item.isPresent() && item.get().getQuantity() == ChargeId.UNLIMITED) {
             return;
         }
 

@@ -1,6 +1,6 @@
 package tictac7x.charges.item.listeners;
 
-import tictac7x.charges.customEvents.CustomChatMessage;
+import tictac7x.charges.events.CustomChatMessage;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.triggers.OnChatMessage;

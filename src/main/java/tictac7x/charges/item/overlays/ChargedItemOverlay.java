@@ -13,8 +13,7 @@ import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.Charges;
-import tictac7x.charges.store.ItemOverlayLocation;
+import tictac7x.charges.store.ids.ChargeId;
 
 import java.awt.*;
 import java.util.Optional;
@@ -85,7 +84,7 @@ public class ChargedItemOverlay extends WidgetItemOverlay {
 
             // Infinity charges hidden.
             !config.showUnlimited() && chargedItem.get().getCharges(itemId).equals(INFINITE_SYMBOL) ||
-            !config.showUnlimited() && triggerItem.get().fixedCharges.isPresent() && triggerItem.get().fixedCharges.get().equals(Charges.UNLIMITED) ||
+            !config.showUnlimited() && triggerItem.get().fixedCharges.isPresent() && triggerItem.get().fixedCharges.get().equals(ChargeId.UNLIMITED) ||
 
             // Hide overlays in bank.
             !config.showBankOverlays() && isBankWidget(widgetItem) ||
@@ -106,16 +105,16 @@ public class ChargedItemOverlay extends WidgetItemOverlay {
         final Dimension textDimension = charges_component.render(graphics);
 
         final int itemOverlayX = (int) ((
-            config.itemOverlayLocation() == ItemOverlayLocation.BOTTOM_LEFT ||
-            config.itemOverlayLocation() == ItemOverlayLocation.TOP_LEFT
+            config.itemOverlayLocation() == TicTac7xChargesImprovedConfig.ItemOverlayLocation.BOTTOM_LEFT ||
+            config.itemOverlayLocation() == TicTac7xChargesImprovedConfig.ItemOverlayLocation.TOP_LEFT
         )
             ? bounds.getMinX()
             : bounds.getMaxX() - textDimension.getWidth() - 5
         );
 
         final int itemOverlayY = (int) ((
-            config.itemOverlayLocation() == ItemOverlayLocation.TOP_LEFT ||
-            config.itemOverlayLocation() == ItemOverlayLocation.TOP_RIGHT
+            config.itemOverlayLocation() == TicTac7xChargesImprovedConfig.ItemOverlayLocation.TOP_LEFT ||
+            config.itemOverlayLocation() == TicTac7xChargesImprovedConfig.ItemOverlayLocation.TOP_RIGHT
         )
             ? bounds.getMinY() + textDimension.getHeight() - 2
             : bounds.getMaxY()

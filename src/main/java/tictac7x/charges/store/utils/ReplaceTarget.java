@@ -1,4 +1,4 @@
-package tictac7x.charges.store;
+package tictac7x.charges.store.utils;
 
 public class ReplaceTarget {
     public final String target;

@@ -1,4 +1,4 @@
-package tictac7x.charges.customEvents;
+package tictac7x.charges.events;
 
 import net.runelite.api.Item;
 import net.runelite.api.ItemComposition;

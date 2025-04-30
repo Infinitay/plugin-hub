@@ -1,6 +1,5 @@
 package tictac7x.charges.store.ids;
 
-
 import net.runelite.api.gameval.InventoryID;
 
 public final class ItemContainerId {

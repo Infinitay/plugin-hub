@@ -1,6 +1,6 @@
 package tictac7x.charges.item.triggers;
 
-import tictac7x.charges.customEvents.CustomMenuOptionClicked;
+import tictac7x.charges.events.CustomMenuOptionClicked;
 
 import java.util.Optional;
 import java.util.function.Consumer;

@@ -4,6 +4,9 @@ import tictac7x.charges.store.*;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.*;
+import tictac7x.charges.store.enums.CombatStyle;
+import tictac7x.charges.store.enums.HitsplatGroup;
+import tictac7x.charges.store.enums.HitsplatTarget;
 import tictac7x.charges.store.ids.ItemId;
 
 public class J_EfaritaysAid extends ChargedItem {

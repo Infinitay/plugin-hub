@@ -1,7 +1,6 @@
 package tictac7x.charges.item;
 
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
-import tictac7x.charges.store.ItemActivity;
 import tictac7x.charges.store.Provider;
 
 import java.awt.Color;
@@ -20,7 +19,7 @@ public class ChargedItemWithStatus extends ChargedItem {
             return false;
         }
 
-        return status.get().equals(ItemActivity.DEACTIVATED.toString());
+        return status.get().equals(TicTac7xChargesImprovedConfig.ItemActivity.DEACTIVATED.toString());
     }
 
     public boolean isActivated() {
@@ -30,7 +29,7 @@ public class ChargedItemWithStatus extends ChargedItem {
             return false;
         }
 
-        return status.get().equals(ItemActivity.ACTIVATED.toString());
+        return status.get().equals(TicTac7xChargesImprovedConfig.ItemActivity.ACTIVATED.toString());
     }
 
     public String getConfigStatusKey() {
@@ -38,14 +37,14 @@ public class ChargedItemWithStatus extends ChargedItem {
     }
 
     public void deactivate() {
-        setActivity(ItemActivity.DEACTIVATED);
+        setActivity(TicTac7xChargesImprovedConfig.ItemActivity.DEACTIVATED);
     }
 
     public void activate() {
-        setActivity(ItemActivity.ACTIVATED);
+        setActivity(TicTac7xChargesImprovedConfig.ItemActivity.ACTIVATED);
     }
 
-    private void setActivity(final ItemActivity status) {
+    private void setActivity(final TicTac7xChargesImprovedConfig.ItemActivity status) {
         provider.configManager.setConfiguration(TicTac7xChargesImprovedConfig.group, getConfigStatusKey(), status);
     }
 

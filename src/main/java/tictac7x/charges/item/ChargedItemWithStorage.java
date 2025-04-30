@@ -5,7 +5,7 @@ import net.runelite.client.util.ColorUtil;
 import tictac7x.charges.item.storage.Storage;
 import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.item.storage.StorageItems;
-import tictac7x.charges.store.Charges;
+import tictac7x.charges.store.ids.ChargeId;
 import tictac7x.charges.store.Provider;
 
 import java.awt.Color;
@@ -62,7 +62,7 @@ public class ChargedItemWithStorage extends ChargedItemBase {
     public String getCharges(final int itemId) {
         int quantity = getQuantity();
 
-        if (quantity == Charges.UNKNOWN) {
+        if (quantity == ChargeId.UNKNOWN) {
             return "?";
         }
 

@@ -1,6 +1,6 @@
 package tictac7x.charges.items.weapons;
 
-import tictac7x.charges.store.Charges;
+import tictac7x.charges.store.ids.ChargeId;
 import tictac7x.charges.store.ids.ItemId;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
@@ -20,7 +20,7 @@ public class W_EnchantedLyre extends ChargedItem {
             new TriggerItem(ItemId.ENCHANTED_LYRE_3).fixedCharges(3),
             new TriggerItem(ItemId.ENCHANTED_LYRE_4).fixedCharges(4),
             new TriggerItem(ItemId.ENCHANTED_LYRE_5).fixedCharges(5),
-            new TriggerItem(ItemId.ENCHANTED_LYRE_IMBUED).fixedCharges(Charges.UNLIMITED),
+            new TriggerItem(ItemId.ENCHANTED_LYRE_IMBUED).fixedCharges(ChargeId.UNLIMITED),
         };
 
         this.triggers = new TriggerBase[]{

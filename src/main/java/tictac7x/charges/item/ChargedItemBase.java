@@ -4,14 +4,14 @@ import net.runelite.api.events.*;
 import net.runelite.client.ui.JagexColors;
 import net.runelite.client.util.ColorUtil;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
-import tictac7x.charges.customEvents.CustomChatMessage;
-import tictac7x.charges.customEvents.CustomHitsplatApplied;
+import tictac7x.charges.events.CustomChatMessage;
+import tictac7x.charges.events.CustomHitsplatApplied;
 import tictac7x.charges.item.listeners.*;
-import tictac7x.charges.customEvents.CustomItemContainerChanged;
+import tictac7x.charges.events.CustomItemContainerChanged;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.customEvents.CustomMenuOptionClicked;
-import tictac7x.charges.store.Charges;
+import tictac7x.charges.events.CustomMenuOptionClicked;
+import tictac7x.charges.store.ids.ChargeId;
 import tictac7x.charges.store.Provider;
 
 import javax.annotation.Nonnull;
@@ -150,10 +150,10 @@ public abstract class ChargedItemBase {
 
     protected String getChargesMinified(final int charges) {
         // Unlimited.
-        if (charges == Charges.UNLIMITED) return INFINITE_SYMBOL;
+        if (charges == ChargeId.UNLIMITED) return INFINITE_SYMBOL;
 
         // Unknown.
-        if (charges == Charges.UNKNOWN) return "?";
+        if (charges == ChargeId.UNKNOWN) return "?";
 
         // Show as is.
         if (charges < 1000) return String.valueOf(charges);

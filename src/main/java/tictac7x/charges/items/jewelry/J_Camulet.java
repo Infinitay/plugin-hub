@@ -7,7 +7,7 @@ import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnMenuEntryAdded;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.Charges;
+import tictac7x.charges.store.ids.ChargeId;
 import tictac7x.charges.store.Provider;
 
 public class J_Camulet extends ChargedItem {
@@ -30,7 +30,7 @@ public class J_Camulet extends ChargedItem {
             new OnChatMessage("The Camulet is already fully charged.").setFixedCharges(4),
 
             // Unlimited charges.
-            new OnChatMessage("The Camulet has unlimited charges.").setFixedCharges(Charges.UNLIMITED),
+            new OnChatMessage("The Camulet has unlimited charges.").setFixedCharges(ChargeId.UNLIMITED),
 
             // Replace check.
             new OnMenuEntryAdded("Check-charge").replaceOption("Check"),

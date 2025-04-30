@@ -1,18 +1,14 @@
 package tictac7x.charges.item.listeners;
 
-import net.runelite.api.Client;
 import net.runelite.api.HitsplatID;
-import net.runelite.client.Notifier;
-import net.runelite.client.game.ItemManager;
-import tictac7x.charges.TicTac7xChargesImprovedConfig;
-import tictac7x.charges.customEvents.CustomHitsplatApplied;
+import tictac7x.charges.events.CustomHitsplatApplied;
 import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.triggers.OnHitsplatApplied;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.Provider;
-import tictac7x.charges.store.WeaponAttackStyle;
-import tictac7x.charges.store.HitsplatGroup;
-import tictac7x.charges.store.HitsplatTarget;
+import tictac7x.charges.store.utils.WeaponAttackStyle;
+import tictac7x.charges.store.enums.HitsplatGroup;
+import tictac7x.charges.store.enums.HitsplatTarget;
 
 public class ListenerOnHitsplatApplied extends ListenerBase {
     private final WeaponAttackStyle weaponAttackStyle;

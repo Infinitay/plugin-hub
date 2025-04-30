@@ -1,7 +1,7 @@
 package tictac7x.charges.items.barrows;
 
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
-import tictac7x.charges.customEvents.CustomMenuOptionClicked;
+import tictac7x.charges.events.CustomMenuOptionClicked;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnCombat;

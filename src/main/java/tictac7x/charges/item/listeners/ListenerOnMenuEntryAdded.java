@@ -7,7 +7,7 @@ import tictac7x.charges.item.triggers.OnMenuEntryAdded;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
-import tictac7x.charges.store.ReplaceTarget;
+import tictac7x.charges.store.utils.ReplaceTarget;
 
 import java.util.ArrayList;
 import java.util.List;

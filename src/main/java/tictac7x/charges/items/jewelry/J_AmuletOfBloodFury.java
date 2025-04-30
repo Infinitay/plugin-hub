@@ -7,6 +7,8 @@ import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnHitsplatApplied;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
+import tictac7x.charges.store.enums.CombatStyle;
+import tictac7x.charges.store.enums.HitsplatTarget;
 import tictac7x.charges.store.ids.ItemId;
 
 public class J_AmuletOfBloodFury extends ChargedItem {

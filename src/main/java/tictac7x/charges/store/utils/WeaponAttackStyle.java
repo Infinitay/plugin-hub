@@ -1,4 +1,4 @@
-package tictac7x.charges.store;
+package tictac7x.charges.store.utils;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +8,7 @@ import net.runelite.api.ParamID;
 import net.runelite.api.StructComposition;
 import net.runelite.api.VarPlayer;
 import net.runelite.api.Varbits;
+import tictac7x.charges.store.enums.CombatStyle;
 
 /**
  * Get a generalised weapon style (melee/magic/ranged) from the current attack style.

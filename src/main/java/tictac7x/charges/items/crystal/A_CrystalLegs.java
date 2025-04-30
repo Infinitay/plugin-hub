@@ -9,7 +9,7 @@ import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
 
-import static tictac7x.charges.store.HitsplatTarget.SELF;
+import static tictac7x.charges.store.enums.HitsplatTarget.SELF;
 
 public class A_CrystalLegs extends ChargedItem {
     public A_CrystalLegs(final Provider provider) {
