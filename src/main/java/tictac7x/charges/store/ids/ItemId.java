@@ -275,7 +275,7 @@ public final class ItemId {
     public static final int SILVER_COFFIN = ItemID.SHADES_COFFIN_SILVER;
     public static final int SILVER_COFFIN_OPEN = ItemID.SHADES_COFFIN_SILVER_OPEN;
     public static final int GOLD_COFFIN = ItemID.SHADES_COFFIN_GOLD;
-    public static final int GOLD_COFFIN_OPEN = ItemID.SHADES_COFFIN_GOLD;
+    public static final int GOLD_COFFIN_OPEN = ItemID.SHADES_COFFIN_GOLD_OPEN;
 
     // Forestry basket
     public static final int FORESTRY_BASKET = ItemID.FORESTRY_BASKET_CLOSED;
