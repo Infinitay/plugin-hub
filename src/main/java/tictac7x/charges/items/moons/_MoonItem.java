@@ -6,20 +6,27 @@ import tictac7x.charges.store.Provider;
 
 public class _MoonItem extends ChargedItem {
     public _MoonItem(final String configKey, final int itemId, final Provider provider) {
-        super(TicTac7xChargesImprovedConfig.moons_gear_ + configKey, itemId, provider);
+        super(TicTac7xChargesImprovedConfig.moons_gear + "_" + configKey, itemId, provider);
     }
 
     @Override
-    protected String getChargesMinified(final int itemId) {
+    public String getChargesString(final int itemId) {
+        final int charges = getCharges(itemId);
+
         switch (provider.config.combatTimeDegradableStyle()) {
             case PERCENTAGE:
-                return getChargesFromConfig() * 100 / 3000 + "%";
+                return charges * 100 / 3000 + "%";
             case TIME:
-                final double hours = (double) (getChargesFromConfig() * 90 * 600) / 1000 / 3600;
+                final double hours = (double) (charges * 90 * 600) / 1000 / 3600;
                 return String.format("%.1fh", hours).replaceAll("\\.0", "");
             case CHARGES:
             default:
-                return super.getChargesMinified(itemId);
+                return super.getChargesString(itemId);
         }
+    }
+
+    @Override
+    public String getTotalChargesString() {
+        return getChargesString(itemId);
     }
 }

@@ -15,7 +15,7 @@ public class _BarrowsItem extends ChargedItem {
             final Provider provider
             ) {
         super(
-            TicTac7xChargesImprovedConfig.barrows_gear_ + itemName.toLowerCase().replaceAll("'", "").replaceAll(" ", "_"),
+            TicTac7xChargesImprovedConfig.barrows_gear + "_" + itemName.toLowerCase().replaceAll("'", "").replaceAll(" ", "_"),
             itemId,
             provider
         );
@@ -41,16 +41,23 @@ public class _BarrowsItem extends ChargedItem {
     }
 
     @Override
-    protected String getChargesMinified(final int itemId) {
+    public String getChargesString(final int itemId) {
+        final int charges = getCharges(itemId);
+
         switch (provider.config.combatTimeDegradableStyle()) {
             case PERCENTAGE:
-                return getChargesFromConfig() * 100 / 1000 + "%";
+                return charges * 100 / 1000 + "%";
             case TIME:
-                final double hours = (double) (getChargesFromConfig() * 90 * 600) / 1000 / 3600;
+                final double hours = (double) (charges * 90 * 600) / 1000 / 3600;
                 return String.format("%.1fh", hours).replaceAll("\\.0", "");
             case CHARGES:
             default:
-                return super.getChargesMinified(itemId);
+                return super.getChargesString(itemId);
         }
+    }
+
+    @Override
+    public String getTotalChargesString() {
+        return getChargesString(itemId);
     }
 }
