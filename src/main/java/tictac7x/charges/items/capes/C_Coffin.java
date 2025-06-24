@@ -11,6 +11,8 @@ import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.ids.ItemContainerId;
 import tictac7x.charges.store.Provider;
 
+import static tictac7x.charges.store.ids.ItemContainerId.INVENTORY;
+
 public class C_Coffin extends ChargedItemWithStorage {
     public C_Coffin(final Provider provider) {
         super(TicTac7xChargesImprovedConfig.coffin, ItemId.GOLD_COFFIN, provider);
@@ -59,6 +61,10 @@ public class C_Coffin extends ChargedItemWithStorage {
 
             // Fill from inventory.
             new OnItemContainerChanged(ItemContainerId.INVENTORY).fillStorageFromInventory().onMenuOption("Fill"),
+
+            // Use shades on coffin and vice versa.
+            new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().onUseChargedItemOnStorageItem(storage.getStorableItems()),
+            new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().onUseStorageItemOnChargedItem(storage.getStorableItems()),
         };
     }
 }
