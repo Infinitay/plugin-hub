@@ -1,4 +1,4 @@
-# Item Charges Improved - v0.6.5
+# Item Charges Improved - v0.6.6
 
 Show charges of various items that are in inventory or equipped
 
@@ -61,6 +61,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - Ring of forging
 - Ring of pursuit
 - Ring of recoil
+- Ring of returning
 - Ring of shadows
 - Ring of suffering
 - Ring of the elements

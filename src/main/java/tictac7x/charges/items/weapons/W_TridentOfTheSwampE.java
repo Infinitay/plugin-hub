@@ -20,7 +20,7 @@ public class W_TridentOfTheSwampE extends ChargedItem {
 
         this.triggers = new TriggerBase[] {
             // Ran out of charges.
-            new OnChatMessage("Your Trident of the swamp \\(e\\) has run out of charges.").notification().setFixedCharges(0),
+            new OnChatMessage("Your Trident of the swamp \\(e\\) has run out of charges.").setFixedCharges(0),
 
             // Check, one charge left.
             new OnChatMessage("Your Trident of the swamp \\(e\\) has one charge.").setFixedCharges(1),
@@ -32,7 +32,7 @@ public class W_TridentOfTheSwampE extends ChargedItem {
             new OnChatMessage("You add .* charges? to the Trident of the swamp \\(e\\). New total: (?<charges>.+)").setDynamicallyCharges(),
 
             // Attack.
-            new OnGraphicChanged(1251).isEquipped().decreaseCharges(1),
+            new OnGraphicChanged(665).isEquipped().decreaseCharges(1),
 
             // Auto-charge.
             new OnChatMessage("The banker charges your Trident of the swamp \\(e\\) using (?<deathrune>.+)x Death rune.*").matcherConsumer(m -> {

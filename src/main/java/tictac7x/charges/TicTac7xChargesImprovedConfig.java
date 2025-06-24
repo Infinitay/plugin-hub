@@ -99,6 +99,7 @@ public interface TicTac7xChargesImprovedConfig extends Config {
     String ring_of_forging = "ring_of_forging";
     String ring_of_pursuit = "ring_of_pursuit";
     String ring_of_recoil = "ring_of_recoil";
+    String ring_of_returning = "ring_of_returning";
     String ring_of_shadows = "ring_of_shadows";
     String ring_of_suffering = "ring_of_suffering";
     String ring_of_suffering_status = "ring_of_suffering_status";
@@ -685,6 +686,13 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             description = "",
             section = infoboxes
         ) default boolean ringOfRecoilInfobox() { return true; }
+
+        @ConfigItem(
+            keyName = ring_of_returning + _infobox,
+            name = "Ring of returning",
+            description = "",
+            section = infoboxes
+        ) default boolean ringOfReturningInfobox() { return true; }
 
         @ConfigItem(
             keyName = ring_of_shadows + _infobox,
@@ -1623,6 +1631,13 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             description = "",
             section = overlays
         ) default boolean ringOfRecoilOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = ring_of_returning + _overlay,
+            name = "Ring of returning",
+            description = "",
+            section = overlays
+        ) default boolean ringOfReturningOverlay() { return true; }
 
         @ConfigItem(
             keyName = ring_of_shadows + _overlay,

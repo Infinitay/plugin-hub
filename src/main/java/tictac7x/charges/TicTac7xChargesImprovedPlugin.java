@@ -146,10 +146,15 @@ import java.util.*;
 )
 
 public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener, MouseListener, MouseWheelListener {
-	private final String pluginVersion = "v0.6.5";
+	private final String pluginVersion = "v0.6.6";
 	private final String pluginMessage =
 		"<colHIGHLIGHT>Item Charges Improved " + pluginVersion + ":<br>" +
-		"<colHIGHLIGHT>* Master scrollbook updated."
+		"<colHIGHLIGHT>* Ring of returning added.<br>" +
+		"<colHIGHLIGHT>* Amulet of chemistry and Alchemist's amulet improvements.<br>" +
+		"<colHIGHLIGHT>* Aether runes support for Binding necklace.<br>" +
+		"<colHIGHLIGHT>* Quetzal whistle fixes.<br>" +
+		"<colHIGHLIGHT>* Expeditious bracelet fixes.<br>" +
+		"<colHIGHLIGHT>* Efaritay's aid fixes"
 	;
 
 	@Inject
@@ -271,6 +276,7 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 			new J_ExplorersRing(provider),
 			new J_RingOfPursuit(provider),
 			new J_RingOfRecoil(provider),
+			new J_RingOfReturning(provider),
 			new J_RingOfShadows(provider),
 			new J_SlayerRing(provider),
 			new J_RingOfSuffering(provider),
@@ -577,7 +583,7 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 
 	@Subscribe
 	public void onAnimationChanged(final AnimationChanged event) {
-		if (event.getActor() != client.getLocalPlayer() || event.getActor().getAnimation() == -1) return;
+		if (event.getActor().getAnimation() == -1) return;
 
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onAnimationChanged(event));
 
