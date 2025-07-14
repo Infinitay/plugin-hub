@@ -112,12 +112,15 @@ public class U_ReagentPouch extends ChargedItemWithStorage {
             new OnChatMessage("You pick some whiteberries.").requiredItem(ItemId.REAGENT_POUCH_OPEN).consumer(() -> {
                 storage.add(ItemId.WHITE_BERRIES, 1);
             }),
-            // TODO - jangerberries
-                // TODO - poison ivy
+            new OnChatMessage("You pick some jangerberries.").requiredItem(ItemId.REAGENT_POUCH_OPEN).consumer(() -> {
+                storage.add(ItemId.JANGERBERRIES, 1);
+            }),
+            new OnChatMessage("You pick some poison ivy berries.").requiredItem(ItemId.REAGENT_POUCH_OPEN).consumer(() -> {
+                storage.add(ItemId.POISON_IVY_BERRIES, 1);
+            }),
             new OnChatMessage("You carefully pick a potato cactus.").requiredItem(ItemId.REAGENT_POUCH_OPEN).consumer(() -> {
                 storage.add(ItemId.POTATO_CACTUS, 1);
             }),
-
             new OnChatMessage("You carefully pick a spine from the cactus.").consumer(() -> {
                 storage.add(ItemId.CACTUS_SPINE, 1);
             }),
