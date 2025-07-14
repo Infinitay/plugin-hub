@@ -787,6 +787,10 @@ public final class ItemId {
     public static final int BATTLEMAGE_POTION_3 = ItemID._3DOSEBATTLEMAGE;
     public static final int BATTLEMAGE_POTION_4 = ItemID._4DOSEBATTLEMAGE;
     public static final int SARADOMIN_BREW_1 = ItemID._1DOSEPOTIONOFSARADOMIN;
+    public static final int SURGE_POTION_1 = ItemID._1DOSESURGE;
+    public static final int SURGE_POTION_2 = ItemID._2DOSESURGE;
+    public static final int SURGE_POTION_3 = ItemID._3DOSESURGE;
+    public static final int SURGE_POTION_4 = ItemID._4DOSESURGE;
     public static final int SARADOMIN_BREW_2 = ItemID._2DOSEPOTIONOFSARADOMIN;
     public static final int SARADOMIN_BREW_3 = ItemID._3DOSEPOTIONOFSARADOMIN;
     public static final int SARADOMIN_BREW_4 = ItemID._4DOSEPOTIONOFSARADOMIN;
@@ -1120,6 +1124,7 @@ public final class ItemId {
     public static final int WILLOW_LOGS = ItemID.WILLOW_LOGS;
     public static final int TEAK_LOGS = ItemID.TEAK_LOGS;
     public static final int JUNIPER_LOGS = ItemID.JUNIPER_LOGS;
+    public static final int BARK = ItemID.HOLLOW_BARK;
     public static final int MAPLE_LOGS = ItemID.MAPLE_LOGS;
     public static final int MAHOGANY_LOGS = ItemID.MAHOGANY_LOGS;
     public static final int ARCTIC_PINE_LOGS = ItemID.ARCTIC_PINE_LOG;
@@ -1594,4 +1599,11 @@ public final class ItemId {
     public static final int RING_OF_RETURNING_3 = ItemID.RING_OF_RETURNING_3;
     public static final int RING_OF_RETURNING_4 = ItemID.RING_OF_RETURNING_4;
     public static final int RING_OF_RETURNING_5 = ItemID.RING_OF_RETURNING_5;
+
+    // Royal seed pod
+    public static final int ROYAL_SEED_POD = ItemID.MM2_ROYAL_SEED_POD;
+
+    // Ectophial
+    public static final int ECTOPHIAL = ItemID.ECTOPHIAL;
+    public static final int ECTOPHIAL_EMPTY = ItemID.ECTOPHIAL_EMPTY;
 }

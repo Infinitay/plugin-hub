@@ -1,5 +1,6 @@
 package tictac7x.charges.items.utils;
 
+import tictac7x.charges.item.triggers.OnWidgetLoaded;
 import tictac7x.charges.store.ids.ChargeId;
 import tictac7x.charges.store.ids.ItemId;
 import net.runelite.client.ui.JagexColors;
@@ -21,25 +22,25 @@ public class U_MasterScrollBook extends ChargedItemWithStorage {
     public U_MasterScrollBook(final Provider provider) {
         super(TicTac7xChargesImprovedConfig.master_scroll_book, ItemId.MASTER_SCROLL_BOOK, provider);
         storage = storage.setMaximumIndividualQuantity(1000).storableItems(
-            new StorableItem(ItemId.TELEPORTSCROLL_NARDAH).displayName("Nardah").specificOrder(1),
-            new StorableItem(ItemId.TELEPORTSCROLL_DIGSITE).displayName("Digsite").specificOrder(2),
-            new StorableItem(ItemId.TELEPORTSCROLL_FELDIP_HILLS).displayName("Feldip Hills").specificOrder(3),
-            new StorableItem(ItemId.TELEPORTSCROLL_LUNAR_ISLE).displayName("Lunar Isle").specificOrder(4),
-            new StorableItem(ItemId.TELEPORTSCROLL_MORTTON).displayName("Mort'ton").specificOrder(5),
-            new StorableItem(ItemId.TELEPORTSCROLL_PEST_CONTROL).displayName("Pest Control").specificOrder(6),
-            new StorableItem(ItemId.TELEPORTSCROLL_PISCATORIS).displayName("Piscatoris").specificOrder(7),
-            new StorableItem(ItemId.TELEPORTSCROLL_TAI_BWO_WANNAI).displayName("Tai Bwo Wannai").specificOrder(8),
-            new StorableItem(ItemId.TELEPORTSCROLL_IORWERTH_CAMP).displayName("Iorwerth Camp").specificOrder(9),
-            new StorableItem(ItemId.TELEPORTSCROLL_MOS_LEHARMLESS).displayName("Mos Le' Harmless").specificOrder(10),
-            new StorableItem(ItemId.TELEPORTSCROLL_LUMBERYARD).displayName("Lumberyard").specificOrder(11),
-            new StorableItem(ItemId.TELEPORTSCROLL_ZULANDRA).displayName("Zul-Andra").specificOrder(12),
-            new StorableItem(ItemId.TELEPORTSCROLL_KEY_MASTER).displayName("Key Master").specificOrder(13),
-            new StorableItem(ItemId.TELEPORTSCROLL_REVENANTS_CAVE).displayName("Revenant Caves").specificOrder(14),
-            new StorableItem(ItemId.TELEPORTSCROLL_WATSON).displayName("Watson").specificOrder(15),
-            new StorableItem(ItemId.TELEPORTSCROLL_GUTHIXIAN_TEMPLE).displayName("Guthixian Temple").specificOrder(16),
-            new StorableItem(ItemId.TELEPORTSCROLL_SPIDER_CAVE).displayName("Spider Cave").specificOrder(17),
-            new StorableItem(ItemId.TELEPORTSCROLL_COLOSSAL_WYRM).displayName("Colossal Wyrm").specificOrder(18),
-            new StorableItem(ItemId.TELEPORTSCROLL_CHASM_OF_FIRE).displayName("Chasm of Fire").specificOrder(19)
+            new StorableItem(ItemId.TELEPORTSCROLL_NARDAH).displayName("Nardah"),
+            new StorableItem(ItemId.TELEPORTSCROLL_DIGSITE).displayName("Digsite"),
+            new StorableItem(ItemId.TELEPORTSCROLL_FELDIP_HILLS).displayName("Feldip Hills"),
+            new StorableItem(ItemId.TELEPORTSCROLL_LUNAR_ISLE).displayName("Lunar Isle"),
+            new StorableItem(ItemId.TELEPORTSCROLL_MORTTON).displayName("Mort'ton"),
+            new StorableItem(ItemId.TELEPORTSCROLL_PEST_CONTROL).displayName("Pest Control"),
+            new StorableItem(ItemId.TELEPORTSCROLL_PISCATORIS).displayName("Piscatoris"),
+            new StorableItem(ItemId.TELEPORTSCROLL_TAI_BWO_WANNAI).displayName("Tai Bwo Wannai"),
+            new StorableItem(ItemId.TELEPORTSCROLL_IORWERTH_CAMP).displayName("Iorwerth Camp"),
+            new StorableItem(ItemId.TELEPORTSCROLL_MOS_LEHARMLESS).displayName("Mos Le' Harmless"),
+            new StorableItem(ItemId.TELEPORTSCROLL_LUMBERYARD).displayName("Lumberyard"),
+            new StorableItem(ItemId.TELEPORTSCROLL_ZULANDRA).displayName("Zul-Andra"),
+            new StorableItem(ItemId.TELEPORTSCROLL_KEY_MASTER).displayName("Key Master"),
+            new StorableItem(ItemId.TELEPORTSCROLL_REVENANTS_CAVE).displayName("Revenant Caves"),
+            new StorableItem(ItemId.TELEPORTSCROLL_WATSON).displayName("Watson"),
+            new StorableItem(ItemId.TELEPORTSCROLL_GUTHIXIAN_TEMPLE).displayName("Guthixian Temple"),
+            new StorableItem(ItemId.TELEPORTSCROLL_SPIDER_CAVE).displayName("Spider Cave"),
+            new StorableItem(ItemId.TELEPORTSCROLL_COLOSSAL_WYRM).displayName("Colossal Wyrm"),
+            new StorableItem(ItemId.TELEPORTSCROLL_CHASM_OF_FIRE).displayName("Chasm of Fire")
         );
 
         this.items = new TriggerItem[]{
@@ -70,6 +71,29 @@ public class U_MasterScrollBook extends ChargedItemWithStorage {
 
             // Replace default teleport option.
             new OnMenuEntryAdded("Teleport").replaceTargetDynamically("Master scroll book", this::getDefaultTeleportLocation),
+
+            // Widget
+            new OnWidgetLoaded(597, 2).consumer(() -> {
+                storage.put(ItemId.TELEPORTSCROLL_NARDAH, Integer.parseInt(provider.client.getWidget(597, 7).getText()));
+                storage.put(ItemId.TELEPORTSCROLL_DIGSITE, Integer.parseInt(provider.client.getWidget(597, 11).getText()));
+                storage.put(ItemId.TELEPORTSCROLL_FELDIP_HILLS, Integer.parseInt(provider.client.getWidget(597, 15).getText()));
+                storage.put(ItemId.TELEPORTSCROLL_LUNAR_ISLE, Integer.parseInt(provider.client.getWidget(597, 19).getText()));
+                storage.put(ItemId.TELEPORTSCROLL_MORTTON, Integer.parseInt(provider.client.getWidget(597, 23).getText()));
+                storage.put(ItemId.TELEPORTSCROLL_PEST_CONTROL, Integer.parseInt(provider.client.getWidget(597, 27).getText()));
+                storage.put(ItemId.TELEPORTSCROLL_PISCATORIS, Integer.parseInt(provider.client.getWidget(597, 31).getText()));
+                storage.put(ItemId.TELEPORTSCROLL_TAI_BWO_WANNAI, Integer.parseInt(provider.client.getWidget(597, 35).getText()));
+                storage.put(ItemId.TELEPORTSCROLL_IORWERTH_CAMP, Integer.parseInt(provider.client.getWidget(597, 39).getText()));
+                storage.put(ItemId.TELEPORTSCROLL_MOS_LEHARMLESS, Integer.parseInt(provider.client.getWidget(597, 43).getText()));
+                storage.put(ItemId.TELEPORTSCROLL_LUMBERYARD, Integer.parseInt(provider.client.getWidget(597, 47).getText()));
+                storage.put(ItemId.TELEPORTSCROLL_ZULANDRA, Integer.parseInt(provider.client.getWidget(597, 51).getText()));
+                storage.put(ItemId.TELEPORTSCROLL_KEY_MASTER, Integer.parseInt(provider.client.getWidget(597, 54).getText()));
+                storage.put(ItemId.TELEPORTSCROLL_REVENANTS_CAVE, Integer.parseInt(provider.client.getWidget(597, 60).getText()));
+                storage.put(ItemId.TELEPORTSCROLL_WATSON, Integer.parseInt(provider.client.getWidget(597, 65).getText()));
+                storage.put(ItemId.TELEPORTSCROLL_GUTHIXIAN_TEMPLE, Integer.parseInt(provider.client.getWidget(597, 68).getText()));
+                storage.put(ItemId.TELEPORTSCROLL_SPIDER_CAVE, Integer.parseInt(provider.client.getWidget(597, 71).getText()));
+                storage.put(ItemId.TELEPORTSCROLL_COLOSSAL_WYRM, Integer.parseInt(provider.client.getWidget(597, 76).getText()));
+                storage.put(ItemId.TELEPORTSCROLL_CHASM_OF_FIRE, Integer.parseInt(provider.client.getWidget(597, 79).getText()));
+            }),
         };
     }
 

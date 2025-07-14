@@ -146,15 +146,16 @@ import java.util.*;
 )
 
 public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener, MouseListener, MouseWheelListener {
-	private final String pluginVersion = "v0.6.6";
+	private final String pluginVersion = "v0.6.7";
 	private final String pluginMessage =
 		"<colHIGHLIGHT>Item Charges Improved " + pluginVersion + ":<br>" +
-		"<colHIGHLIGHT>* Ring of returning added.<br>" +
-		"<colHIGHLIGHT>* Amulet of chemistry and Alchemist's amulet improvements.<br>" +
-		"<colHIGHLIGHT>* Aether runes support for Binding necklace.<br>" +
-		"<colHIGHLIGHT>* Quetzal whistle fixes.<br>" +
-		"<colHIGHLIGHT>* Expeditious bracelet fixes.<br>" +
-		"<colHIGHLIGHT>* Efaritay's aid fixes"
+		"<colHIGHLIGHT>* Beehive event, secateurs attachment, hallowed tree bark  support for log basket, forestry kit/basket.<br>" +
+		"<colHIGHLIGHT>* STASH units support for plank sack.<br>" +
+		"<colHIGHLIGHT>* Seed box updating when pickpocketing..<br>" +
+		"<colHIGHLIGHT>* Royal seed pod added.<br>" +
+		"<colHIGHLIGHT>* Ectophial added.<br>" +
+		"<colHIGHLIGHT>* Surge potion added.<br>" +
+		"<colHIGHLIGHT>* Ability to change potions doses overlay colors."
 	;
 
 	@Inject
@@ -378,6 +379,7 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 			new P_SuperRestoreMix(provider),
 			new P_SuperStrength(provider),
 			new P_SuperStrengthMix(provider),
+			new P_Surge(provider),
 			new P_ZamorakBrew(provider),
 			new P_ZamorakMix(provider),
 			// COX potions
@@ -428,6 +430,7 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 			new U_ChuggingBarrel(provider),
 			new U_CoalBag(provider),
 			new U_CrystalSaw(provider),
+			new U_Ectophial(provider),
 			new U_ColossalPouch(provider),
 			new U_FishBarrel(provider),
 			new U_FlamtaerBag(provider),
@@ -439,13 +442,14 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 			new U_HuntsmansKit(provider),
 			new U_ImpInABox(provider),
 			new U_JarGenerator(provider),
-			new U_LogBasket(provider),
+			new C_LogBasket(provider),
 			new U_MasterScrollBook(provider),
 			new U_MeatPouch(provider),
 			new U_OgreBellows(provider),
 			new U_QuetzalWhistle(provider),
 			new U_PlankSack(provider),
 			new U_ReagentPouch(provider),
+			new U_RoyalSeedPod(provider),
 			new U_SeedBox(provider),
 			new U_SoulBearer(provider),
 			new U_StrangeOldLockpick(provider),

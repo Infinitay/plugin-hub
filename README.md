@@ -1,4 +1,4 @@
-# Item Charges Improved - v0.6.6
+# Item Charges Improved - v0.6.7
 
 Show charges of various items that are in inventory or equipped
 
@@ -24,7 +24,9 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 ### Capes
 - Ardougle cloak
 - Coffin
-- Forestry kit / Forestry basket
+- Forestry basket
+- Forestry kit
+- Log basket
 - Magic cape
 
 ### Foods
@@ -98,12 +100,12 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - Huntsman's kit
 - Imp in a box
 - Jar generator
-- Log basket
 - Master scroll book
 - Meat pouches
 - Ogre bellows
 - Plank sack
 - Reagent pouch
+- Royal seed pod
 - Seed box
 - Soul bearer
 - Strange old lockpick

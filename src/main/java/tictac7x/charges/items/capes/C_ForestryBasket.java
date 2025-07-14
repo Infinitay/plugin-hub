@@ -26,47 +26,50 @@ public class C_ForestryBasket extends ChargedItemWithStorage {
     private final String menuOptionEmptyLogsToBank = "Empty logs to bank";
     private final String menuOptionFillLeavesFromBank = "Fill leaves from bank";
     private final String menuOptionEmptyLeavesToBank = "Empty leaves to bank";
+    private Optional<Integer> lastLogUsedFromBasketForBeehive = Optional.empty();
+    private Optional<StorageItem> lastLeaves = Optional.empty();
 
     public C_ForestryBasket(final Provider provider) {
         super(TicTac7xChargesImprovedConfig.forestry_basket, ItemId.FORESTRY_BASKET, provider);
 
         this.storage = storage.storableItems(
             // Log basket.
-            new StorableItem(ItemId.LOGS).displayName("Regular logs").checkName("some logs", "x Logs").specificOrder(1),
-            new StorableItem(ItemId.ACHEY_TREE_LOGS).checkName("Achey tree logs").specificOrder(2),
-            new StorableItem(ItemId.OAK_LOGS).checkName("Oak logs").specificOrder(3),
-            new StorableItem(ItemId.WILLOW_LOGS).checkName("Willow logs").specificOrder(4),
-            new StorableItem(ItemId.TEAK_LOGS).checkName("Teak logs").specificOrder(5),
-            new StorableItem(ItemId.JUNIPER_LOGS).checkName("Juniper logs").specificOrder(6),
-            new StorableItem(ItemId.MAPLE_LOGS).checkName("Maple logs").specificOrder(7),
-            new StorableItem(ItemId.MAHOGANY_LOGS).checkName("Mahogany logs").specificOrder(8),
-            new StorableItem(ItemId.ARCTIC_PINE_LOGS).checkName("Arctic pine logs").specificOrder(9),
-            new StorableItem(ItemId.YEW_LOGS).checkName("Yew logs").specificOrder(10),
-            new StorableItem(ItemId.BLISTERWOOD_LOGS).checkName("Blisterwood logs").specificOrder(11),
-            new StorableItem(ItemId.MAGIC_LOGS).checkName("Magic logs").specificOrder(12),
-            new StorableItem(ItemId.REDWOOD_LOGS).checkName("Redwood logs").specificOrder(3),
+            new StorableItem(ItemId.LOGS).displayName("Regular logs").checkName("some logs", "x Logs"),
+            new StorableItem(ItemId.OAK_LOGS).checkName("Oak logs"),
+            new StorableItem(ItemId.WILLOW_LOGS).checkName("Willow logs"),
+            new StorableItem(ItemId.MAPLE_LOGS).checkName("Maple logs"),
+            new StorableItem(ItemId.YEW_LOGS).checkName("Yew logs"),
+            new StorableItem(ItemId.MAGIC_LOGS).checkName("Magic logs"),
+            new StorableItem(ItemId.REDWOOD_LOGS).checkName("Redwood logs"),
+            new StorableItem(ItemId.TEAK_LOGS).checkName("Teak logs"),
+            new StorableItem(ItemId.MAHOGANY_LOGS).checkName("Mahogany logs"),
+            new StorableItem(ItemId.ACHEY_TREE_LOGS).checkName("Achey tree logs"),
+            new StorableItem(ItemId.ARCTIC_PINE_LOGS).checkName("Arctic pine logs"),
+            new StorableItem(ItemId.JUNIPER_LOGS).checkName("Juniper logs"),
+            new StorableItem(ItemId.BARK).checkName("Bark"),
+            new StorableItem(ItemId.BLISTERWOOD_LOGS).checkName("Blisterwood logs"),
 
             // Forestry kit.
-            new StorableItem(ItemId.ANIMAINFUSED_BARK).specificOrder(14),
-            new StorableItem(ItemId.FORESTERS_RATION).specificOrder(15),
-            new StorableItem(ItemId.NATURE_OFFERINGS).specificOrder(16),
-            new StorableItem(ItemId.SECATEURS_ATTACHMENT).specificOrder(17),
-            new StorableItem(ItemId.LEAVES).displayName("Regular leaves").checkName("regular").specificOrder(18),
-            new StorableItem(ItemId.OAK_LEAVES).checkName("oak").specificOrder(19),
-            new StorableItem(ItemId.WILLOW_LEAVES).checkName("willow").specificOrder(20),
-            new StorableItem(ItemId.MAPLE_LEAVES).checkName("maple").specificOrder(21),
-            new StorableItem(ItemId.YEW_LEAVES).checkName("yew").specificOrder(22),
-            new StorableItem(ItemId.MAGIC_LEAVES).checkName("magic").specificOrder(23),
-            new StorableItem(ItemId.FORESTRY_HAT).specificOrder(24),
-            new StorableItem(ItemId.FORESTRY_TOP).specificOrder(25),
-            new StorableItem(ItemId.FORESTRY_LEGS).specificOrder(26),
-            new StorableItem(ItemId.FORESTRY_BOOTS).specificOrder(27),
-            new StorableItem(ItemId.LUMBERJACK_HAT).specificOrder(28),
-            new StorableItem(ItemId.LUMBERJACK_TOP).specificOrder(29),
-            new StorableItem(ItemId.LUMBERJACK_LEGS).specificOrder(30),
-            new StorableItem(ItemId.LUMBERJACK_BOOTS).specificOrder(31),
-            new StorableItem(ItemId.WOODCUTTING_CAPE).specificOrder(32),
-            new StorableItem(ItemId.WOODCUTTING_CAPE_TRIMMED).specificOrder(33)
+            new StorableItem(ItemId.ANIMAINFUSED_BARK),
+            new StorableItem(ItemId.FORESTERS_RATION),
+            new StorableItem(ItemId.NATURE_OFFERINGS),
+            new StorableItem(ItemId.SECATEURS_ATTACHMENT),
+            new StorableItem(ItemId.LEAVES).displayName("Regular leaves").checkName("regular"),
+            new StorableItem(ItemId.OAK_LEAVES).checkName("oak"),
+            new StorableItem(ItemId.WILLOW_LEAVES).checkName("willow"),
+            new StorableItem(ItemId.MAPLE_LEAVES).checkName("maple"),
+            new StorableItem(ItemId.YEW_LEAVES).checkName("yew"),
+            new StorableItem(ItemId.MAGIC_LEAVES).checkName("magic"),
+            new StorableItem(ItemId.FORESTRY_HAT),
+            new StorableItem(ItemId.FORESTRY_TOP),
+            new StorableItem(ItemId.FORESTRY_LEGS),
+            new StorableItem(ItemId.FORESTRY_BOOTS),
+            new StorableItem(ItemId.LUMBERJACK_HAT),
+            new StorableItem(ItemId.LUMBERJACK_TOP),
+            new StorableItem(ItemId.LUMBERJACK_LEGS),
+            new StorableItem(ItemId.LUMBERJACK_BOOTS),
+            new StorableItem(ItemId.WOODCUTTING_CAPE),
+            new StorableItem(ItemId.WOODCUTTING_CAPE_TRIMMED)
         ).setMaximumComboQuantity(new int[]{
             ItemId.LOGS,
             ItemId.ACHEY_TREE_LOGS,
@@ -115,7 +118,14 @@ public class C_ForestryBasket extends ChargedItemWithStorage {
 
             // Get leaves while chopping wood.
             new OnChatMessage("Some (?<leaves>.+) leaves fall to the ground and you place them into your Forestry kit.").matcherConsumer(m -> {
-                storage.add(getStorageItemFromName(m.group("leaves"), 1));
+                lastLeaves = getStorageItemFromName(m.group("leaves"), 1);
+                storage.add(lastLeaves);
+            }),
+
+            // Secateurs attachment.
+            new OnChatMessage("Your secateurs attachment enabled you to gather extra leaves.").runConsumerOnNextGameTick(() -> {
+                storage.add(lastLeaves);
+                storage.removeAndPrioritizeInventory(ItemId.SECATEURS_ATTACHMENT, 1);
             }),
 
             // Get leaves from event.
@@ -194,6 +204,13 @@ public class C_ForestryBasket extends ChargedItemWithStorage {
             // Miscellania support.
             new OnChatMessage("You get some maple logs and give them to Lumberjack Leif.").requiredItem(ItemId.FORESTRY_BASKET_OPEN).addToStorage(ItemId.MAPLE_LOGS, 0),
 
+            // Achey tree.
+            new OnChatMessage("You get some logs.").onMenuTarget("Achey Tree").consumer(() -> {
+                lastLogs = Optional.of(new StorageItem(ItemId.ACHEY_TREE_LOGS, 1));
+                storage.add(lastLogs);
+                infernalQuantityTracker++;
+            }).requiredItem(ItemId.LOG_BASKET_OPEN),
+
             // Chop.
             new OnChatMessage("You get (?<logs>some .+).").matcherConsumer(m -> {
                 lastLogs = getStorageItemFromName(m.group("logs"), 1);
@@ -245,6 +262,27 @@ public class C_ForestryBasket extends ChargedItemWithStorage {
                 final Optional<Widget> bankWoodcuttingResourcesWidget = TicTac7xChargesImprovedPlugin.getWidget(provider.client, 219, 1, 2);
                 if (bankWoodcuttingResourcesWidget.isPresent() && bankWoodcuttingResourcesWidget.get().getText().equals("Only bank woodcutting resources")) {
                     emptyLogBasket();
+                }
+            }),
+
+            // Beehives.
+            new OnXpDrop(Skill.WOODCUTTING).onMenuOption("Use").onMenuTarget(
+                    "Logs",
+                    "Achey tree logs",
+                    "Oak logs",
+                    "Willow logs",
+                    "Teak logs",
+                    "Maple logs",
+                    "Mahogany logs",
+                    "Arctic pine logs",
+                    "Yew logs",
+                    "Magic logs",
+                    "Redwood logs"
+            ).consumer(this::buildBeehive),
+            new OnChatMessage("Well done, you've completed a beehive. The bees can now be safely rehomed.").consumer(() -> {
+                if (lastLogUsedFromBasketForBeehive.isPresent()) {
+                    storage.add(lastLogUsedFromBasketForBeehive.get(), 1);
+                    lastLogUsedFromBasketForBeehive = Optional.empty();
                 }
             }),
 
@@ -336,18 +374,19 @@ public class C_ForestryBasket extends ChargedItemWithStorage {
 
     private void emptyLogBasket() {
         storage.put(ItemId.LOGS, 0);
-        storage.put(ItemId.ACHEY_TREE_LOGS, 0);
         storage.put(ItemId.OAK_LOGS, 0);
         storage.put(ItemId.WILLOW_LOGS, 0);
-        storage.put(ItemId.TEAK_LOGS, 0);
-        storage.put(ItemId.JUNIPER_LOGS, 0);
         storage.put(ItemId.MAPLE_LOGS, 0);
-        storage.put(ItemId.MAHOGANY_LOGS, 0);
-        storage.put(ItemId.ARCTIC_PINE_LOGS, 0);
         storage.put(ItemId.YEW_LOGS, 0);
-        storage.put(ItemId.BLISTERWOOD_LOGS, 0);
         storage.put(ItemId.MAGIC_LOGS, 0);
         storage.put(ItemId.REDWOOD_LOGS, 0);
+        storage.put(ItemId.TEAK_LOGS, 0);
+        storage.put(ItemId.MAHOGANY_LOGS, 0);
+        storage.put(ItemId.ACHEY_TREE_LOGS, 0);
+        storage.put(ItemId.ARCTIC_PINE_LOGS, 0);
+        storage.put(ItemId.JUNIPER_LOGS, 0);
+        storage.put(ItemId.BARK, 0);
+        storage.put(ItemId.BLISTERWOOD_LOGS, 0);
     }
 
     private int getLogsInBasket() {
@@ -358,18 +397,19 @@ public class C_ForestryBasket extends ChargedItemWithStorage {
 
             switch (storageItem.getId()) {
                 case ItemId.LOGS:
-                case ItemId.ACHEY_TREE_LOGS:
                 case ItemId.OAK_LOGS:
                 case ItemId.WILLOW_LOGS:
-                case ItemId.TEAK_LOGS:
-                case ItemId.JUNIPER_LOGS:
                 case ItemId.MAPLE_LOGS:
-                case ItemId.MAHOGANY_LOGS:
-                case ItemId.ARCTIC_PINE_LOGS:
                 case ItemId.YEW_LOGS:
-                case ItemId.BLISTERWOOD_LOGS:
                 case ItemId.MAGIC_LOGS:
                 case ItemId.REDWOOD_LOGS:
+                case ItemId.TEAK_LOGS:
+                case ItemId.MAHOGANY_LOGS:
+                case ItemId.ACHEY_TREE_LOGS:
+                case ItemId.ARCTIC_PINE_LOGS:
+                case ItemId.JUNIPER_LOGS:
+                case ItemId.BARK:
+                case ItemId.BLISTERWOOD_LOGS:
                     logs += storageItem.getQuantity();
                     break;
             }
@@ -397,5 +437,24 @@ public class C_ForestryBasket extends ChargedItemWithStorage {
             }
         }
         return false;
+    }
+
+    private void buildBeehive() {
+        final int[] logsInOrderToUse = new int[]{
+                ItemId.LOGS, ItemId.ACHEY_TREE_LOGS, ItemId.OAK_LOGS, ItemId.WILLOW_LOGS,
+                ItemId.TEAK_LOGS, ItemId.MAPLE_LOGS, ItemId.MAHOGANY_LOGS, ItemId.ARCTIC_PINE_LOGS,
+                ItemId.YEW_LOGS, ItemId.MAGIC_LOGS, ItemId.REDWOOD_LOGS
+        };
+
+        for (final int logsId : logsInOrderToUse) {
+            if (provider.store.inventoryContainsItem(logsId)) {
+                lastLogUsedFromBasketForBeehive = Optional.empty();
+                return;
+            } else if (storage.hasItem(logsId)) {
+                storage.remove(logsId, 1);
+                lastLogUsedFromBasketForBeehive = Optional.of(logsId);
+                return;
+            }
+        }
     }
 }
