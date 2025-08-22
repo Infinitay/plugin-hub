@@ -3,15 +3,11 @@ package tictac7x.charges.item;
 import net.runelite.api.events.*;
 import net.runelite.client.ui.JagexColors;
 import net.runelite.client.util.ColorUtil;
-import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.TicTac7xChargesImprovedPlugin;
-import tictac7x.charges.events.CustomChatMessage;
-import tictac7x.charges.events.CustomHitsplatApplied;
+import tictac7x.charges.events.*;
 import tictac7x.charges.item.listeners.*;
-import tictac7x.charges.events.CustomItemContainerChanged;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.events.CustomMenuOptionClicked;
 import tictac7x.charges.store.Provider;
 import tictac7x.charges.store.ids.ChargeId;
 
@@ -94,6 +90,10 @@ public abstract class ChargedItemBase {
         return configKey;
     }
 
+    public String getInfoboxName() {
+        return configKey;
+    }
+
     public boolean inInventory() {
         return inInventory;
     }
@@ -102,8 +102,8 @@ public abstract class ChargedItemBase {
         return inEquipment;
     }
 
-    private boolean inInventoryOrEquipment() {
-        return inInventory || inEquipment;
+    public boolean inInventoryOrEquipment() {
+        return inInventory() || inEquipment();
     }
 
     public String getTooltip() {
@@ -144,7 +144,15 @@ public abstract class ChargedItemBase {
             return provider.config.getColorUnknown();
         }
 
-        if (charges == 0 || needsToBeEquipped() && !inEquipment()) {
+        if (charges == 0) {
+            return provider.config.getColorEmpty();
+        }
+
+        if (needsToBeEquipped() && inEquipment()) {
+            return provider.config.getColorActivated();
+        }
+
+        if (needsToBeEquipped() && !inEquipment()) {
             return provider.config.getColorEmpty();
         }
 

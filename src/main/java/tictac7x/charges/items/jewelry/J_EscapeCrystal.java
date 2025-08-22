@@ -16,6 +16,7 @@ import java.time.Instant;
 public class J_EscapeCrystal extends ChargedItemWithStatus {
     private Instant instantToTeleport = Instant.now();
     private boolean alertedAboutActivation = false;
+    private boolean inGauntletWithEscapeCrystal = false;
 
     public J_EscapeCrystal(final Provider provider) {
         super(TicTac7xChargesImprovedConfig.escape_crystal, ItemId.ESCAPE_CRYSTAL, provider);
@@ -39,8 +40,27 @@ public class J_EscapeCrystal extends ChargedItemWithStatus {
                 provider.configManager.setConfiguration(TicTac7xChargesImprovedConfig.group, TicTac7xChargesImprovedConfig.escape_crystal_inactivity_period, value);
             }),
 
-            // Keyboard or mouse action resets idle timer.
-            new OnUserAction().consumer(this::resetIdleTimer),
+            // Keyboard or mouse actions.
+            new OnUserAction().consumer(() -> {
+                resetIdleTimer();
+            }),
+
+            // Enter Gauntlet detection.
+            new OnMenuOptionClicked("Enter", "Enter-corrupted").onMenuTarget("The Gauntlet").consumer(() -> {
+                if (provider.store.inventoryContainsItem(ItemId.ESCAPE_CRYSTAL)) {
+                    inGauntletWithEscapeCrystal = true;
+                } else if (provider.store.equipmentContainsItem(ItemId.ESCAPE_CRYSTAL)) {
+                    provider.notifier.notify("Escape crystal disabled, because it was not in the inventory!");
+                    inGauntletWithEscapeCrystal = false;
+                } else {
+                    inGauntletWithEscapeCrystal = false;
+                }
+            }),
+
+            // Leave Gauntlet detection.
+            new OnChatMessage("(You leave the Gauntlet.|Your reward awaits you in the nearby chest.)").consumer(() -> {
+                inGauntletWithEscapeCrystal = false;
+            }),
         };
     }
 
@@ -67,13 +87,18 @@ public class J_EscapeCrystal extends ChargedItemWithStatus {
     }
 
     @Override
+    public boolean inInventory() {
+        return super.inInventory() || inGauntletWithEscapeCrystal;
+    }
+
+    @Override
     public Color getTextColor(int itemId) {
         return getTotalTextColor();
     }
 
     @Override
     public Color getTotalTextColor() {
-        return isAboutToActivate() ? Color.YELLOW : super.getTotalTextColor();
+        return isAboutToActivate() ? Color.YELLOW : isActivated() ? provider.config.getColorActivated() : provider.config.getColorEmpty();
     }
 
     @Override
@@ -83,8 +108,16 @@ public class J_EscapeCrystal extends ChargedItemWithStatus {
 
     @Override
     public String getTotalChargesString() {
-        if (provider.config.getEscapeCrystalStatus() == TicTac7xChargesImprovedConfig.ItemActivity.DEACTIVATED || (!inInventory() && !inEquipment())) { return TicTac7xChargesImprovedPlugin.getChargesMinified(ChargeId.UNLIMITED); }
-        if (provider.config.getEscapeCrystalInactivityPeriod() == ChargeId.UNKNOWN) { return TicTac7xChargesImprovedPlugin.getChargesMinified(ChargeId.UNKNOWN); }
+        if (
+            provider.config.getEscapeCrystalStatus() == TicTac7xChargesImprovedConfig.ItemActivity.DEACTIVATED
+            || !inInventoryOrEquipment()
+        ) {
+            return TicTac7xChargesImprovedPlugin.getChargesMinified(ChargeId.UNLIMITED);
+        }
+
+        if (provider.config.getEscapeCrystalInactivityPeriod() == ChargeId.UNKNOWN) {
+            return TicTac7xChargesImprovedPlugin.getChargesMinified(ChargeId.UNKNOWN);
+        }
 
         final long timeRemainingUntilActivation = getTimeRemainingUntilActivation();
         if (!alertedAboutActivation && isAboutToActivate()) {

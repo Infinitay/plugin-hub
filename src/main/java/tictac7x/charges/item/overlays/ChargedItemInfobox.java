@@ -28,7 +28,7 @@ public class ChargedItemInfobox extends InfoBox {
 
     @Override
     public String getName() {
-        return super.getName() + "_" + chargedItem.itemId;
+        return super.getName() + "_" + chargedItem.getInfoboxName();
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ChargedItemInfobox extends InfoBox {
         if (
             !provider.config.showInfoboxes() ||
             !isChargedItemInfoboxEnabled() ||
-            (!chargedItem.inInventory() && !chargedItem.inEquipment()) ||
+            !chargedItem.inInventoryOrEquipment() ||
             chargedItem.getChargesString(itemId).equals(INFINITE_SYMBOL) && !provider.config.showUnlimited()
         ) {
             return false;

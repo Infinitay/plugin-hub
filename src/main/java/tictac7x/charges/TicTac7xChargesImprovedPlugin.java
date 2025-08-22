@@ -17,26 +17,21 @@ import net.runelite.client.game.ItemManager;
 import net.runelite.client.input.*;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.runelite.client.plugins.PluginManager;
 import net.runelite.client.ui.overlay.OverlayManager;
 import net.runelite.client.ui.overlay.infobox.InfoBox;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import net.runelite.client.ui.overlay.tooltip.TooltipManager;
 import net.runelite.client.util.OSType;
-import tictac7x.charges.events.CustomChatMessage;
-import tictac7x.charges.events.CustomHitsplatApplied;
+import tictac7x.charges.events.*;
 import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.overlays.ChargedItemInfobox;
 import tictac7x.charges.item.overlays.ChargedItemOverlay;
-import tictac7x.charges.events.CustomItemContainerChanged;
 import tictac7x.charges.items.barrows.*;
-import tictac7x.charges.events.CustomMenuOptionClicked;
-import tictac7x.charges.items.boots.B_FremennikSeaBoots;
+import tictac7x.charges.items.boots.*;
 import tictac7x.charges.items.capes.*;
-import tictac7x.charges.items.crystal.A_CrystalBody;
-import tictac7x.charges.items.crystal.A_CrystalHelm;
-import tictac7x.charges.items.crystal.A_CrystalLegs;
-import tictac7x.charges.items.helms.H_CircletOfWater;
-import tictac7x.charges.items.helms.H_KandarinHeadgear;
+import tictac7x.charges.items.crystal.*;
+import tictac7x.charges.items.helms.*;
 import tictac7x.charges.items.jewelry.*;
 import tictac7x.charges.items.moons.*;
 import tictac7x.charges.items.potions.*;
@@ -146,16 +141,15 @@ import java.util.*;
 )
 
 public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener, MouseListener, MouseWheelListener {
-	private final String pluginVersion = "v0.6.7";
+	private final String pluginVersion = "v0.6.8";
 	private final String pluginMessage =
 		"<colHIGHLIGHT>Item Charges Improved " + pluginVersion + ":<br>" +
-		"<colHIGHLIGHT>* Beehive event, secateurs attachment, hallowed tree bark  support for log basket, forestry kit/basket.<br>" +
-		"<colHIGHLIGHT>* STASH units support for plank sack.<br>" +
-		"<colHIGHLIGHT>* Seed box updating when pickpocketing..<br>" +
-		"<colHIGHLIGHT>* Royal seed pod added.<br>" +
-		"<colHIGHLIGHT>* Ectophial added.<br>" +
-		"<colHIGHLIGHT>* Surge potion added.<br>" +
-		"<colHIGHLIGHT>* Ability to change potions doses overlay colors."
+		"<colHIGHLIGHT>* Blowpipe added.<br>" +
+		"<colHIGHLIGHT>* Bow string spool added.<br>" +
+		"<colHIGHLIGHT>* Forestry shop fixes.<br>" +
+		"<colHIGHLIGHT>* Escape crystal support for Gauntlet.<br>" +
+		"<colHIGHLIGHT>* Diabolic worms and shark lure support for tackle box.<br>" +
+		"<colHIGHLIGHT>* Items no longer have Destroy options hidden by default."
 	;
 
 	@Inject
@@ -166,6 +160,9 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 
 	@Inject
 	private ItemManager itemManager;
+
+	@Inject
+	private PluginManager pluginManager;
 
 	@Inject
 	private ConfigManager configManager;
@@ -221,7 +218,7 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 		mouseManager.registerMouseWheelListener(this);
 
 		store = new Store(client, itemManager, configManager);
-		provider = new Provider(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, this, config, store, gson);
+		provider = new Provider(client, clientThread, pluginManager, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, this, config, store, gson);
 
 		chargedItems = new ChargedItemBase[]{
 			// Crystal armor set
@@ -237,6 +234,7 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 			new C_Coffin(provider),
 			new C_ForestryBasket(provider),
 			new C_ForestryKit(provider),
+			new C_LogBasket(provider),
 			new C_MagicCape(provider),
 
 			// Helms
@@ -248,7 +246,6 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 			new J_AmuletOfBloodFury(provider),
 			new J_AmuletOfChemistry(provider),
 			new J_AmuletOfGlory(provider),
-			new U_BloodEssence(provider),
 			new J_BindingNecklace(provider),
 			new J_BraceletOfClay(provider),
 			new J_BraceletOfSlaughter(provider),
@@ -425,8 +422,10 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 
 			// Utilities
 			new U_AshSanctifier(provider),
+			new U_BloodEssence(provider),
 			new U_BoneCrusher(provider),
 			new U_BottomlessCompostBucket(provider),
+			new U_BowStringSpool(provider),
 			new U_ChuggingBarrel(provider),
 			new U_CoalBag(provider),
 			new U_CrystalSaw(provider),
@@ -442,7 +441,6 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 			new U_HuntsmansKit(provider),
 			new U_ImpInABox(provider),
 			new U_JarGenerator(provider),
-			new C_LogBasket(provider),
 			new U_MasterScrollBook(provider),
 			new U_MeatPouch(provider),
 			new U_OgreBellows(provider),
@@ -471,6 +469,7 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 			new W_ScytheOfVitur(provider),
 			new W_SkullSceptre(provider),
 			new W_SlayerStaffE(provider),
+			new W_ToxicBlowpipe(provider),
 			new W_TridentOfTheSeas(provider),
 			new W_TridentOfTheSeasE(provider),
 			new W_TridentOfTheSwamp(provider),
@@ -619,7 +618,12 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 			// Not menu.
 			customMenuOptionClicked.target.isEmpty() && (
 				!customMenuOptionClicked.option.contains("Buy-") &&
-				!customMenuOptionClicked.option.equals("Continue")
+				!customMenuOptionClicked.option.equals("Continue") &&
+				!customMenuOptionClicked.option.equals("Yes") &&
+				customMenuOptionClicked.eventId != 65540 && // Special event check for log basket
+				customMenuOptionClicked.eventId != 65538 && // Special event check for forestry basket
+				customMenuOptionClicked.eventId != 131074 && // Special event check for forestry basket
+				customMenuOptionClicked.eventId != 131076 // Special event check for forestry basket
 			) ||
 			// Start use by clicking on item.
 			customMenuOptionClicked.option.equals("Use") && customMenuOptionClicked.action.equals("WIDGET_TARGET") ||
@@ -760,7 +764,9 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 	}
 
 	private void onUserAction() {
-		Arrays.stream(chargedItems).forEach(ChargedItemBase::onUserAction);
+		Arrays.stream(chargedItems).forEach(chargedItem -> {
+			chargedItem.onUserAction();
+		});
 	}
 
 	private void checkForChargesReset() {
@@ -780,18 +786,21 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 	}
 
 	private void configMigration() {
-		// Migrate old hidden infoboxes multi-select to checkboxes.
+		// v0.5.5 - Migrate old hidden infoboxes multi-select to checkboxes.
 		final Optional<String> necklaceOfPassageOverlay = Optional.ofNullable(configManager.getConfiguration(TicTac7xChargesImprovedConfig.group, "necklage_of_passage_overlay"));
 		final Optional<String> necklaceOfPassageInfobox = Optional.ofNullable(configManager.getConfiguration(TicTac7xChargesImprovedConfig.group, "necklage_of_passage_infobox"));
-
 		if (necklaceOfPassageOverlay.isPresent()) {
 			configManager.setConfiguration(TicTac7xChargesImprovedConfig.group, TicTac7xChargesImprovedConfig.necklace_of_passage + TicTac7xChargesImprovedConfig._overlay, necklaceOfPassageOverlay.get().equals("true"));
 			configManager.unsetConfiguration(TicTac7xChargesImprovedConfig.group, "necklage_of_passage_overlay");
 		}
-
 		if (necklaceOfPassageInfobox.isPresent()) {
 			configManager.setConfiguration(TicTac7xChargesImprovedConfig.group, TicTac7xChargesImprovedConfig.necklace_of_passage + TicTac7xChargesImprovedConfig._infobox, necklaceOfPassageInfobox.get().equals("true"));
 			configManager.unsetConfiguration(TicTac7xChargesImprovedConfig.group, "necklage_of_passage_infobox");
+		}
+
+		// v0.6.8 - remove outdated destroy entries config
+		if (Optional.ofNullable(configManager.getConfiguration(TicTac7xChargesImprovedConfig.group, "hide_destroy")).isPresent()) {
+			configManager.unsetConfiguration(TicTac7xChargesImprovedConfig.group, "hide_destroy");
 		}
 	}
 
@@ -801,10 +810,12 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 	}
 
 	@Override
-	public void keyTyped(final KeyEvent keyEvent) {}
+	public void keyTyped(final KeyEvent keyEvent) {
+	}
 
 	@Override
-	public void keyReleased(final KeyEvent keyEvent) {}
+	public void keyReleased(final KeyEvent keyEvent) {
+	}
 
 	@Override
 	public MouseEvent mousePressed(final MouseEvent mouseEvent) {

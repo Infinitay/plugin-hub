@@ -1190,7 +1190,7 @@ public final class ItemId {
     public static final int QUETZAL_WHISTLE_BASIC = ItemID.HG_QUETZALWHISTLE_BASIC;
     public static final int QUETZAL_WHISTLE_ENHANCED = ItemID.HG_QUETZALWHISTLE_ENHANCED;
     public static final int QUETZAL_WHISTLE_PERFECTED = ItemID.HG_QUETZALWHISTLE_PERFECTED;
-    public static final int QUETZAL_FEED = ItemID.VMQ2_QUETZAL_FEED;
+    public static final int QUETZAL_FEED = ItemID.HG_SEEDSACK;
 
     // Reagent pouch
     public static final int REAGENT_POUCH = ItemID.MM_SECONDARY_POUCH;
@@ -1366,6 +1366,8 @@ public final class ItemId {
     public static final int FISH_CHUNKS = ItemID.FISH_CHUNKS;
     public static final int MOLCH_PEARL = ItemID.AERIAL_FISHING_PEARL;
     public static final int STRIPY_FEATHER = ItemID.HUNTING_STRIPY_BIRD_FEATHER;
+    public static final int DIABOLIC_WORMS = ItemID.DIABOLIC_WORMS;
+    public static final int SHARK_LURE = ItemID.SHARK_LURE;
 
     // Teleport crystal
     public static final int TELEPORT_CRYSTAL_0 = ItemID.GAUNTLET_TELEPORT_CRYSTAL;
@@ -1606,4 +1608,30 @@ public final class ItemId {
     // Ectophial
     public static final int ECTOPHIAL = ItemID.ECTOPHIAL;
     public static final int ECTOPHIAL_EMPTY = ItemID.ECTOPHIAL_EMPTY;
+
+    // Toxic blowpipe.
+    public static final int TOXIC_BLOWPIPE = ItemID.TOXIC_BLOWPIPE_LOADED;
+    public static final int TOXIC_BLOWPIPE_EMPTY = ItemID.TOXIC_BLOWPIPE;
+    public static final int ZULRAH_SCALES = ItemID.SNAKEBOSS_SCALE;
+    public static final int BRONZE_DART = ItemID.BRONZE_DART;
+    public static final int IRON_DART = ItemID.IRON_DART;
+    public static final int STEEL_DART = ItemID.STEEL_DART;
+    public static final int MITHRIL_DART = ItemID.MITHRIL_DART;
+    public static final int ADAMANT_DART = ItemID.ADAMANT_DART;
+    public static final int RUNE_DART = ItemID.RUNE_DART;
+    public static final int AMETHYST_DART = ItemID.AMETHYST_DART;
+    public static final int DRAGON_DART = ItemID.DRAGON_DART;
+    public static final int AVAS_ATTRACTOR = ItemID.ANMA_30_REWARD;
+    public static final int AVAS_ACCUMULATOR = ItemID.ANMA_50_REWARD;
+    public static final int AVAS_ASSEMBLER = ItemID.AVAS_ASSEMBLER;
+    public static final int AVAS_ASSEMBLER_TROUVER = ItemID.AVAS_ASSEMBLER_TROUVER;
+    public static final int AVAS_ASSEMBLER_MASORI = ItemID.AVAS_ASSEMBLER_MASORI;
+    public static final int AVAS_ASSEMBLER_MASORI_TROUVER = ItemID.AVAS_ASSEMBLER_MASORI_TROUVER;
+    public static final int AVAS_ASSEMBLER_MAX_SKILLCAPE = ItemID.SKILLCAPE_MAX_ASSEMBLER;
+    public static final int AVAS_ASSEMBLER_MAX_SKILLCAPE_TROUVER = ItemID.SKILLCAPE_MAX_ASSEMBLER_TROUVER;
+    public static final int AVAS_ASSEMBLER_MAX_SKILLCAPE_MASORI = ItemID.SKILLCAPE_MAX_ASSEMBLER_MASORI;
+    public static final int AVAS_ASSEMBLER_MAX_SKILLCAPE_MASORI_TROUVER = ItemID.SKILLCAPE_MAX_ASSEMBLER_MASORI_TROUVER;
+
+    // Bow string spool
+    public static final int BOW_STRING_SPOOL = ItemID.BOWSTRING_SPOOL;
 }

@@ -27,7 +27,6 @@ public class ListenerOnUserAction extends ListenerBase {
 
     public boolean isValidTrigger(final TriggerBase triggerBase) {
         if (!(triggerBase instanceof OnUserAction)) return false;
-
         final OnUserAction trigger = (OnUserAction) triggerBase;
         return super.isValidTrigger(trigger);
     }

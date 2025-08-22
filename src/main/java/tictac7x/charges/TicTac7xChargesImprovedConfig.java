@@ -123,6 +123,7 @@ public interface TicTac7xChargesImprovedConfig extends Config {
     String bonecrusher = "bonecrusher";
     String bonecrusher_status = "bonecrusher_status";
     String bottomless_compost_bucket = "bottomless_compost_bucket";
+    String bow_string_spool = "bow_string_spool";
     String chugging_barrel = "chugging_barrel";
     String coal_bag = "coal_bag";
     String colossal_pouch = "colossal_pouch";
@@ -168,6 +169,7 @@ public interface TicTac7xChargesImprovedConfig extends Config {
     String scythe_of_vitur = "scythe_of_vitur";
     String skull_sceptre = "skull_sceptre";
     String slayer_staff_e = "slayer_staff_e";
+    String toxic_blowpipe = "toxic_blowpipe";
     String toxic_staff_of_the_dead = "toxic_staff_of_the_dead";
     String trident_of_the_seas = "trident_of_the_seas";
     String trident_of_the_seas_e = "trident_of_the_seas_e";
@@ -233,12 +235,12 @@ public interface TicTac7xChargesImprovedConfig extends Config {
         ) default boolean showStorageTooltips() { return true; }
 
         @ConfigItem(
-            keyName = "hide_destroy",
+            keyName = "hide_destroy_menu_entries",
             name = "Hide destroy menu entries",
             description = "Hide destroy menu entry from items that make no sense to destroy",
             section = general,
             position = 7
-        ) default boolean hideDestroy() { return true; }
+        ) default boolean hideDestroyMenuEntries() { return false; }
 
         @ConfigItem(
             keyName = "show_unlimited_charges",
@@ -368,18 +370,18 @@ public interface TicTac7xChargesImprovedConfig extends Config {
         @ConfigItem(
             keyName = escape_crystal_time_remaining_warning,
             name = "Time remaining alert",
-            description = "How many time before you are warned before Escape crystal activates",
+            description = "Time before you are warned about Escape crystal activating",
             position = 4,
             section = escape_crystal_section
-        ) default int getEscapeCrystalTimeRemainingWarning() { return 5; }
+        ) default int getEscapeCrystalTimeRemainingWarning() { return 2; }
 
         @ConfigItem(
             keyName = escape_crystal_time_remaining_unit,
             name = "Time remaining unit",
-            description = "What unit to use for escape crystal activation (ticks is more precise)",
+            description = "Unit to use for Escape crystal activation warning",
             position = 5,
             section = escape_crystal_section
-        ) default EscapeCrystalTimeRemainingUnit getEscapeCrystalTimeRemainingUnit() { return EscapeCrystalTimeRemainingUnit.TICKS; }
+        ) default EscapeCrystalTimeRemainingUnit getEscapeCrystalTimeRemainingUnit() { return EscapeCrystalTimeRemainingUnit.SECONDS; }
 
     @ConfigSection(
         name = "Infoboxes",
@@ -865,6 +867,13 @@ public interface TicTac7xChargesImprovedConfig extends Config {
         ) default boolean bottomlessCompostBucketInfobox() { return true; }
 
         @ConfigItem(
+            keyName = bow_string_spool + _infobox,
+            name = "Bow string spool",
+            description = "",
+            section = infoboxes
+        ) default boolean bowStringSpoolInfobox() { return true; }
+
+        @ConfigItem(
             keyName = coal_bag + _infobox,
             name = "Coal bag",
             description = "",
@@ -1124,6 +1133,13 @@ public interface TicTac7xChargesImprovedConfig extends Config {
         ) default boolean slayerStaffEInfobox() { return true; }
 
         @ConfigItem(
+            keyName = toxic_blowpipe + _infobox,
+            name = "Toxic blowpipe",
+            description = "",
+            section = infoboxes
+        ) default boolean toxicBlowpipeInfobox() { return true; }
+
+        @ConfigItem(
             keyName = toxic_staff_of_the_dead + _infobox,
             name = "Toxic staff of the dead",
             description = "",
@@ -1339,6 +1355,13 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             description = "",
             section = overlays
         ) default boolean bottomlessCompostBucketOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = bow_string_spool + _overlay,
+            name = "Bow string spool",
+            description = "",
+            section = overlays
+        ) default boolean bowStringSpoolOverlay() { return true; }
 
         @ConfigItem(
             keyName = bow_of_faerdhinen + _overlay,
@@ -1927,6 +1950,13 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             description = "",
             section = overlays
         ) default boolean slayerStaffEOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = toxic_blowpipe + _overlay,
+            name = "Toxic blowpipe",
+            description = "",
+            section = overlays
+        ) default boolean toxicBlowpipeOverlay() { return true; }
 
         @ConfigItem(
             keyName = toxic_staff_of_the_dead + _overlay,
