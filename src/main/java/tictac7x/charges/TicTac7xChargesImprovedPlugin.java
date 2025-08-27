@@ -141,15 +141,13 @@ import java.util.*;
 )
 
 public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener, MouseListener, MouseWheelListener {
-	private final String pluginVersion = "v0.6.8";
+	private final String pluginVersion = "v0.6.9";
 	private final String pluginMessage =
 		"<colHIGHLIGHT>Item Charges Improved " + pluginVersion + ":<br>" +
-		"<colHIGHLIGHT>* Blowpipe added.<br>" +
-		"<colHIGHLIGHT>* Bow string spool added.<br>" +
-		"<colHIGHLIGHT>* Forestry shop fixes.<br>" +
-		"<colHIGHLIGHT>* Escape crystal support for Gauntlet.<br>" +
-		"<colHIGHLIGHT>* Diabolic worms and shark lure support for tackle box.<br>" +
-		"<colHIGHLIGHT>* Items no longer have Destroy options hidden by default."
+		"<colHIGHLIGHT>* Craw's bow and webweaver bow added.<br>" +
+		"<colHIGHLIGHT>* Blazing blowpipe added.<br>" +
+		"<colHIGHLIGHT>* Infernal axe added.<br>" +
+		"<colHIGHLIGHT>* Fixes for skull sceptre, fish barrel, plank sack."
 	;
 
 	@Inject
@@ -174,9 +172,6 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 	private OverlayManager overlayManager;
 
 	@Inject
-	private TicTac7xChargesImprovedConfig config;
-
-	@Inject
 	private ChatMessageManager chatMessageManager;
 
 	@Inject
@@ -193,6 +188,9 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 	
 	@Inject
 	private Gson gson;
+
+	@Inject
+	private TicTac7xChargesImprovedConfig config;
 
 	@Provides
 	TicTac7xChargesImprovedConfig provideConfig(final ConfigManager configManager) {
@@ -218,7 +216,7 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 		mouseManager.registerMouseWheelListener(this);
 
 		store = new Store(client, itemManager, configManager);
-		provider = new Provider(client, clientThread, pluginManager, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, this, config, store, gson);
+		provider = new Provider(client, clientThread, pluginManager, configManager, itemManager, infoBoxManager, chatMessageManager, tooltipManager, notifier, this, config, store, gson);
 
 		chargedItems = new ChargedItemBase[]{
 			// Crystal armor set
@@ -458,11 +456,14 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 
 			// Weapons
 			new W_Arclight(provider),
+			new W_BlazingBlowpipe(provider),
 			new W_BowOfFaerdhinen(provider),
 			new W_BryophytasStaff(provider),
+			new W_CrawsBow(provider),
 			new W_CrystalBow(provider),
 			new W_CrystalHalberd(provider),
 			new W_EnchantedLyre(provider),
+			new W_InfernalAxe(provider),
 			new W_IbansStaff(provider),
 			new W_PharaohsSceptre(provider),
 			new W_SanguinestiStaff(provider),
@@ -477,6 +478,7 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 			new W_TumekensShadow(provider),
 			new W_VenatorBow(provider),
 			new W_WarpedSceptre(provider),
+			new W_WebweaverBow(provider),
 			new W_WesternBanner(provider),
 
 			// Barrows armor sets
@@ -525,7 +527,7 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 		store.setChargedItems(chargedItems);
 
 		// Items overlays.
-		overlayChargedItems = new ChargedItemOverlay(client, tooltipManager, itemManager, configManager, config, chargedItems);
+		overlayChargedItems = new ChargedItemOverlay(provider, chargedItems);
 		overlayManager.add(overlayChargedItems);
 
 		// Items infoboxes.
@@ -932,16 +934,21 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 		// Unknown.
 		if (charges == ChargeId.UNKNOWN) return "?";
 
-		// Show as is.
-		if (charges < 1000) return String.valueOf(charges);
-
-		// Minify to use millions (M).
+		// Minify to use millions (_M).
 		if (charges >= 1000000) return charges / 1000000 + "M";
 
-		// Minify to use thousands (K).
-		final int thousands = charges / 1000;
-		final int hundreds = Math.min((charges % 1000 + 50) / 100, 9);
-		return thousands + (thousands < 10 && hundreds > 0 ? "." + hundreds : "") + "K";
+		// Minify to use thousands (_K).
+		if (charges >= 10000) return Math.round(((float) charges / 1000)) + "K";
+
+		// Minify to use thousands with hundreds (_._K)
+		if (charges >= 1000) {
+			final int thousands = charges / 1000;
+			final int hundreds = Math.min((charges % 1000 + 50) / 100, 9);
+			return thousands + (hundreds > 0 ? "." + hundreds : "") + "K";
+		}
+
+		// As is.
+		return String.valueOf(charges);
 	}
 }
 
