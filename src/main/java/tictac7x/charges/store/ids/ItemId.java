@@ -1196,9 +1196,9 @@ public final class ItemId {
     public static final int OAK_PLANK = ItemID.PLANK_OAK;
     public static final int TEAK_PLANK = ItemID.PLANK_TEAK;
     public static final int MAHOGANY_PLANK = ItemID.PLANK_MAHOGANY;
-    public static final int CAMPHOR_PLANK = ItemID.CAMPHOR_PLANK;
-	public static final int IRONWOOD_PLANK = ItemID.IRONWOOD_PLANK;
-	public static final int ROSEWOOD_PLANK = ItemID.ROSEWOOD_PLANK;
+    public static final int CAMPHOR_PLANK = ItemID.PLANK_CAMPHOR;
+	public static final int IRONWOOD_PLANK = ItemID.PLANK_IRONWOOD;
+	public static final int ROSEWOOD_PLANK = ItemID.PLANK_ROSEWOOD;
     public static final int SAWMILL_VOUCHER = ItemID.FORESTRY_SAWMILL_VOUCHER;
 
     // Quetzal whistle
