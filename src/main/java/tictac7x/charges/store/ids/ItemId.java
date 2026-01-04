@@ -1136,6 +1136,7 @@ public final class ItemId {
     public static final int REDWOOD_LOGS = ItemID.REDWOOD_LOGS;
     public static final int ROSEWOOD_LOGS = ItemID.ROSEWOOD_LOGS;
 
+
     // Master scroll book
     public static final int MASTER_SCROLL_BOOK = ItemID.BOOKOFSCROLLS_CHARGED;
     public static final int MASTER_SCROLL_BOOK_UNCHARGED = ItemID.BOOKOFSCROLLS_EMPTY;
@@ -1658,4 +1659,8 @@ public final class ItemId {
     //Eye of Ayak
     public static final int EYE_OF_AYAK_UNCHARGED = ItemID.EYE_OF_AYAK_UNCHARGED;
     public static final int EYE_OF_AYAK = ItemID.EYE_OF_AYAK;
+
+    //Sailors' Amulet
+    public static final int SAILORS_AMULET_UNCHARGED = ItemID.SAILORS_AMULET_EMPTY;
+    public static final int SAILORS_AMULET = ItemID.SAILORS_AMULET;
 }

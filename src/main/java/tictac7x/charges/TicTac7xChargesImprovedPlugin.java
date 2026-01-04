@@ -34,6 +34,7 @@ import tictac7x.charges.items.crystal.*;
 import tictac7x.charges.items.helms.*;
 import tictac7x.charges.items.jewelry.*;
 import tictac7x.charges.items.moons.*;
+import tictac7x.charges.items.potions.P_Overload;
 import tictac7x.charges.items.potions.*;
 import tictac7x.charges.items.potions.P_Overload;
 import tictac7x.charges.items.potions.cox.*;
@@ -278,7 +279,7 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 			new J_RingOfSuffering(provider),
 			new J_SkillsNecklace(provider),
 			new J_XericsTalisman(provider),
-
+			new J_SailorsAmulet(provider),
 			// Potions
 			new P_Absorption(provider),
 			new P_Agility(provider),
@@ -626,7 +627,8 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 				customMenuOptionClicked.eventId != 65540 && // Special event check for log basket
 				customMenuOptionClicked.eventId != 65538 && // Special event check for forestry basket
 				customMenuOptionClicked.eventId != 131074 && // Special event check for forestry basket
-				customMenuOptionClicked.eventId != 131076 // Special event check for forestry basket
+				customMenuOptionClicked.eventId != 131076 && // Special event check for forestry basket
+				customMenuOptionClicked.eventId != 327684 // Sailor's amulet - Deepfin Point
 			) ||
 			// Start use by clicking on item.
 			customMenuOptionClicked.option.equals("Use") && customMenuOptionClicked.action.equals("WIDGET_TARGET") ||
