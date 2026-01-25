@@ -28,7 +28,7 @@ dependencies {
 }
 
 group = 'tictac7x-charges'
-version = 'v0.6.9.2'
+version = 'v0.6.10'
 
 tasks.withType(JavaCompile).configureEach {
 	options.encoding = 'UTF-8'

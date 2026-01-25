@@ -36,6 +36,7 @@ public abstract class ChargedItemBase {
     private final ListenerOnHitsplatApplied listenerOnHitsplatApplied;
     private final ListenerOnWidgetLoaded listenerOnWidgetLoaded;
     private final ListenerOnVarbitChanged listenerOnVarbitChanged;
+    private final ListenerOnVarbitsMapChanged listenerOnVarbitsMapChanged;
     private final ListenerOnUserAction listenerOnUserAction;
     private final ListenerOnMenuOptionClicked listenerOnMenuOptionClicked;
     private final ListenerOnScriptPreFired listenerOnScriptPreFired;
@@ -67,6 +68,7 @@ public abstract class ChargedItemBase {
         listenerOnHitsplatApplied = new ListenerOnHitsplatApplied(provider, this);
         listenerOnWidgetLoaded = new ListenerOnWidgetLoaded(provider, this);
         listenerOnVarbitChanged = new ListenerOnVarbitChanged(provider, this);
+        listenerOnVarbitsMapChanged = new ListenerOnVarbitsMapChanged(provider, this);
         listenerOnUserAction = new ListenerOnUserAction(provider, this);
         listenerOnMenuOptionClicked = new ListenerOnMenuOptionClicked(provider, this);
         listenerOnScriptPreFired = new ListenerOnScriptPreFired(provider, this);
@@ -188,6 +190,7 @@ public abstract class ChargedItemBase {
     public void onVarbitChanged(final VarbitChanged event) {
         if (!inInventoryOrEquipment()) return;
         listenerOnVarbitChanged.trigger(event);
+        listenerOnVarbitsMapChanged.trigger(event);
     }
 
     public void onStatChanged(final StatChanged event) {
