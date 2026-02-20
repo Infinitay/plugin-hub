@@ -31,6 +31,9 @@ public class W_CrystalHalberd extends ChargedItem {
             // Attack with slash.
             new OnAnimationChanged(AnimationId.HUMAN_SCYTHE_SWEEP).isEquipped().decreaseCharges(1),
 
+            // Attack with special.
+            new OnAnimationChanged(AnimationId.HUMAN_HALBERD_SPECIAL).isEquipped().decreaseCharges(1),
+
             // Auto-charge.
             new OnChatMessage("The banker charges your Crystal halberd using (?<crystalshard>.+)x Crystal shard.").matcherConsumer(m -> {
                 final int crystalShards = Integer.parseInt(m.group("crystalshard"));
