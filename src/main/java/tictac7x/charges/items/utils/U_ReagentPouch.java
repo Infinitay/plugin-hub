@@ -48,7 +48,10 @@ public class U_ReagentPouch extends ChargedItemWithStorage {
             new StorableItem(ItemId.NAIL_BEAST_NAILS).checkName("Nail beast nails"),
             new StorableItem(ItemId.LILY_OF_THE_SANDS).checkName("Lily of the sands"),
             new StorableItem(ItemId.CAVIAR).checkName("Caviar"),
-            new StorableItem(ItemId.ROE).checkName("Roe")
+            new StorableItem(ItemId.ROE).checkName("Roe"),
+            new StorableItem(ItemId.SQUID_PASTE).checkName("Squid paste"),
+            new StorableItem(ItemId.DEMONIC_TALLOW).checkName("Demonic tallow"),
+            new StorableItem(ItemId.HADDOCK_EYE).checkName("Haddock eye")
         );
 
         this.items = new TriggerItem[]{

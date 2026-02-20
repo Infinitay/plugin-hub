@@ -1264,6 +1264,9 @@ public final class ItemId {
     public static final int LILY_OF_THE_SANDS = ItemID.LILY_OF_THE_SANDS;
     public static final int CAVIAR = ItemID.BRUT_CAVIAR;
     public static final int ROE = ItemID.BRUT_ROE;
+    public static final int SQUID_PASTE = ItemID.SQUID_PASTE;
+    public static final int HADDOCK_EYE = ItemID.HADDOCK_EYE;
+    public static final int DEMONIC_TALLOW = ItemID.DEMONIC_TALLOW;
 
     // Seed box
     public static final int SEED_BOX = ItemID.SEED_BOX;

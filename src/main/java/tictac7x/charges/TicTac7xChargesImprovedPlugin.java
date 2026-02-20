@@ -145,7 +145,10 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 	private final String pluginVersion = "v0.6.10";
 	private final String pluginMessage =
 		"<colHIGHLIGHT>Item Charges Improved " + pluginVersion + ":<br>" +
-		"<colHIGHLIGHT>* Plank sack updated, all actions correctly track the contents of it."
+		"<colHIGHLIGHT>* Sailing potions added." +
+		"<colHIGHLIGHT>* Reagent pouch new items added." +
+		"<colHIGHLIGHT>* Plank sack updated, all actions correctly track the contents of it.<br>" +
+		"<colHIGHLIGHT>* Fish barrel fixes for leaping fishes."
 	;
 
 	@Inject
