@@ -1,18 +1,17 @@
 package tictac7x.charges.items.weapons;
 
 import tictac7x.charges.item.triggers.OnAnimationChanged;
-import tictac7x.charges.item.triggers.OnGraphicChanged;
 import tictac7x.charges.store.enums.HitsplatGroup;
 import tictac7x.charges.store.ids.AnimationId;
-import tictac7x.charges.store.ids.GraphicId;
 import tictac7x.charges.store.ids.ItemId;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnHitsplatApplied;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 import static tictac7x.charges.store.enums.HitsplatTarget.ENEMY;
 
@@ -27,7 +26,7 @@ public class W_Arclight extends ChargedItem {
             new TriggerItem(ItemId.ARCLIGHT_UNCHARGED).fixedCharges(0),
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             new OnChatMessage("Your arclight has (?<charges>.+) charges?( left)?.").setDynamicallyCharges(),
             new OnChatMessage("Your arclight can perform (?<charges>.+) more attacks.").setDynamicallyCharges(),
             new OnChatMessage("Your arclight has degraded.").setFixedCharges(0),
@@ -44,7 +43,7 @@ public class W_Arclight extends ChargedItem {
             }),
             new OnHitsplatApplied(ENEMY, HitsplatGroup.SUCCESSFUL).isEquipped().consumer(() -> {
                 attacked = false;
-            }),
-        };
+            })
+        ));
     }
 }

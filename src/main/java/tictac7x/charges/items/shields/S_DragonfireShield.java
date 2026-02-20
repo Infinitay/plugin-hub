@@ -5,9 +5,10 @@ import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnGraphicChanged;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 public class S_DragonfireShield extends ChargedItem {
     public S_DragonfireShield(final Provider provider) {
@@ -20,7 +21,7 @@ public class S_DragonfireShield extends ChargedItem {
             new TriggerItem(ItemId.DRAGONFIRE_WARD)
         };
 
-        this.triggers = new TriggerBase[]{
+        this.triggers.addAll(List.of(
             // Check.
             new OnChatMessage("The shield has (?<charges>.+) charges?.").setDynamicallyCharges().onItemClick(),
 
@@ -34,7 +35,7 @@ public class S_DragonfireShield extends ChargedItem {
             new OnChatMessage("Your dragonfire shield is already fully charged.").setFixedCharges(50),
 
             // Attack.
-            new OnGraphicChanged(1165).isEquipped().decreaseCharges(1),
-        };
+            new OnGraphicChanged(1165).isEquipped().decreaseCharges(1)
+        ));
     }
 }

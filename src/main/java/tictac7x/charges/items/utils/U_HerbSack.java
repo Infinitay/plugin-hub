@@ -1,22 +1,25 @@
 package tictac7x.charges.items.utils;
 
+import tictac7x.charges.item.ChargedItemWithStorageEmptyable;
 import tictac7x.charges.store.*;
 import net.runelite.api.Skill;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.TicTac7xChargesImprovedPlugin;
-import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.storage.StorableItem;
 import tictac7x.charges.item.triggers.*;
 import tictac7x.charges.store.ids.ItemId;
 import tictac7x.charges.store.ids.WidgetId;
 import tictac7x.charges.store.utils.ReplaceTarget;
 
+import java.util.List;
+
 import static tictac7x.charges.store.ids.ItemContainerId.BANK;
 import static tictac7x.charges.store.ids.ItemContainerId.INVENTORY;
 
-public class U_HerbSack extends ChargedItemWithStorage {
+public class U_HerbSack extends ChargedItemWithStorageEmptyable {
     public U_HerbSack(final Provider provider) {
         super(TicTac7xChargesImprovedConfig.herb_sack, ItemId.HERB_SACK, provider);
+
         this.items = new TriggerItem[]{
             new TriggerItem(ItemId.HERB_SACK),
             new TriggerItem(ItemId.HERB_SACK_OPEN),
@@ -40,7 +43,7 @@ public class U_HerbSack extends ChargedItemWithStorage {
             new StorableItem(ItemId.GRIMY_TORSTOL).checkName("Torstol")
         );
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Check or empty.
             new OnChatMessage("The herb sack is empty.").emptyStorage(),
 
@@ -291,7 +294,7 @@ public class U_HerbSack extends ChargedItemWithStorage {
             ).replaceTargets(
                 new ReplaceTarget("Herbs", "Snapdragon herbs"),
                 new ReplaceTarget("Herb patch", "Snapdragon herbs")
-            ).onMenuTarget("Herbs").onHover(),
-        };
+            ).onMenuTarget("Herbs").onHover()
+        ));
     }
 }

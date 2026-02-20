@@ -5,10 +5,11 @@ import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnResetDaily;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.ids.ChargeId;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 public class J_DesertAmulet extends ChargedItem {
     public J_DesertAmulet(final Provider provider) {
@@ -20,10 +21,10 @@ public class J_DesertAmulet extends ChargedItem {
             new TriggerItem(ItemId.DESERT_AMULET_4).fixedCharges(ChargeId.UNLIMITED),
         };
 
-        this.triggers = new TriggerBase[]{
+        this.triggers.addAll(List.of(
             new OnChatMessage("You have already used your available teleports for today.").setFixedCharges(0),
             new OnResetDaily().specificItem(ItemId.DESERT_AMULET_2).setFixedCharges(1),
-            new OnResetDaily().specificItem(ItemId.DESERT_AMULET_3).setFixedCharges(1),
-        };
+            new OnResetDaily().specificItem(ItemId.DESERT_AMULET_3).setFixedCharges(1)
+        ));
     }
 }

@@ -4,9 +4,10 @@ import tictac7x.charges.store.ids.ItemId;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 public class J_CelestialRing extends ChargedItem {
     public J_CelestialRing(final Provider provider) {
@@ -19,7 +20,7 @@ public class J_CelestialRing extends ChargedItem {
             new TriggerItem(ItemId.CELESTIAL_SIGNET).needsToBeEquipped()
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Charge.
             new OnChatMessage("You add .+ charges? to your Celestial (ring|signet). It now has (?<charges>.+) charges?.").setDynamicallyCharges(),
             new OnChatMessage("You add (?<charges>.+) charges? to your Celestial (ring|signet).").setDynamicallyCharges(),
@@ -38,6 +39,6 @@ public class J_CelestialRing extends ChargedItem {
                 final int stardust = Integer.parseInt(m.group("stardust"));
                 increaseCharges(stardust);
             })
-        };
+        ));
     }
 }

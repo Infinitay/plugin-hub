@@ -3,10 +3,11 @@ package tictac7x.charges.items.utils;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnMenuEntryAdded;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
 import tictac7x.charges.store.ids.ItemId;
+
+import java.util.List;
 
 public class U_Ectophial extends ChargedItem {
     public U_Ectophial(Provider provider) {
@@ -17,9 +18,9 @@ public class U_Ectophial extends ChargedItem {
             new TriggerItem(ItemId.ECTOPHIAL).fixedCharges(1),
         };
 
-        this.triggers = new TriggerBase[]{
+        this.triggers.addAll(List.of(
             // Unify teleport.
-            new OnMenuEntryAdded("Empty").replaceOption("Teleport"),
-        };
+            new OnMenuEntryAdded("Empty").replaceOption("Teleport")
+        ));
     }
 }

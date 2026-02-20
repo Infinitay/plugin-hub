@@ -1,19 +1,21 @@
 package tictac7x.charges.items.utils;
 
+import tictac7x.charges.item.ChargedItemWithStorageEmptyable;
 import tictac7x.charges.store.ids.ItemId;
 import net.runelite.api.Skill;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.TicTac7xChargesImprovedPlugin;
-import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.storage.StorableItem;
 import tictac7x.charges.item.triggers.*;
 import tictac7x.charges.store.Provider;
 import tictac7x.charges.store.ids.WidgetId;
 
+import java.util.List;
+
 import static tictac7x.charges.store.ids.ItemContainerId.BANK;
 import static tictac7x.charges.store.ids.ItemContainerId.INVENTORY;
 
-public class U_MeatPouch extends ChargedItemWithStorage {
+public class U_MeatPouch extends ChargedItemWithStorageEmptyable {
     public U_MeatPouch(final Provider provider) {
         super(TicTac7xChargesImprovedConfig.meat_pouch, ItemId.MEAT_POUCH_SMALL, provider);
         this.storage = storage.storableItems(
@@ -43,7 +45,7 @@ public class U_MeatPouch extends ChargedItemWithStorage {
             new TriggerItem(ItemId.MEAT_POUCH_LARGE_OPEN).maxCharges(28),
         };
 
-        this.triggers = new TriggerBase[]{
+        this.triggers.addAll(List.of(
             // Empty.
             new OnChatMessage("Your meat pouch is currently holding 0 meat").emptyStorage(),
             new OnChatMessage("Your meat pouch is empty.").emptyStorage(),
@@ -91,7 +93,7 @@ public class U_MeatPouch extends ChargedItemWithStorage {
             // Aerial.
             new OnXpDrop(Skill.HUNTER, 156).requiredItem(ItemId.MEAT_POUCH_SMALL_OPEN, ItemId.MEAT_POUCH_LARGE_OPEN).hasChatMessage("You retrieve the falcon as well as the fur of the dead kebbit.").consumer(() -> {
                 storage.add(ItemId.RAW_DASHING_KEBBIT, 1);
-            }),
-        };
+            })
+        ));
     }
 }

@@ -5,9 +5,10 @@ import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnGraphicChanged;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 public class W_TridentOfTheSeas extends ChargedItem {
     public W_TridentOfTheSeas(final Provider provider) {
@@ -19,7 +20,7 @@ public class W_TridentOfTheSeas extends ChargedItem {
             new TriggerItem(ItemId.TRIDENT_OF_THE_SEAS_FULL).fixedCharges(2500),
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Ran out of charges.
             new OnChatMessage("Your Trident of the seas has run out of charges.").setFixedCharges(0),
 
@@ -39,7 +40,7 @@ public class W_TridentOfTheSeas extends ChargedItem {
             new OnChatMessage("The banker charges your Trident of the seas using (?<deathrune>.+)x Death rune.*").matcherConsumer(m -> {
                 final int deathRunes = Integer.parseInt(m.group("deathrune"));
                 increaseCharges(deathRunes);
-            }),
-        };
+            })
+        ));
     }
 }

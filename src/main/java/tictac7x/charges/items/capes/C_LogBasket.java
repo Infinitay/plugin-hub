@@ -12,6 +12,7 @@ import tictac7x.charges.item.triggers.*;
 import tictac7x.charges.store.Provider;
 import tictac7x.charges.store.ids.WidgetId;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -50,7 +51,8 @@ public class C_LogBasket extends ChargedItemWithStorage {
             new TriggerItem(ItemId.LOG_BASKET),
             new TriggerItem(ItemId.LOG_BASKET_OPEN),
         };
-        this.triggers = new TriggerBase[] {
+
+        this.triggers.addAll(List.of(
             // Check while empty.
             new OnChatMessage("(Your|The) basket is empty.").onItemClick().emptyStorage().consumer(() -> {
                 infernalQuantityTracker = 0;
@@ -168,8 +170,8 @@ public class C_LogBasket extends ChargedItemWithStorage {
                     storage.remove(lastLogs.get().getId(), 1);
                     infernalQuantityTracker--;
                 }
-            }).requiredItem(ItemId.LOG_BASKET_OPEN),
-        };
+            }).requiredItem(ItemId.LOG_BASKET_OPEN)
+        ));
     }
 
     private void buildBeehive() {

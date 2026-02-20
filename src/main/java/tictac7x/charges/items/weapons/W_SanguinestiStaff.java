@@ -4,9 +4,10 @@ import tictac7x.charges.store.ids.ItemId;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 public class W_SanguinestiStaff extends ChargedItem {
     public W_SanguinestiStaff(final Provider provider) {
@@ -19,7 +20,7 @@ public class W_SanguinestiStaff extends ChargedItem {
             new TriggerItem(ItemId.SANGUINESTI_STAFF_HOLY_UNCHARGED).fixedCharges(0),
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Check.
             new OnChatMessage("Your (Holy s|S)anguinesti staff has (?<charges>.+) charges? remaining.").setDynamicallyCharges(),
 
@@ -33,7 +34,7 @@ public class W_SanguinestiStaff extends ChargedItem {
             new OnChatMessage("The banker charges your (Holy s|S)anguinesti staff using (?<bloodrune>.+)x Blood rune.").matcherConsumer(m -> {
                 final int bloodRunes = Integer.parseInt(m.group("bloodrune"));
                 increaseCharges(bloodRunes / 3);
-            }),
-        };
+            })
+        ));
     }
 }

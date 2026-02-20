@@ -6,10 +6,11 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnGraphicChanged;
 import tictac7x.charges.item.triggers.OnResetDaily;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.ids.ChargeId;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 public class B_FremennikSeaBoots extends ChargedItem {
     public B_FremennikSeaBoots(final Provider provider) {
@@ -22,7 +23,7 @@ public class B_FremennikSeaBoots extends ChargedItem {
             new TriggerItem(ItemId.FREMENNIK_SEA_BOOTS_4).fixedCharges(ChargeId.UNLIMITED),
         };
 
-        this.triggers = new TriggerBase[]{
+        this.triggers.addAll(List.of(
             // Try to teleport while empty.
             new OnChatMessage("You have already used your available teleport for today. Try again tomorrow when the boots have recharged.").setFixedCharges(0),
 
@@ -32,7 +33,7 @@ public class B_FremennikSeaBoots extends ChargedItem {
             // Daily reset.
             new OnResetDaily().specificItem(ItemId.FREMENNIK_SEA_BOOTS_1).setFixedCharges(1),
             new OnResetDaily().specificItem(ItemId.FREMENNIK_SEA_BOOTS_2).setFixedCharges(3),
-            new OnResetDaily().specificItem(ItemId.FREMENNIK_SEA_BOOTS_3).setFixedCharges(5),
-        };
+            new OnResetDaily().specificItem(ItemId.FREMENNIK_SEA_BOOTS_3).setFixedCharges(5)
+        ));
     }
 }

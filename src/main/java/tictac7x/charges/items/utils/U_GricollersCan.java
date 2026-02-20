@@ -5,9 +5,10 @@ import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnGraphicChanged;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 public class U_GricollersCan extends ChargedItem {
     public U_GricollersCan(final Provider provider) {
@@ -17,7 +18,7 @@ public class U_GricollersCan extends ChargedItem {
             new TriggerItem(ItemId.GRICOLLERS_CAN),
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Check.
             new OnChatMessage("Watering can charges remaining: (?<charges>.+)%").setDynamicallyCharges().onItemClick(),
 
@@ -28,7 +29,7 @@ public class U_GricollersCan extends ChargedItem {
             new OnChatMessage("You fill the watering can").onItemClick().setFixedCharges(1000),
 
             // Water.
-            new OnGraphicChanged(410).decreaseCharges(1),
-        };
+            new OnGraphicChanged(410).decreaseCharges(1)
+        ));
     }
 }

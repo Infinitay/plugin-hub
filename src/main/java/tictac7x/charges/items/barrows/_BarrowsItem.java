@@ -5,8 +5,9 @@ import tictac7x.charges.events.CustomMenuOptionClicked;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnCombat;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 public class _BarrowsItem extends ChargedItem {
     public _BarrowsItem(
@@ -20,7 +21,7 @@ public class _BarrowsItem extends ChargedItem {
             provider
         );
 
-        this.triggers = new TriggerBase[]{
+        this.triggers.addAll(List.of(
             // Check.
             new OnChatMessage(itemName + ": (?<percentage>.+)% remaining until the next degradation.").matcherConsumer((m) -> {
                 final int percentage = Integer.parseInt(m.group("percentage"));
@@ -36,8 +37,8 @@ public class _BarrowsItem extends ChargedItem {
             }),
 
             // Degrade in combat.
-            new OnCombat(90).isEquipped().decreaseCharges(1),
-        };
+            new OnCombat(90).isEquipped().decreaseCharges(1)
+        ));
     }
 
     @Override

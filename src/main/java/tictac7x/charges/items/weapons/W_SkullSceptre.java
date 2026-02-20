@@ -5,9 +5,10 @@ import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnMenuEntryAdded;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 public class W_SkullSceptre extends ChargedItem {
     public W_SkullSceptre(final Provider provider) {
@@ -18,7 +19,7 @@ public class W_SkullSceptre extends ChargedItem {
             new TriggerItem(ItemId.SKULL_SCEPTRE_IMBUED)
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Teleport.
             new OnChatMessage("Your Skull Sceptre has (?<charges>.+) charges? left.").setDynamicallyCharges(),
 
@@ -36,7 +37,7 @@ public class W_SkullSceptre extends ChargedItem {
 
             // Unified menu entry.
             new OnMenuEntryAdded("Divine").replaceOption("Check"),
-            new OnMenuEntryAdded("Invoke").replaceOption("Teleport"),
-        };
+            new OnMenuEntryAdded("Invoke").replaceOption("Teleport")
+        ));
     }
 }

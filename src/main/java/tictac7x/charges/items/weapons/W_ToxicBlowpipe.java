@@ -10,12 +10,12 @@ import tictac7x.charges.item.triggers.OnAnimationChanged;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnMenuOptionClicked;
 import tictac7x.charges.item.triggers.OnScriptPreFired;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
 import tictac7x.charges.store.ids.ItemId;
 
 import java.awt.Color;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -43,7 +43,7 @@ public class W_ToxicBlowpipe extends ChargedItemWithStorage {
             new StorableItem(ItemId.DRAGON_DART).checkName("Dragon dart")
         );
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Check without darts.
             new OnChatMessage("Darts: None\\. Scales: (?<scales>.+) \\(.*\\).").matcherConsumer(m -> {
                 final StorageItem scales = new StorageItem(ItemId.ZULRAH_SCALES, TicTac7xChargesImprovedPlugin.getNumberFromCommaString(m.group("scales")));
@@ -112,8 +112,8 @@ public class W_ToxicBlowpipe extends ChargedItemWithStorage {
                         storage.remove(item.getId(), 1);
                     }
                 }
-            }),
-        };
+            })
+        ));
     }
 
     @Override

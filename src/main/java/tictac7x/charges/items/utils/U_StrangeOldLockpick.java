@@ -4,9 +4,10 @@ import tictac7x.charges.store.ids.ItemId;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 public class U_StrangeOldLockpick extends ChargedItem {
     public U_StrangeOldLockpick(final Provider provider) {
@@ -17,9 +18,9 @@ public class U_StrangeOldLockpick extends ChargedItem {
             new TriggerItem(ItemId.STRANGE_OLD_LOCKPICK_DEGRADED),
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             new OnChatMessage("Your Strange old lockpick( now)? has (?<charges>.+) charges? remaining.").setDynamicallyCharges(),
-            new OnChatMessage("The Strange old lockpick crumbles to dust as you use it one last time."),
-        };
+            new OnChatMessage("The Strange old lockpick crumbles to dust as you use it one last time.")
+        ));
     }
 }

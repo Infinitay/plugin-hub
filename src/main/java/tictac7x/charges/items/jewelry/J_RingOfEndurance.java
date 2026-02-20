@@ -8,6 +8,7 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.*;
 import tictac7x.charges.store.Provider;
 
+import java.util.List;
 import java.util.Optional;
 
 public class J_RingOfEndurance extends ChargedItem {
@@ -20,7 +21,7 @@ public class J_RingOfEndurance extends ChargedItem {
             new TriggerItem(ItemId.RING_OF_ENDURANCE_NOCHARGES).fixedCharges(0),
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Charge.
             new OnChatMessage("You load your Ring of endurance with (?<charges>.+) stamina doses?.").increaseDynamically(),
 
@@ -36,7 +37,7 @@ public class J_RingOfEndurance extends ChargedItem {
                 if (unchargeWidget.isPresent() && unchargeWidget.get().getText().equals("Are you sure you want to uncharge your Ring of endurance?")) {
                     setCharges(0);
                 }
-            }),
-        };
+            })
+        ));
     }
 }

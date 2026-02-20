@@ -1,20 +1,22 @@
 package tictac7x.charges.items.utils;
 
+import tictac7x.charges.item.ChargedItemWithStorageEmptyable;
 import tictac7x.charges.store.*;
 import net.runelite.api.Skill;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.TicTac7xChargesImprovedPlugin;
-import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.storage.StorableItem;
 import tictac7x.charges.item.triggers.*;
 import tictac7x.charges.store.ids.ItemContainerId;
 import tictac7x.charges.store.ids.ItemId;
 import tictac7x.charges.store.ids.WidgetId;
 
+import java.util.List;
+
 import static tictac7x.charges.store.ids.ItemContainerId.BANK;
 import static tictac7x.charges.store.ids.ItemContainerId.INVENTORY;
 
-public class U_FurPouch extends ChargedItemWithStorage {
+public class U_FurPouch extends ChargedItemWithStorageEmptyable {
     public U_FurPouch(final Provider provider) {
         super(TicTac7xChargesImprovedConfig.fur_pouch, ItemId.FUR_POUCH_SMALL, provider);
         this.storage = storage.storableItems(
@@ -49,7 +51,7 @@ public class U_FurPouch extends ChargedItemWithStorage {
             new TriggerItem(ItemId.FUR_POUCH_LARGE_OPEN).maxCharges(28),
         };
 
-        this.triggers = new TriggerBase[]{
+        this.triggers.addAll(List.of(
             // Empty.
             new OnChatMessage("Your fur pouch is currently holding 0 fur.").emptyStorage(),
             new OnChatMessage("Your fur pouch is empty.").emptyStorage(),
@@ -115,7 +117,7 @@ public class U_FurPouch extends ChargedItemWithStorage {
             }),
             new OnXpDrop(Skill.HUNTER, 156).hasChatMessage("You retrieve the falcon as well as the fur of the dead kebbit.").requiredItem(ItemId.FUR_POUCH_SMALL_OPEN, ItemId.FUR_POUCH_MEDIUM_OPEN, ItemId.FUR_POUCH_LARGE_OPEN).consumer(() -> {
                 storage.add(ItemId.DASHING_KEBBIT_FUR, 1);
-            }),
-        };
+            })
+        ));
     }
 }

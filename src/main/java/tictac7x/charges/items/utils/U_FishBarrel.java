@@ -1,26 +1,26 @@
 package tictac7x.charges.items.utils;
 
+import tictac7x.charges.item.ChargedItemWithStorageEmptyable;
 import tictac7x.charges.store.ids.ItemId;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.TicTac7xChargesImprovedPlugin;
-import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.storage.StorableItem;
 import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.OnMenuEntryAdded;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
 import tictac7x.charges.store.ids.WidgetId;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static tictac7x.charges.store.ids.ItemContainerId.INVENTORY;
 
-public class U_FishBarrel extends ChargedItemWithStorage {
+public class U_FishBarrel extends ChargedItemWithStorageEmptyable {
     private Optional<StorageItem> lastCaughtFish = Optional.empty();
 
     public U_FishBarrel(final Provider provider) {
@@ -94,7 +94,7 @@ public class U_FishBarrel extends ChargedItemWithStorage {
             new StorableItem(ItemId.RAW_MANTA_RAY).checkName("Manta ray")
         );
 
-        this.triggers = new TriggerBase[]{
+        this.triggers.addAll(List.of(
             // Check or empty already empty.
             new OnChatMessage("(Your|The) barrel is empty.").onItemClick().emptyStorage(),
 
@@ -134,7 +134,7 @@ public class U_FishBarrel extends ChargedItemWithStorage {
             new OnChatMessage("You empty the barrel.").onMenuOption(TicTac7xChargesImprovedPlugin.menuOptionEmptyToBank).emptyStorage(),
 
             // Hide destroy.
-            new OnMenuEntryAdded("Destroy").hide(),
-        };
+            new OnMenuEntryAdded("Destroy").hide()
+        ));
     }
 }

@@ -3,11 +3,12 @@ package tictac7x.charges.items.utils;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnVarbitChanged;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
 import tictac7x.charges.store.ids.ItemId;
 import tictac7x.charges.store.ids.VarbitId;
+
+import java.util.List;
 
 public class U_BowStringSpool extends ChargedItem {
     public U_BowStringSpool(final Provider provider) {
@@ -17,8 +18,8 @@ public class U_BowStringSpool extends ChargedItem {
             new TriggerItem(ItemId.BOW_STRING_SPOOL)
         };
 
-        this.triggers = new TriggerBase[]{
-            new OnVarbitChanged(VarbitId.BOW_STRING_SPOOL_CHARGES).setDynamically(),
-        };
+        this.triggers.addAll(List.of(
+            new OnVarbitChanged(VarbitId.BOW_STRING_SPOOL_CHARGES).setDynamically()
+        ));
     }
 }

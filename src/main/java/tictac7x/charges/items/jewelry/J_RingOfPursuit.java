@@ -4,9 +4,10 @@ import tictac7x.charges.store.ids.ItemId;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 public class J_RingOfPursuit extends ChargedItem {
     public J_RingOfPursuit(final Provider provider) {
@@ -16,7 +17,7 @@ public class J_RingOfPursuit extends ChargedItem {
             new TriggerItem(ItemId.RING_OF_PURSUIT).needsToBeEquipped(),
         };
 
-        this.triggers = new TriggerBase[]{
+        this.triggers.addAll(List.of(
             // Check.
             new OnChatMessage("Your ring of pursuit has (?<charges>.+) charges? left.").setDynamicallyCharges(),
 
@@ -27,7 +28,7 @@ public class J_RingOfPursuit extends ChargedItem {
             new OnChatMessage("Your ring of pursuit reveals the entire trail to you. It then crumbles to dust.").setFixedCharges(10),
 
             // Destroy.
-            new OnChatMessage("The ring shatters. Your next ring of pursuit will start afresh from 10 charges.").setFixedCharges(10),
-        };
+            new OnChatMessage("The ring shatters. Your next ring of pursuit will start afresh from 10 charges.").setFixedCharges(10)
+        ));
     }
 }

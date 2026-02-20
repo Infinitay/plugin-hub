@@ -6,6 +6,8 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.*;
 import tictac7x.charges.store.Provider;
 
+import java.util.List;
+
 public class J_GiantsoulAmulet extends ChargedItem {
     public J_GiantsoulAmulet(final Provider provider) {
         super(TicTac7xChargesImprovedConfig.giantsoul_amulet, ItemId.GIANTSOUL_AMULET, provider);
@@ -15,7 +17,7 @@ public class J_GiantsoulAmulet extends ChargedItem {
             new TriggerItem(ItemId.GIANTSOUL_AMULET),
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Check.
             new OnChatMessage("Your Giantsoul amulet has (?<charges>.+) charges? left powering it.").setDynamicallyCharges(),
 
@@ -32,7 +34,7 @@ public class J_GiantsoulAmulet extends ChargedItem {
             }),
 
             // Unified menu entry.
-            new OnMenuEntryAdded("Rub").replaceOption("Teleport"),
-        };
+            new OnMenuEntryAdded("Rub").replaceOption("Teleport")
+        ));
     }
 }

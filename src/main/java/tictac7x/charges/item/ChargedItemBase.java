@@ -13,6 +13,8 @@ import tictac7x.charges.store.ids.ChargeId;
 
 import javax.annotation.Nonnull;
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public abstract class ChargedItemBase {
@@ -22,7 +24,7 @@ public abstract class ChargedItemBase {
     public int itemId;
 
     public TriggerItem[] items = new TriggerItem[]{};
-    public TriggerBase[] triggers = new TriggerBase[]{};
+    public final List<TriggerBase> triggers = new ArrayList<>();
 
     private final ListenerOnChatMessage listenerOnChatMessage;
     private final ListenerOnItemContainerChanged listenerOnItemContainerChanged;

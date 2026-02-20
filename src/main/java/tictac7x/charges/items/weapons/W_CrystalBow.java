@@ -6,9 +6,10 @@ import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnAnimationChanged;
 import tictac7x.charges.item.triggers.OnChatMessage;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 public class W_CrystalBow extends ChargedItem {
     public W_CrystalBow(final Provider provider) {
@@ -20,7 +21,7 @@ public class W_CrystalBow extends ChargedItem {
             new TriggerItem(ItemId.CRYSTAL_BOW_FULL).fixedCharges(2500),
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Check.
             new OnChatMessage("Your crystal bow has (?<charges>.+) charges? remaining.").setDynamicallyCharges(),
 
@@ -31,7 +32,7 @@ public class W_CrystalBow extends ChargedItem {
             new OnChatMessage("The banker charges your Crystal bow using (?<crystalshard>.+)x Crystal shard.").matcherConsumer(m -> {
                 final int crystalShards = Integer.parseInt(m.group("crystalshard"));
                 increaseCharges(crystalShards * 100);
-            }),
-        };
+            })
+        ));
     }
 }

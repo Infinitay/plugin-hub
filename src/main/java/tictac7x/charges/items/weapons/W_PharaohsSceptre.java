@@ -5,9 +5,10 @@ import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnGraphicChanged;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 public class W_PharaohsSceptre extends ChargedItem {
     public W_PharaohsSceptre(final Provider provider) {
@@ -18,8 +19,8 @@ public class W_PharaohsSceptre extends ChargedItem {
             new TriggerItem(ItemId.PHARAOHS_SCEPTRE_INITIAL),
             new TriggerItem(ItemId.PHARAOHS_SCEPTRE),
         };
-        
-        this.triggers = new TriggerBase[]{
+
+        this.triggers.addAll(List.of(
             // Check and automatic messages.
             new OnChatMessage("Your sceptre has (?<charges>.+) charges? left.").setDynamicallyCharges().onItemClick(),
 
@@ -30,7 +31,7 @@ public class W_PharaohsSceptre extends ChargedItem {
             new OnChatMessage("Right, .+ artefacts gives you (?<charges>.+) charges. Now be on your way.").setDynamicallyCharges(),
 
             // Teleport.
-            new OnGraphicChanged(715).decreaseCharges(1),
-        };
+            new OnGraphicChanged(715).decreaseCharges(1)
+        ));
     }
 }

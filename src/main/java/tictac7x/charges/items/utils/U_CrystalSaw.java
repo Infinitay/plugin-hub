@@ -6,6 +6,8 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.*;
 import tictac7x.charges.store.Provider;
 
+import java.util.List;
+
 public class U_CrystalSaw extends ChargedItem {
     public U_CrystalSaw(final Provider provider) {
         super(TicTac7xChargesImprovedConfig.crystal_saw, ItemId.CRYSTAL_SAW, provider);
@@ -14,9 +16,9 @@ public class U_CrystalSaw extends ChargedItem {
             new TriggerItem(ItemId.CRYSTAL_SAW),
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Check.
-            new OnChatMessage("Your saw has (?<charges>.+) charges? left.").setDynamicallyCharges(),
-        };
+            new OnChatMessage("Your saw has (?<charges>.+) charges? left.").setDynamicallyCharges()
+        ));
     }
 }

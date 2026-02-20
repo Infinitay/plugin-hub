@@ -1,17 +1,18 @@
 package tictac7x.charges.items.utils;
 
+import tictac7x.charges.item.ChargedItemWithStorageEmptyable;
 import tictac7x.charges.item.storage.StorableItem;
 import tictac7x.charges.item.triggers.*;
 import tictac7x.charges.store.*;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.TicTac7xChargesImprovedPlugin;
-import tictac7x.charges.item.ChargedItemWithStorage;
-import tictac7x.charges.store.ids.ChargeId;
 import tictac7x.charges.store.ids.ItemContainerId;
 import tictac7x.charges.store.ids.ItemId;
 import tictac7x.charges.store.ids.WidgetId;
 
-public class U_SeedBox extends ChargedItemWithStorage {
+import java.util.List;
+
+public class U_SeedBox extends ChargedItemWithStorageEmptyable {
     public U_SeedBox(final Provider provider) {
         super(TicTac7xChargesImprovedConfig.seed_box, ItemId.SEED_BOX, provider);
 
@@ -95,7 +96,7 @@ public class U_SeedBox extends ChargedItemWithStorage {
             new StorableItem(ItemId.CELASTRUS_SEED).checkName("celastrus")
         );
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Check or empty.
             new OnChatMessage("(The|Your) seed box is( now| already)? empty.").emptyStorage(),
 
@@ -130,6 +131,6 @@ public class U_SeedBox extends ChargedItemWithStorage {
 
             // Hide destroy.
             new OnMenuEntryAdded("Destroy").hide()
-        };
+        ));
     }
 }

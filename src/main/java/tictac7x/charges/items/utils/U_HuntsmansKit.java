@@ -13,9 +13,12 @@ import tictac7x.charges.store.ids.ItemContainerId;
 import tictac7x.charges.store.ids.ItemId;
 import tictac7x.charges.store.ids.WidgetId;
 
+import java.util.List;
+
 public class U_HuntsmansKit extends ChargedItemWithStorage {
     public U_HuntsmansKit(final Provider provider) {
         super(TicTac7xChargesImprovedConfig.huntsmans_kit, ItemId.HUNTSMANS_KIT, provider);
+
         this.items = new TriggerItem[]{
             new TriggerItem(ItemId.HUNTSMANS_KIT)
         };
@@ -62,7 +65,7 @@ public class U_HuntsmansKit extends ChargedItemWithStorage {
             new StorableItem(ItemId.IMPLING_JAR)
         );
 
-        this.triggers = new TriggerBase[]{
+        this.triggers.addAll(List.of(
             // Fill from inventory.
             new OnItemContainerChanged(ItemContainerId.INVENTORY).fillStorageFromInventory().onMenuOption("Fill", TicTac7xChargesImprovedPlugin.menuOptionFillFromInventory),
 
@@ -77,8 +80,8 @@ public class U_HuntsmansKit extends ChargedItemWithStorage {
             new OnMenuEntryAdded("Use").replaceOptionConsumer(() -> getMenuOptionForUse()).isWidgetVisible(WidgetId.BANK, WidgetId.DEPOSIT_BOX),
 
             // Hide destroy option.
-            new OnMenuEntryAdded("Destroy").hide(),
-        };
+            new OnMenuEntryAdded("Destroy").hide()
+        ));
     }
 
     private String getMenuOptionForUse() {

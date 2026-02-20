@@ -5,10 +5,11 @@ import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnItemContainerChanged;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.ids.ItemContainerId;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 public class J_BraceletOfClay extends ChargedItem {
     public J_BraceletOfClay(final Provider provider) {
@@ -18,7 +19,7 @@ public class J_BraceletOfClay extends ChargedItem {
             new TriggerItem(ItemId.BRACELET_OF_CLAY).needsToBeEquipped(),
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Check.
             new OnChatMessage("You can mine (?<charges>.+) more pieces? of soft clay before your bracelet crumbles to dust.").setDynamicallyCharges(),
 
@@ -41,7 +42,7 @@ public class J_BraceletOfClay extends ChargedItem {
             }),
 
             // Crumbles.
-            new OnChatMessage("Your bracelet of clay crumbles to dust.").setFixedCharges(28),
-        };
+            new OnChatMessage("Your bracelet of clay crumbles to dust.").setFixedCharges(28)
+        ));
     }
 }

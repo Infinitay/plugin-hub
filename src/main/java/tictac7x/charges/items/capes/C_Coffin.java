@@ -6,10 +6,11 @@ import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.storage.StorableItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnItemContainerChanged;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.ids.ItemContainerId;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 import static tictac7x.charges.store.ids.ItemContainerId.INVENTORY;
 
@@ -39,7 +40,7 @@ public class C_Coffin extends ChargedItemWithStorage {
             new TriggerItem(ItemId.GOLD_COFFIN_OPEN).maxCharges(28),
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Add remains to coffin.
             new OnChatMessage("You put the (?<remains>.+) remains into your open coffin.").matcherConsumer(m -> {
                 storage.add(getStorageItemFromName(m.group("remains"), 1));
@@ -64,7 +65,7 @@ public class C_Coffin extends ChargedItemWithStorage {
 
             // Use shades on coffin and vice versa.
             new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().onUseChargedItemOnStorageItem(storage.getStorableItems()),
-            new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().onUseStorageItemOnChargedItem(storage.getStorableItems()),
-        };
+            new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().onUseStorageItemOnChargedItem(storage.getStorableItems())
+        ));
     }
 }

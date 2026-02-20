@@ -5,9 +5,10 @@ import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnWidgetLoaded;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 public class J_AmuletOfChemistry extends ChargedItem {
     public J_AmuletOfChemistry(final Provider provider) {
@@ -17,7 +18,7 @@ public class J_AmuletOfChemistry extends ChargedItem {
             new TriggerItem(ItemId.AMULET_OF_CHEMISTRY).needsToBeEquipped()
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Check
             new OnChatMessage("Your amulet of chemistry has (?<charges>.+) charges? left.").setDynamicallyCharges(),
 
@@ -29,7 +30,7 @@ public class J_AmuletOfChemistry extends ChargedItem {
             new OnWidgetLoaded(219, 1, 0).text("Status: (?<charges>.+) charges? left.").setDynamically().onItemClick(),
 
             // Break
-            new OnChatMessage("The amulet shatters. Your next amulet of chemistry will start afresh from (?<charges>.+) charges.").setDynamicallyCharges(),
-        };
+            new OnChatMessage("The amulet shatters. Your next amulet of chemistry will start afresh from (?<charges>.+) charges.").setDynamicallyCharges()
+        ));
     }
 }

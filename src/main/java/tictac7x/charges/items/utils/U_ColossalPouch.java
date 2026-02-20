@@ -1,10 +1,10 @@
 package tictac7x.charges.items.utils;
 
+import tictac7x.charges.item.ChargedItemWithStorageEmptyable;
 import tictac7x.charges.store.*;
 import net.runelite.api.Skill;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.TicTac7xChargesImprovedPlugin;
-import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.storage.StorableItem;
 import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.item.triggers.*;
@@ -13,12 +13,13 @@ import tictac7x.charges.store.ids.ItemId;
 import tictac7x.charges.store.ids.WidgetId;
 
 import java.awt.*;
+import java.util.List;
 import java.util.Optional;
 
 import static tictac7x.charges.TicTac7xChargesImprovedPlugin.getNumberFromWordRepresentation;
 import static tictac7x.charges.store.ids.ItemContainerId.INVENTORY;
 
-public class U_ColossalPouch extends ChargedItemWithStorage {
+public class U_ColossalPouch extends ChargedItemWithStorageEmptyable {
     public U_ColossalPouch(final Provider provider) {
         super(TicTac7xChargesImprovedConfig.colossal_pouch, ItemId.COLOSSAL_POUCH, provider);
         this.storage = storage.storableItems(
@@ -33,7 +34,7 @@ public class U_ColossalPouch extends ChargedItemWithStorage {
             new TriggerItem(ItemId.COLOSSAL_POUCH_DEGRADED),
         };
 
-        this.triggers = new TriggerBase[]{
+        this.triggers.addAll(List.of(
             // Empty.
             new OnChatMessage("There is no essence in this pouch.").emptyStorage(),
 
@@ -122,8 +123,8 @@ public class U_ColossalPouch extends ChargedItemWithStorage {
             // Set maximum charges on level up
             new OnStatChanged(Skill.RUNECRAFT).consumer(() -> {
                 storage.setMaximumTotalQuantity(getPouchCapacity());
-            }),
-        };
+            })
+        ));
     }
 
     private String getMenuOptionForUse() {

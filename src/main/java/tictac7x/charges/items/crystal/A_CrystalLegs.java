@@ -6,9 +6,10 @@ import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnHitsplatApplied;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 import static tictac7x.charges.store.enums.HitsplatTarget.SELF;
 
@@ -35,7 +36,7 @@ public class A_CrystalLegs extends ChargedItem {
             new TriggerItem(ItemId.CRYSTAL_LEGS_AMLODD_INACTIVE).fixedCharges(0),
         };
 
-        this.triggers = new TriggerBase[]{
+        this.triggers.addAll(List.of(
             new OnChatMessage("Your crystal legs has (?<charges>.+) charges? remaining").setDynamicallyCharges().onItemClick(),
             new OnHitsplatApplied(SELF, HitsplatGroup.SUCCESSFUL).isEquipped().decreaseCharges(1),
 
@@ -43,7 +44,7 @@ public class A_CrystalLegs extends ChargedItem {
             new OnChatMessage("The banker charges your Crystal legs using (?<crystalshard>.+)x Crystal shard.").matcherConsumer(m -> {
                 final int crystalShards = Integer.parseInt(m.group("crystalshard"));
                 increaseCharges(crystalShards * 100);
-            }),
-        };
+            })
+        ));
     }
 }

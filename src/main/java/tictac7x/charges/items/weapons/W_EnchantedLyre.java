@@ -5,9 +5,10 @@ import tictac7x.charges.store.ids.ItemId;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnMenuEntryAdded;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 public class W_EnchantedLyre extends ChargedItem {
     public W_EnchantedLyre(final Provider provider) {
@@ -23,8 +24,8 @@ public class W_EnchantedLyre extends ChargedItem {
             new TriggerItem(ItemId.ENCHANTED_LYRE_IMBUED).fixedCharges(ChargeId.UNLIMITED),
         };
 
-        this.triggers = new TriggerBase[]{
-            new OnMenuEntryAdded("Play").replaceOption("Teleport"),
-        };
+        this.triggers.addAll(List.of(
+            new OnMenuEntryAdded("Play").replaceOption("Teleport")
+        ));
     }
 }

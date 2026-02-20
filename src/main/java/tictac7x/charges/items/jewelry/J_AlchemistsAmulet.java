@@ -6,6 +6,8 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.*;
 import tictac7x.charges.store.Provider;
 
+import java.util.List;
+
 public class J_AlchemistsAmulet extends ChargedItem {
     public J_AlchemistsAmulet(final Provider provider) {
         super(TicTac7xChargesImprovedConfig.alchemists_amulet, ItemId.ALCHEMISTS_AMULET, provider);
@@ -15,7 +17,7 @@ public class J_AlchemistsAmulet extends ChargedItem {
             new TriggerItem(ItemId.ALCHEMISTS_AMULET_UNCHARGED).fixedCharges(0),
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Check
             new OnChatMessage("Your Alchemist's amulet has (?<charges>.+) charges left.").setDynamicallyCharges(),
 
@@ -34,7 +36,7 @@ public class J_AlchemistsAmulet extends ChargedItem {
             new OnChatMessage("The banker charges your Alchemist's amulet using (?<amulets>.+)x Amulet of chemistry.*").matcherConsumer(m -> {
                 final int amuletsOfChemistry = Integer.parseInt(m.group("amulets"));
                 increaseCharges(amuletsOfChemistry * 10);
-            }),
-        };
+            })
+        ));
     }
 }

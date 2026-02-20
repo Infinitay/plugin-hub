@@ -10,6 +10,8 @@ import tictac7x.charges.store.ids.AnimationId;
 import tictac7x.charges.store.ids.ItemContainerId;
 import tictac7x.charges.store.ids.ItemId;
 
+import java.util.List;
+
 public class U_ChuggingBarrel extends ChargedItemWithStorage {
     public U_ChuggingBarrel(final Provider provider) {
         super(TicTac7xChargesImprovedConfig.chugging_barrel, ItemId.CHUGGING_BARREL, provider);
@@ -107,7 +109,7 @@ public class U_ChuggingBarrel extends ChargedItemWithStorage {
             new TriggerItem(ItemId.CHUGGING_BARREL),
         };
 
-        this.triggers = new TriggerBase[]{
+        this.triggers.addAll(List.of(
             // Check contents.
             new OnItemContainerChanged(ItemContainerId.CHUGGING_BARREL).updateStorage(),
 
@@ -125,8 +127,8 @@ public class U_ChuggingBarrel extends ChargedItemWithStorage {
             new OnMenuEntryAdded("Destroy").hide(),
 
             // Unify "Open" to "Configure"
-            new OnMenuEntryAdded("Open").replaceOption("Configure"),
-        };
+            new OnMenuEntryAdded("Open").replaceOption("Configure")
+        ));
     }
 
     private int getMinimumSips() {

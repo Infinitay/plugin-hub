@@ -5,9 +5,10 @@ import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnGraphicChanged;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 public class W_IbansStaff extends ChargedItem {
     public W_IbansStaff(final Provider provider) {
@@ -19,12 +20,12 @@ public class W_IbansStaff extends ChargedItem {
             new TriggerItem(ItemId.IBANS_STAFF_UPGRADED),
         };
 
-        this.triggers = new TriggerBase[]{
+        this.triggers.addAll(List.of(
             // Check.
             new OnChatMessage("You have (?<charges>.+) charges left on the staff.").setDynamicallyCharges().onItemClick(),
 
             // Attack.
-            new OnGraphicChanged(87).isEquipped().decreaseCharges(1),
-        };
+            new OnGraphicChanged(87).isEquipped().decreaseCharges(1)
+        ));
     }
 }

@@ -4,9 +4,10 @@ import tictac7x.charges.store.ids.ItemId;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnMenuEntryAdded;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 public class J_BurningAmulet extends ChargedItem {
     public J_BurningAmulet(
@@ -22,8 +23,8 @@ public class J_BurningAmulet extends ChargedItem {
             new TriggerItem(ItemId.BURNING_AMULET_5).fixedCharges(5),
         };
 
-        this.triggers = new TriggerBase[]{
-            new OnMenuEntryAdded("Rub").replaceOption("Teleport"),
-        };
+        this.triggers.addAll(List.of(
+            new OnMenuEntryAdded("Rub").replaceOption("Teleport")
+        ));
     }
 }

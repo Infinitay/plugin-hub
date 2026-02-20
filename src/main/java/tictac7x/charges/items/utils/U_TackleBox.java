@@ -7,15 +7,17 @@ import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.storage.StorableItem;
 import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.OnMenuEntryAdded;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.ids.ItemContainerId;
 import tictac7x.charges.store.ids.ItemId;
 import tictac7x.charges.store.ids.WidgetId;
 
+import java.util.List;
+
 public class U_TackleBox extends ChargedItemWithStorage {
     public U_TackleBox(final Provider provider) {
         super(TicTac7xChargesImprovedConfig.tackle_box, ItemId.TACKLE_BOX, provider);
+
         this.storage = storage.storableItems(
             new StorableItem(ItemId.ANGLER_HAT),
             new StorableItem(ItemId.ANGLER_TOP),
@@ -85,7 +87,7 @@ public class U_TackleBox extends ChargedItemWithStorage {
             new TriggerItem(ItemId.TACKLE_BOX),
         };
 
-        this.triggers = new TriggerBase[]{
+        this.triggers.addAll(List.of(
             // Fill from inventory.
             new OnItemContainerChanged(ItemContainerId.INVENTORY).fillStorageFromInventory().onMenuOption("Fill", TicTac7xChargesImprovedPlugin.menuOptionFillFromInventory),
 
@@ -104,8 +106,8 @@ public class U_TackleBox extends ChargedItemWithStorage {
             new OnMenuEntryAdded("Use").replaceOptionConsumer(() -> getMenuOptionForUse()).isWidgetVisible(WidgetId.BANK, WidgetId.DEPOSIT_BOX),
 
             // Hide destroy.
-            new OnMenuEntryAdded("Destroy").hide(),
-        };
+            new OnMenuEntryAdded("Destroy").hide()
+        ));
     }
 
     private String getMenuOptionForUse() {

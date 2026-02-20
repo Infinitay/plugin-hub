@@ -6,9 +6,10 @@ import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnXpDrop;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 public class W_BryophytasStaff extends ChargedItem {
     public W_BryophytasStaff(final Provider provider) {
@@ -19,7 +20,7 @@ public class W_BryophytasStaff extends ChargedItem {
             new TriggerItem(ItemId.BRYOPHYTAS_STAFF)
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Check.
             new OnChatMessage("The nature staff has (?<charges>.+) charges?.").setDynamicallyCharges(),
 
@@ -92,7 +93,7 @@ public class W_BryophytasStaff extends ChargedItem {
             ).decreaseCharges(2),
             new OnXpDrop(Skill.MAGIC).isEquipped().onMenuOption("Cast").onMenuTarget(
                 "Geomancy"
-            ).decreaseCharges(3),
-        };
+            ).decreaseCharges(3)
+        ));
     }
 }

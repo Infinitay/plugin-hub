@@ -8,11 +8,12 @@ import tictac7x.charges.item.triggers.OnAnimationChanged;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.OnMenuEntryAdded;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.ids.AnimationId;
 import tictac7x.charges.store.ids.ItemContainerId;
 import tictac7x.charges.store.ids.ItemId;
+
+import java.util.List;
 
 public class U_QuetzalWhistle extends ChargedItem {
     public U_QuetzalWhistle(final Provider provider) {
@@ -24,7 +25,7 @@ public class U_QuetzalWhistle extends ChargedItem {
             new TriggerItem(ItemId.QUETZAL_WHISTLE_PERFECTED).maxCharges(50),
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Check.
             new OnChatMessage("Your quetzal whistle has (?<charges>.+) charges? remaining.").setDynamicallyCharges(),
 
@@ -65,6 +66,6 @@ public class U_QuetzalWhistle extends ChargedItem {
                     }
                 }
             })
-        };
+        ));
     }
 }

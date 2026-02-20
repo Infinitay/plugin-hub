@@ -7,6 +7,8 @@ import tictac7x.charges.item.triggers.*;
 import tictac7x.charges.store.ids.ChargeId;
 import tictac7x.charges.store.Provider;
 
+import java.util.List;
+
 public class W_BowOfFaerdhinen extends ChargedItem {
     public W_BowOfFaerdhinen(final Provider provider) {
         super(TicTac7xChargesImprovedConfig.bow_of_faerdhinen, ItemId.BOW_OF_FAERDHINEN, provider);
@@ -24,7 +26,7 @@ public class W_BowOfFaerdhinen extends ChargedItem {
             new TriggerItem(ItemId.BOW_OF_FAERDHINEN_CORRUPTED_AMLODD).fixedCharges(ChargeId.UNLIMITED),
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Check.
             new OnChatMessage("Your bow of Faerdhinen has (?<charges>.+) charges? remaining.").setDynamicallyCharges(),
 
@@ -35,7 +37,7 @@ public class W_BowOfFaerdhinen extends ChargedItem {
             new OnChatMessage("The banker charges your Bow of faerdhinen using (?<crystalshard>.+)x Crystal shard.").matcherConsumer(m -> {
                 final int crystalShards = Integer.parseInt(m.group("crystalshard"));
                 increaseCharges(crystalShards * 100);
-            }),
-        };
+            })
+        ));
     }
 }

@@ -8,6 +8,7 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.*;
 import tictac7x.charges.store.Provider;
 
+import java.util.List;
 import java.util.Optional;
 
 public class J_BindingNecklace extends ChargedItem {
@@ -18,7 +19,7 @@ public class J_BindingNecklace extends ChargedItem {
             new TriggerItem(ItemId.BINDING_NECKLACE).needsToBeEquipped(),
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Check, one left.
             new OnChatMessage("You have one charge left before your Binding necklace disintegrates.").setFixedCharges(1),
 
@@ -41,7 +42,7 @@ public class J_BindingNecklace extends ChargedItem {
                 ) {
                     provider.store.addConsumerToNextTickQueue(() -> setCharges(16));
                 }
-            }),
-        };
+            })
+        ));
     }
 }

@@ -5,9 +5,10 @@ import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnGraphicChanged;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 public class S_TomeOfFire extends ChargedItem {
     public S_TomeOfFire(final Provider provider) {
@@ -18,7 +19,7 @@ public class S_TomeOfFire extends ChargedItem {
             new TriggerItem(ItemId.TOME_OF_FIRE).needsToBeEquipped(),
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Check.
             new OnChatMessage("Your tome has been charged with (Burnt|Searing) Pages. It currently holds (?<charges>.+) charges?.").setDynamicallyCharges().onItemClick(),
 
@@ -29,7 +30,7 @@ public class S_TomeOfFire extends ChargedItem {
             new OnChatMessage("The banker charges your Tome of fire using (?<burntpage>.+)x Burnt page.").matcherConsumer(m -> {
                 final int burntPages = Integer.parseInt(m.group("burntpage"));
                 increaseCharges(burntPages * 20);
-            }),
-        };
+            })
+        ));
     }
 }

@@ -6,6 +6,8 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.*;
 import tictac7x.charges.store.Provider;
 
+import java.util.List;
+
 public class J_XericsTalisman extends ChargedItem {
     public J_XericsTalisman(final Provider provider) {
         super(TicTac7xChargesImprovedConfig.xerics_talisman, ItemId.XERICS_TALISMAN, provider);
@@ -15,7 +17,7 @@ public class J_XericsTalisman extends ChargedItem {
             new TriggerItem(ItemId.XERICS_TALISMAN),
         };
 
-        this.triggers = new TriggerBase[]{
+        this.triggers.addAll(List.of(
             // Check.
             new OnChatMessage("(The|Your) talisman( now)? has one charge.").onItemClick().setFixedCharges(1),
             new OnChatMessage("(The|Your) talisman( now)? has (?<charges>.+) charges.").setDynamicallyCharges().onItemClick(),
@@ -33,7 +35,7 @@ public class J_XericsTalisman extends ChargedItem {
             new OnChatMessage("The banker charges your Xeric's talisman using (?<lizardmanfang>.+)x Lizardman fang.").matcherConsumer(m -> {
                 final int lizardmanFangs = Integer.parseInt(m.group("lizardmanfang"));
                 increaseCharges(lizardmanFangs);
-            }),
-        };
+            })
+        ));
     }
 }

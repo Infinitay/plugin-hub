@@ -1,16 +1,17 @@
 package tictac7x.charges.items.utils;
 
 import net.runelite.api.gameval.VarbitID;
+import tictac7x.charges.item.ChargedItemWithStorageEmptyable;
 import tictac7x.charges.store.ids.ItemId;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
-import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.storage.StorableItem;
 import tictac7x.charges.item.triggers.*;
 import tictac7x.charges.store.Provider;
 
+import java.util.List;
 import java.util.Map;
 
-public class U_PlankSack extends ChargedItemWithStorage {
+public class U_PlankSack extends ChargedItemWithStorageEmptyable {
     public U_PlankSack(final Provider provider) {
         super(TicTac7xChargesImprovedConfig.plank_sack, ItemId.PLANK_SACK, provider);
         storage.setMaximumTotalQuantity(28).emptyIsNegative().storableItems(
@@ -27,7 +28,7 @@ public class U_PlankSack extends ChargedItemWithStorage {
             new TriggerItem(ItemId.PLANK_SACK),
         };
 
-        this.triggers = new TriggerBase[]{
+        this.triggers.addAll(List.of(
             new OnChatMessage("Your sack is currently empty.").onItemClick().emptyStorage(),
 
             new OnVarbitsMapChanged(
@@ -41,6 +42,6 @@ public class U_PlankSack extends ChargedItemWithStorage {
                     VarbitID.PLANK_SACK_ROSEWOOD, ItemId.ROSEWOOD_PLANK
                 )
             )
-        };
+        ));
     }
 }

@@ -5,9 +5,10 @@ import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnGraphicChanged;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 public class S_TomeOfEarth extends ChargedItem {
     public S_TomeOfEarth(final Provider provider) {
@@ -18,7 +19,7 @@ public class S_TomeOfEarth extends ChargedItem {
             new TriggerItem(ItemId.TOME_OF_EARTH).needsToBeEquipped(),
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Check.
             new OnChatMessage("Your tome currently holds (?<charges>.+) charges?.").setDynamicallyCharges().onItemClick(),
 
@@ -29,7 +30,7 @@ public class S_TomeOfEarth extends ChargedItem {
             new OnChatMessage("The banker charges your Tome of earth using (?<soiledpage>.+)x Soiled page.").matcherConsumer(m -> {
                 final int soiledPages = Integer.parseInt(m.group("soiledpage"));
                 increaseCharges(soiledPages * 20);
-            }),
-        };
+            })
+        ));
     }
 }

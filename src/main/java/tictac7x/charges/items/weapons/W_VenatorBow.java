@@ -6,6 +6,8 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.*;
 import tictac7x.charges.store.Provider;
 
+import java.util.List;
+
 public class W_VenatorBow extends ChargedItem {
     public W_VenatorBow(final Provider provider) {
         super(TicTac7xChargesImprovedConfig.venator_bow, ItemId.VENATOR_BOW, provider);
@@ -15,12 +17,12 @@ public class W_VenatorBow extends ChargedItem {
             new TriggerItem(ItemId.VENATOR_BOW)
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Check.
             new OnChatMessage("Your venator bow has (?<charges>.+) charges? remaining.").setDynamicallyCharges(),
 
             // Attack.
-            new OnGraphicChanged(2289).decreaseCharges(1),
-        };
+            new OnGraphicChanged(2289).decreaseCharges(1)
+        ));
     }
 }

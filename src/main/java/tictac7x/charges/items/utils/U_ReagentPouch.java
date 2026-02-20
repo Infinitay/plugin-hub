@@ -1,22 +1,23 @@
 package tictac7x.charges.items.utils;
 
 import net.runelite.api.Skill;
+import tictac7x.charges.item.ChargedItemWithStorageEmptyable;
 import tictac7x.charges.store.ids.ItemId;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.TicTac7xChargesImprovedPlugin;
-import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.storage.StorableItem;
 import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.item.triggers.*;
 import tictac7x.charges.store.Provider;
 import tictac7x.charges.store.ids.WidgetId;
 
+import java.util.List;
 import java.util.Optional;
 
 import static tictac7x.charges.TicTac7xChargesImprovedPlugin.getNumberFromWordRepresentation;
 import static tictac7x.charges.store.ids.ItemContainerId.INVENTORY;
 
-public class U_ReagentPouch extends ChargedItemWithStorage {
+public class U_ReagentPouch extends ChargedItemWithStorageEmptyable {
     public U_ReagentPouch(final Provider provider) {
         super(TicTac7xChargesImprovedConfig.reagent_pouch, ItemId.REAGENT_POUCH, provider);
         storage.emptyIsNegative().setMaximumIndividualQuantity(26).storableItems(
@@ -59,7 +60,7 @@ public class U_ReagentPouch extends ChargedItemWithStorage {
             new TriggerItem(ItemId.REAGENT_POUCH_OPEN),
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Check empty.
             new OnChatMessage("The Reagent pouch is empty.").emptyStorage(),
 
@@ -130,8 +131,8 @@ public class U_ReagentPouch extends ChargedItemWithStorage {
 
 
             // Hide destroy.
-            new OnMenuEntryAdded("Destroy").hide(),
-        };
+            new OnMenuEntryAdded("Destroy").hide()
+        ));
     }
 
     private String getMenuOptionForUse() {

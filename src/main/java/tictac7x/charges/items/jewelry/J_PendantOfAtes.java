@@ -6,6 +6,8 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.*;
 import tictac7x.charges.store.Provider;
 
+import java.util.List;
+
 public class J_PendantOfAtes extends ChargedItem {
     public J_PendantOfAtes(final Provider provider) {
         super(TicTac7xChargesImprovedConfig.pendant_of_ates, ItemId.PENDANT_OF_ATES, provider);
@@ -15,7 +17,7 @@ public class J_PendantOfAtes extends ChargedItem {
             new TriggerItem(ItemId.PENDANT_OF_ATES),
         };
 
-        this.triggers = new TriggerBase[]{
+        this.triggers.addAll(List.of(
             // Check empty.
             new OnChatMessage("The pendant has no charges.").setFixedCharges(0).onItemClick(),
 
@@ -38,7 +40,7 @@ public class J_PendantOfAtes extends ChargedItem {
             }),
 
             // Unified menu entry.
-            new OnMenuEntryAdded("Rub").replaceOption("Teleport"),
-        };
+            new OnMenuEntryAdded("Rub").replaceOption("Teleport")
+        ));
     }
 }

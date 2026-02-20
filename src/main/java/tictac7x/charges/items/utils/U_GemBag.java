@@ -1,19 +1,21 @@
 package tictac7x.charges.items.utils;
 
+import tictac7x.charges.item.ChargedItemWithStorageEmptyable;
 import tictac7x.charges.store.ids.ItemId;
 import net.runelite.api.Skill;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.TicTac7xChargesImprovedPlugin;
-import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.storage.StorableItem;
 import tictac7x.charges.item.triggers.*;
 import tictac7x.charges.store.Provider;
 import tictac7x.charges.store.ids.WidgetId;
 
+import java.util.List;
+
 import static tictac7x.charges.store.ids.ItemContainerId.INVENTORY;
 import static tictac7x.charges.store.ids.ItemContainerId.BANK;
 
-public class U_GemBag extends ChargedItemWithStorage {
+public class U_GemBag extends ChargedItemWithStorageEmptyable {
     public U_GemBag(final Provider provider) {
         super(TicTac7xChargesImprovedConfig.gem_bag, ItemId.GEM_BAG, provider);
         this.items = new TriggerItem[]{
@@ -29,7 +31,7 @@ public class U_GemBag extends ChargedItemWithStorage {
             new StorableItem(ItemId.UNCUT_DRAGONSTONE).checkName("Dragonstone")
         );
 
-        this.triggers = new TriggerBase[]{
+        this.triggers.addAll(List.of(
             // Empty to bank or inventory.
             new OnChatMessage("The gem bag is( now)? empty.").emptyStorage(),
 
@@ -91,7 +93,7 @@ public class U_GemBag extends ChargedItemWithStorage {
             new OnMenuEntryAdded("Empty").replaceOption(TicTac7xChargesImprovedPlugin.menuOptionEmptyToBank).isWidgetVisible(WidgetId.BANK, WidgetId.DEPOSIT_BOX),
 
             // Hide destroy.
-            new OnMenuEntryAdded("Destroy").hide(),
-        };
+            new OnMenuEntryAdded("Destroy").hide()
+        ));
     }
 }

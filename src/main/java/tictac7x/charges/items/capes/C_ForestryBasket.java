@@ -13,6 +13,7 @@ import tictac7x.charges.store.ids.ItemContainerId;
 import tictac7x.charges.store.ids.ItemId;
 import tictac7x.charges.store.ids.WidgetId;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -94,7 +95,7 @@ public class C_ForestryBasket extends ChargedItemWithStorage {
             new TriggerItem(ItemId.FORESTRY_BASKET_OPEN),
         };
 
-        this.triggers = new TriggerBase[]{
+        this.triggers.addAll(List.of(
             // View contents.
             new OnItemContainerChanged(ItemContainerId.FORESTRY_KIT).itemsConsumer(storageItems -> {
                 storage.put(ItemId.ANIMAINFUSED_BARK, storageItems.count(ItemId.ANIMAINFUSED_BARK));
@@ -313,8 +314,8 @@ public class C_ForestryBasket extends ChargedItemWithStorage {
                     storage.remove(lastLogs.get().getId(), 1);
                     infernalQuantityTracker--;
                 }
-            }).requiredItem(ItemId.FORESTRY_BASKET_OPEN),
-        };
+            }).requiredItem(ItemId.FORESTRY_BASKET_OPEN)
+        ));
     }
 
     private void purchaseFromFriendlyForesterShop(final int amountToBuy) {

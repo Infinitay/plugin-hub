@@ -4,11 +4,12 @@ import tictac7x.charges.store.*;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.*;
-import tictac7x.charges.store.enums.CombatStyle;
 import tictac7x.charges.store.enums.HitsplatGroup;
 import tictac7x.charges.store.enums.HitsplatTarget;
 import tictac7x.charges.store.ids.AnimationId;
 import tictac7x.charges.store.ids.ItemId;
+
+import java.util.List;
 
 public class J_EfaritaysAid extends ChargedItem {
     private boolean attackedVampyre = false;
@@ -20,7 +21,7 @@ public class J_EfaritaysAid extends ChargedItem {
             new TriggerItem(ItemId.EFARITAYS_AID).needsToBeEquipped()
         };
 
-        this.triggers = new TriggerBase[]{
+        this.triggers.addAll(List.of(
             // Check.
             new OnChatMessage("Your ring has (?<charges>.+) charges? left.").setDynamicallyCharges().onItemClick(),
 
@@ -62,7 +63,7 @@ public class J_EfaritaysAid extends ChargedItem {
                     increaseCharges(1);
                     attackedVampyre = false;
                 }
-            }),
-        };
+            })
+        ));
     }
 }

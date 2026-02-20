@@ -5,9 +5,10 @@ import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnWidgetLoaded;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 public class J_DodgyNecklace extends ChargedItem {
     public J_DodgyNecklace(final Provider provider) {
@@ -16,8 +17,8 @@ public class J_DodgyNecklace extends ChargedItem {
         this.items = new TriggerItem[]{
             new TriggerItem(ItemId.DODGY_NECKLACE).needsToBeEquipped(),
         };
-        
-        this.triggers = new TriggerBase[] {
+
+        this.triggers.addAll(List.of(
             // Check.
             new OnChatMessage("Your dodgy necklace has (?<charges>.+) charges? left.").setDynamicallyCharges(),
 
@@ -30,7 +31,7 @@ public class J_DodgyNecklace extends ChargedItem {
             // Break.
             new OnChatMessage("The necklace shatters. Your next dodgy necklace will start afresh from (?<charges>.+) charges.").setDynamicallyCharges(),
 
-            new OnWidgetLoaded(219, 1, 0).text("Status: (?<charges>.+) charges? left.").setDynamically().onItemClick(),
-        };
+            new OnWidgetLoaded(219, 1, 0).text("Status: (?<charges>.+) charges? left.").setDynamically().onItemClick()
+        ));
     }
 }

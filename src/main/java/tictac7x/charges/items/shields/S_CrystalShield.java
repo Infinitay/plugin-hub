@@ -6,10 +6,11 @@ import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnHitsplatApplied;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.enums.HitsplatTarget;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 public class S_CrystalShield extends ChargedItem {
     public S_CrystalShield(final Provider provider) {
@@ -20,12 +21,12 @@ public class S_CrystalShield extends ChargedItem {
             new TriggerItem(ItemId.CRYSTAL_SHIELD_DEGRADED),
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Check.
             new OnChatMessage("Your crystal shield has (?<charges>.+) charges? remaining.").setDynamicallyCharges(),
 
             // Get hit.
             new OnHitsplatApplied(HitsplatTarget.SELF, HitsplatGroup.SUCCESSFUL).moreThanZeroDamage().isEquipped().decreaseCharges(1)
-        };
+        ));
     }
 }

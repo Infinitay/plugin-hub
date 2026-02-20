@@ -8,6 +8,9 @@ import tictac7x.charges.item.storage.StorableItem;
 import tictac7x.charges.item.triggers.*;
 import tictac7x.charges.store.ids.ChargeId;
 import tictac7x.charges.store.Provider;
+import tictac7x.charges.store.ids.VarbitId;
+
+import java.util.List;
 
 class ExplorersRingStorageItemId {
     public static final int TELEPORTS = -1000;
@@ -31,11 +34,11 @@ public class J_ExplorersRing extends ChargedItemWithStorageMultipleCharges {
             new TriggerItem(ItemId.EXPLORERS_RING_4),
         };
 
-        this.triggers = new TriggerBase[]{
+        this.triggers.addAll(List.of(
             // Use.
-            new OnVarbitChanged(Varbits.EXPLORER_RING_ALCHS).consumer(() -> updateStorage()),
-            new OnVarbitChanged(Varbits.EXPLORER_RING_RUNENERGY).consumer(() -> updateStorage()),
-            new OnVarbitChanged(Varbits.EXPLORER_RING_TELEPORTS).consumer(() -> updateStorage()),
+            new OnVarbitChanged(VarbitId.EXPLORER_RING_ALCHS).consumer(() -> updateStorage()),
+            new OnVarbitChanged(VarbitId.EXPLORER_RING_RUNENERGY).consumer(() -> updateStorage()),
+            new OnVarbitChanged(VarbitId.EXPLORER_RING_TELEPORTS).consumer(() -> updateStorage()),
 
             // Check.
             new OnMenuOptionClicked("Check").onItemClick().consumer(() -> updateStorage()),
@@ -66,18 +69,18 @@ public class J_ExplorersRing extends ChargedItemWithStorageMultipleCharges {
                 storage.put(ExplorersRingStorageItemId.ALCHEMY, 30);
                 storage.put(ExplorersRingStorageItemId.ENERGY_RESTORES, 3);
                 storage.put(ExplorersRingStorageItemId.TELEPORTS, ChargeId.UNLIMITED);
-            }),
-        };
+            })
+        ));
     }
 
     private void updateStorage() {
         storage.clear();
 
         // Alchemy.
-        storage.put(ExplorersRingStorageItemId.ALCHEMY, 30 - provider.client.getVarbitValue(Varbits.EXPLORER_RING_ALCHS));
+        storage.put(ExplorersRingStorageItemId.ALCHEMY, 30 - provider.client.getVarbitValue(VarbitId.EXPLORER_RING_ALCHS));
 
         // Energy restores.
-        final int energyRestoresUsed = provider.client.getVarbitValue(Varbits.EXPLORER_RING_RUNENERGY);
+        final int energyRestoresUsed = provider.client.getVarbitValue(VarbitId.EXPLORER_RING_RUNENERGY);
         switch (itemId) {
             case ItemId.EXPLORERS_RING_1:
                 storage.put(ExplorersRingStorageItemId.ENERGY_RESTORES, 2 - energyRestoresUsed);
@@ -94,7 +97,7 @@ public class J_ExplorersRing extends ChargedItemWithStorageMultipleCharges {
         }
 
         // Teleports.
-        final int teleportsUsed = provider.client.getVarbitValue(Varbits.EXPLORER_RING_TELEPORTS);
+        final int teleportsUsed = provider.client.getVarbitValue(VarbitId.EXPLORER_RING_TELEPORTS);
         switch (itemId) {
             case ItemId.EXPLORERS_RING_1:
                 storage.put(ExplorersRingStorageItemId.TELEPORTS, 0);

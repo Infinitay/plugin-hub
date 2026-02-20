@@ -1,16 +1,18 @@
 package tictac7x.charges.items.utils;
 
+import tictac7x.charges.item.ChargedItemWithStorageEmptyable;
 import tictac7x.charges.store.ids.ItemId;
 import net.runelite.api.Skill;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.TicTac7xChargesImprovedPlugin;
-import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.storage.StorableItem;
 import tictac7x.charges.item.triggers.*;
 import tictac7x.charges.store.Provider;
 import tictac7x.charges.store.ids.WidgetId;
 
-public class U_CoalBag extends ChargedItemWithStorage {
+import java.util.List;
+
+public class U_CoalBag extends ChargedItemWithStorageEmptyable {
     public U_CoalBag(final Provider provider) {
         super(TicTac7xChargesImprovedConfig.coal_bag, ItemId.COAL_BAG, provider);
         this.storage = storage
@@ -22,7 +24,8 @@ public class U_CoalBag extends ChargedItemWithStorage {
             new TriggerItem(ItemId.COAL_BAG),
             new TriggerItem(ItemId.COAL_BAG_OPEN),
         };
-        this.triggers = new TriggerBase[] {
+
+        this.triggers.addAll(List.of(
             // Check or empty.
             new OnChatMessage("The coal bag is( now)? empty.").emptyStorage(),
 
@@ -73,7 +76,7 @@ public class U_CoalBag extends ChargedItemWithStorage {
             }),
 
             // Hide destroy.
-            new OnMenuEntryAdded("Destroy").hide(),
-        };
+            new OnMenuEntryAdded("Destroy").hide()
+        ));
     }
 }

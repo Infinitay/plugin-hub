@@ -2,11 +2,24 @@ package tictac7x.charges.items.moons;
 
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.OnCombat;
 import tictac7x.charges.store.Provider;
 
+import java.util.List;
+import java.util.regex.Pattern;
+
 public class _MoonItem extends ChargedItem {
-    public _MoonItem(final String configKey, final int itemId, final Provider provider) {
-        super(TicTac7xChargesImprovedConfig.moons_gear + "_" + configKey, itemId, provider);
+    public _MoonItem(final String checkName, final int itemId, final Provider provider) {
+        super(TicTac7xChargesImprovedConfig.moons_gear + "_" + checkName.toLowerCase().replaceAll("\\s", "_"), itemId, provider);
+
+        this.triggers.addAll(List.of(
+            // Check.
+            new OnChatMessage("Your " + Pattern.quote(checkName) + "( only)? has (?<charges>.+) charges? (remaining|left).").setDynamicallyCharges(),
+
+            // In combat.
+            new OnCombat(90).isEquipped().decreaseCharges(1)
+        ));
     }
 
     @Override

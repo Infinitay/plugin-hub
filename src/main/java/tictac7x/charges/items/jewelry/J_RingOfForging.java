@@ -4,9 +4,10 @@ import tictac7x.charges.store.ids.ItemId;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 public class J_RingOfForging extends ChargedItem {
     public J_RingOfForging(final Provider provider) {
@@ -16,7 +17,7 @@ public class J_RingOfForging extends ChargedItem {
             new TriggerItem(ItemId.RING_OF_FORGING).needsToBeEquipped()
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Break full.
             new OnChatMessage("The ring is fully charged. There would be no point in breaking it.").onMenuOption("Break").onMenuTarget("Ring of forging").setFixedCharges(140),
 
@@ -27,7 +28,7 @@ public class J_RingOfForging extends ChargedItem {
             new OnChatMessage("You retrieve a bar of iron.").decreaseCharges(1),
 
             // Break.
-            new OnChatMessage("The ring shatters. Your next ring of forging will start afresh from (?<charges>.+) charges.").setDynamicallyCharges(),
-        };
+            new OnChatMessage("The ring shatters. Your next ring of forging will start afresh from (?<charges>.+) charges.").setDynamicallyCharges()
+        ));
     }
 }

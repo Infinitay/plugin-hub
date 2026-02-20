@@ -6,9 +6,10 @@ import tictac7x.charges.store.ids.ItemId;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 public class J_RingOfShadows extends ChargedItem {
     public J_RingOfShadows(final Provider provider) {
@@ -19,7 +20,7 @@ public class J_RingOfShadows extends ChargedItem {
             new TriggerItem(ItemId.RING_OF_SHADOWS)
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Check.
             new OnChatMessage("Your ring of shadows has (?<charges>.+) charges? remaining.").setDynamicallyCharges(),
 
@@ -36,7 +37,7 @@ public class J_RingOfShadows extends ChargedItem {
             new OnChatMessage("The banker charges your Ring of shadows using (?<bloodrune>.+)x Blood rune.*").matcherConsumer(m -> {
                 final int bloodRunes = Integer.parseInt(m.group("ringofrecoil"));
                 increaseCharges(bloodRunes);
-            }),
-        };
+            })
+        ));
     }
 }

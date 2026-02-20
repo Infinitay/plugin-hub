@@ -5,10 +5,11 @@ import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnMenuEntryAdded;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.ids.ChargeId;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 public class J_Camulet extends ChargedItem {
     public J_Camulet(final Provider provider) {
@@ -18,7 +19,7 @@ public class J_Camulet extends ChargedItem {
             new TriggerItem(ItemId.CAMULET),
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Check.
             new OnChatMessage("Your Camulet has one charge left.").setFixedCharges(1),
             new OnChatMessage("Your Camulet has (?<charges>.+) charges left.").setDynamicallyCharges(),
@@ -40,7 +41,7 @@ public class J_Camulet extends ChargedItem {
             new OnMenuEntryAdded("Check-charge").replaceOption("Check"),
 
             // Replace rub
-            new OnMenuEntryAdded("Rub").replaceOption("Teleport"),
-        };
+            new OnMenuEntryAdded("Rub").replaceOption("Teleport")
+        ));
     }
 }

@@ -5,9 +5,10 @@ import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnGraphicChanged;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 public class W_TumekensShadow extends ChargedItem {
     public W_TumekensShadow(final Provider provider) {
@@ -18,7 +19,7 @@ public class W_TumekensShadow extends ChargedItem {
             new TriggerItem(ItemId.TUMEKENS_SHADOW),
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Check.
             new OnChatMessage("Tumeken's shadow( only)? has (?<charges>.+) charges? (remaining|left)").setDynamicallyCharges(),
 
@@ -38,7 +39,7 @@ public class W_TumekensShadow extends ChargedItem {
             new OnChatMessage("The banker charges your Tumeken's shadow using (?<soulrune>.+)x Soul rune").matcherConsumer(m -> {
                 final int soulRunes = Integer.parseInt(m.group("soulrune"));
                 increaseCharges(soulRunes / 2);
-            }),
-        };
+            })
+        ));
     }
 }

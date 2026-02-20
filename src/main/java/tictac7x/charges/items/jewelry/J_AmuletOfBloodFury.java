@@ -5,12 +5,13 @@ import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnHitsplatApplied;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.enums.CombatStyle;
 import tictac7x.charges.store.enums.HitsplatGroup;
 import tictac7x.charges.store.enums.HitsplatTarget;
 import tictac7x.charges.store.ids.ItemId;
+
+import java.util.List;
 
 public class J_AmuletOfBloodFury extends ChargedItem {
     public J_AmuletOfBloodFury(final Provider provider) {
@@ -20,7 +21,7 @@ public class J_AmuletOfBloodFury extends ChargedItem {
             new TriggerItem(ItemId.AMULET_OF_BLOOD_FURY),
         };
 
-        this.triggers = new TriggerBase[]{
+        this.triggers.addAll(List.of(
             // Creation
             new OnChatMessage("You have successfully created an Amulet of blood fury.").setFixedCharges(10000),
 
@@ -31,7 +32,7 @@ public class J_AmuletOfBloodFury extends ChargedItem {
             new OnChatMessage("You have successfully added .+ hits? to your Amulet of blood fury. It will now work for (?<charges>.+) more hits?.").setDynamicallyCharges(),
 
             // Take damage.
-            new OnHitsplatApplied(HitsplatTarget.ENEMY, HitsplatGroup.SUCCESSFUL).combatStyle(CombatStyle.MELEE).isEquipped().decreaseCharges(1),
-        };
+            new OnHitsplatApplied(HitsplatTarget.ENEMY, HitsplatGroup.SUCCESSFUL).combatStyle(CombatStyle.MELEE).isEquipped().decreaseCharges(1)
+        ));
     }
 }

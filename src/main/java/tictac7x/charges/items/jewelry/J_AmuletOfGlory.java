@@ -3,11 +3,12 @@ package tictac7x.charges.items.jewelry;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.ids.ChargeId;
 import tictac7x.charges.store.ids.ItemId;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 public class J_AmuletOfGlory extends ChargedItem {
     public J_AmuletOfGlory(final Provider provider) {
@@ -31,7 +32,7 @@ public class J_AmuletOfGlory extends ChargedItem {
             new TriggerItem(ItemId.AMULET_OF_GLORY_TRIMMED_6).fixedCharges(6),
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Check
             new OnChatMessage("Your Alchemist's amulet has (?<charges>.+) charges left.").setDynamicallyCharges(),
 
@@ -51,7 +52,7 @@ public class J_AmuletOfGlory extends ChargedItem {
             new OnChatMessage("The banker charges your Alchemist's amulet using (?<amulets>.+)x Amulet of chemistry.*").matcherConsumer(m -> {
                 final int amuletsOfChemistry = Integer.parseInt(m.group("amulets"));
                 increaseCharges(amuletsOfChemistry * 10);
-            }),
-        };
+            })
+        ));
     }
 }

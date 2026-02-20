@@ -4,9 +4,10 @@ import tictac7x.charges.store.ids.ItemId;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 public class W_ToxicStaffOfTheDead extends ChargedItem {
     public W_ToxicStaffOfTheDead(final Provider provider) {
@@ -17,8 +18,8 @@ public class W_ToxicStaffOfTheDead extends ChargedItem {
             new TriggerItem(ItemId.TOXIC_STAFF_OF_THE_DEAD)
         };
 
-        this.triggers = new TriggerBase[] {
-            new OnChatMessage("Scales: (?<charges>.+)").setDynamicallyCharges(),
-        };
+        this.triggers.addAll(List.of(
+            new OnChatMessage("Scales: (?<charges>.+)").setDynamicallyCharges()
+        ));
     }
 }

@@ -7,9 +7,10 @@ import tictac7x.charges.item.ChargedItemWithStatus;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnMenuEntryAdded;
 import tictac7x.charges.item.triggers.OnXpDrop;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 public class U_BoneCrusher extends ChargedItemWithStatus {
     public U_BoneCrusher(final Provider provider) {
@@ -20,7 +21,7 @@ public class U_BoneCrusher extends ChargedItemWithStatus {
             new TriggerItem(ItemId.BONECRUSHER_NECKLACE)
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Check.
             new OnChatMessage("The bonecrusher( necklace)? has no charges.").setFixedCharges(0),
             new OnChatMessage("The bonecrusher( necklace)? has one charge.").setFixedCharges(1),
@@ -50,7 +51,7 @@ public class U_BoneCrusher extends ChargedItemWithStatus {
             }),
 
             // Hide destroy.
-            new OnMenuEntryAdded("Destroy").hide(),
-        };
+            new OnMenuEntryAdded("Destroy").hide()
+        ));
     }
 }

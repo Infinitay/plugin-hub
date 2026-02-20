@@ -4,9 +4,10 @@ import tictac7x.charges.store.ids.ItemId;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 public class H_CircletOfWater extends ChargedItem {
     public H_CircletOfWater(final Provider provider) {
@@ -17,7 +18,7 @@ public class H_CircletOfWater extends ChargedItem {
             new TriggerItem(ItemId.CIRCLET_OF_WATER).needsToBeEquipped(),
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Protect from heat.
             new OnChatMessage("Your circlet protects you from the desert heat.").decreaseCharges(1),
 
@@ -34,7 +35,7 @@ public class H_CircletOfWater extends ChargedItem {
             new OnChatMessage("The banker charges your Circlet of water using (?<waterrune>.+)x Water rune.").matcherConsumer(m -> {
                 final int waterRunes = Integer.parseInt(m.group("waterrune"));
                 increaseCharges(waterRunes / 5);
-            }),
-        };
+            })
+        ));
     }
 }

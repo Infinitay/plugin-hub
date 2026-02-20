@@ -4,10 +4,11 @@ import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnGraphicChanged;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
 import tictac7x.charges.store.ids.ItemId;
+
+import java.util.List;
 
 public class W_EyeOfAyak  extends ChargedItem {
     public W_EyeOfAyak(Provider provider) {
@@ -27,7 +28,7 @@ public class W_EyeOfAyak  extends ChargedItem {
          * only one of them will be charged.
          */
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             // Check.
             // Charge.
             new OnChatMessage("The Eye of Ayak has been charged with (runes|demon tears). It currently has (?<charges>.+) charges?.").setDynamicallyCharges(),
@@ -48,7 +49,7 @@ public class W_EyeOfAyak  extends ChargedItem {
             }),
 
             // Auto-charge
-            new OnChatMessage("The banker charges your Eye of Ayak using (?<charges>.+)x Demon tear.").increaseDynamically(),
-        };
+            new OnChatMessage("The banker charges your Eye of Ayak using (?<charges>.+)x Demon tear.").increaseDynamically()
+        ));
     }
 }

@@ -7,6 +7,8 @@ import tictac7x.charges.item.triggers.*;
 import tictac7x.charges.store.ids.ChargeId;
 import tictac7x.charges.store.Provider;
 
+import java.util.List;
+
 public class W_WesternBanner extends ChargedItem {
     public W_WesternBanner(final Provider provider) {
         super(TicTac7xChargesImprovedConfig.western_banner, ItemId.WESTERN_BANNER_3, provider);
@@ -16,7 +18,7 @@ public class W_WesternBanner extends ChargedItem {
             new TriggerItem(ItemId.WESTERN_BANNER_4).fixedCharges(ChargeId.UNLIMITED),
         };
 
-        this.triggers = new TriggerBase[]{
+        this.triggers.addAll(List.of(
             // Teleport.
             new OnMenuOptionClicked("Teleport").hasItemId(ItemId.WESTERN_BANNER_3).setFixedCharges(0),
 
@@ -24,7 +26,7 @@ public class W_WesternBanner extends ChargedItem {
             new OnChatMessage("You have already used your available teleports for today. Try again tomorrow after the standard has recharged.").onItemClick().setFixedCharges(0),
 
             // Daily reset.
-            new OnResetDaily().requiredItem(ItemId.WESTERN_BANNER_3).setFixedCharges(1),
-        };
+            new OnResetDaily().requiredItem(ItemId.WESTERN_BANNER_3).setFixedCharges(1)
+        ));
     }
 }

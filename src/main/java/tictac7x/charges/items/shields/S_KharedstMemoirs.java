@@ -5,9 +5,10 @@ import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnMenuEntryAdded;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Provider;
+
+import java.util.List;
 
 public class S_KharedstMemoirs extends ChargedItem {
     public S_KharedstMemoirs(final Provider provider) {
@@ -18,7 +19,7 @@ public class S_KharedstMemoirs extends ChargedItem {
             new TriggerItem(ItemId.BOOK_OF_THE_DEAD)
         };
 
-        this.triggers = new TriggerBase[] {
+        this.triggers.addAll(List.of(
             new OnChatMessage("You add an entry to Kharedst's Memoirs.").increaseCharges(20),
 
             // Teleport.
@@ -43,7 +44,7 @@ public class S_KharedstMemoirs extends ChargedItem {
             new OnMenuEntryAdded("Reminisce").replaceOption("Teleport"),
 
             // Hide destroy.
-            new OnMenuEntryAdded("Destroy").hide(),
-        };
+            new OnMenuEntryAdded("Destroy").hide()
+        ));
     }
 }
