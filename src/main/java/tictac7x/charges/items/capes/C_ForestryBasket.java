@@ -96,6 +96,8 @@ public class C_ForestryBasket extends ChargedItemWithStorage {
         };
 
         this.triggers.addAll(List.of(
+            new OnChatMessage("You empty all of your containers into the bank").consumer(() -> emptyLogBasket()),
+
             // View contents.
             new OnItemContainerChanged(ItemContainerId.FORESTRY_KIT).itemsConsumer(storageItems -> {
                 storage.put(ItemId.ANIMAINFUSED_BARK, storageItems.count(ItemId.ANIMAINFUSED_BARK));

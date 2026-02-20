@@ -1,11 +1,11 @@
 package tictac7x.charges.items.capes;
 
+import tictac7x.charges.item.ChargedItemWithStorageEmptyable;
 import tictac7x.charges.store.ids.ItemId;
 import net.runelite.api.Skill;
 import net.runelite.api.widgets.Widget;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.TicTac7xChargesImprovedPlugin;
-import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.storage.StorableItem;
 import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.item.triggers.*;
@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 import static tictac7x.charges.store.ids.ItemContainerId.BANK;
 import static tictac7x.charges.store.ids.ItemContainerId.INVENTORY;
 
-public class C_LogBasket extends ChargedItemWithStorage {
+public class C_LogBasket extends ChargedItemWithStorageEmptyable {
     private Optional<StorageItem> lastLogs = Optional.empty();
     private int infernalQuantityTracker = 0;
     private Optional<Integer> lastLogUsedFromBasketForBeehive = Optional.empty();

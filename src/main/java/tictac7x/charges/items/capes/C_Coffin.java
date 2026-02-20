@@ -1,8 +1,8 @@
 package tictac7x.charges.items.capes;
 
+import tictac7x.charges.item.ChargedItemWithStorageEmptyable;
 import tictac7x.charges.store.ids.ItemId;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
-import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.storage.StorableItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnItemContainerChanged;
@@ -14,7 +14,7 @@ import java.util.List;
 
 import static tictac7x.charges.store.ids.ItemContainerId.INVENTORY;
 
-public class C_Coffin extends ChargedItemWithStorage {
+public class C_Coffin extends ChargedItemWithStorageEmptyable {
     public C_Coffin(final Provider provider) {
         super(TicTac7xChargesImprovedConfig.coffin, ItemId.GOLD_COFFIN, provider);
         this.storage = storage.storableItems(
