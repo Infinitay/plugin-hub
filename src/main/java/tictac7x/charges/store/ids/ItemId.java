@@ -1284,8 +1284,11 @@ public final class ItemId {
     public static final int ASGARNIAN_SEED = ItemID.ASGARNIAN_HOP_SEED;
     public static final int JUTE_SEED = ItemID.JUTE_SEED;
     public static final int YANILLIAN_SEED = ItemID.YANILLIAN_HOP_SEED;
+    public static final int FLAX_SEED = ItemID.FLAX_SEED;
     public static final int KRANDORIAN_SEED = ItemID.KRANDORIAN_HOP_SEED;
     public static final int WILDBLOOD_SEED = ItemID.WILDBLOOD_HOP_SEED;
+    public static final int HEMP_SEED = ItemID.HEMP_SEED;
+    public static final int COTTON_SEED = ItemID.COTTON_SEED;
     public static final int ACORN = ItemID.ACORN;
     public static final int WILLOW_SEED = ItemID.WILLOW_SEED;
     public static final int MAPLE_SEED = ItemID.MAPLE_SEED;
@@ -1316,6 +1319,7 @@ public final class ItemId {
     public static final int MARRENTILL_SEED = ItemID.MARRENTILL_SEED;
     public static final int TARROMIN_SEED = ItemID.TARROMIN_SEED;
     public static final int HARRALANDER_SEED = ItemID.HARRALANDER_SEED;
+    public static final int GOUT_TUBER_SEED = ItemID.VILLAGE_RARE_TUBER;
     public static final int RANARR_SEED = ItemID.RANARR_SEED;
     public static final int TOADFLAX_SEED = ItemID.TOADFLAX_SEED;
     public static final int IRIT_SEED = ItemID.IRIT_SEED;
@@ -1332,6 +1336,9 @@ public final class ItemId {
     public static final int GRAPE_SEED = ItemID.GRAPE_SEED;
     public static final int MUSHROOM_SPORE = ItemID.MUSHROOM_SEED;
     public static final int MAHOGANY_SEED = ItemID.MAHOGANY_SEED;
+    public static final int CAMPHOR_SEED = ItemID.CAMPHOR_SEED;
+    public static final int IRONWOOD_SEED = ItemID.IRONWOOD_SEED;
+    public static final int ROSEWOOD_SEED = ItemID.ROSEWOOD_SEED;
     public static final int CACTUS_SEED = ItemID.CACTUS_SEED;
     public static final int BELLADONNA_SEED = ItemID.BELLADONNA_SEED;
     public static final int POTATO_CACTUS_SEED = ItemID.POTATO_CACTUS_SEED;
@@ -1343,6 +1350,9 @@ public final class ItemId {
     public static final int ATTAS_SEED = ItemID.ATTAS_SEED;
     public static final int SPIRIT_SEED = ItemID.SPIRIT_TREE_SEED;
     public static final int CELASTRUS_SEED = ItemID.CELASTRUS_TREE_SEED;
+    public static final int ELKHORN_FRAG = ItemID.CORAL_ELKHORN_FRAG;
+    public static final int PILLAR_FRAG = ItemID.CORAL_PILLAR_FRAG;
+    public static final int UMBRAL_FRAG = ItemID.CORAL_UMBRAL_FRAG;
 
     // Soul bearer
     public static final int SOUL_BEARER = ItemID.ARCEUUS_SOULBEARER;
