@@ -27,14 +27,11 @@ public class J_GiantsoulAmulet extends ChargedItem {
             // Teleport.
             new OnGraphicChanged(3226).decreaseCharges(1),
 
-            // Auto-charge.
-            new OnChatMessage("The banker charges your Giantsoul amulet using (?<bigbones>.+)x Big bones.*").matcherConsumer(m -> {
-                final int bigBones = Integer.parseInt(m.group("bigbones"));
-                increaseCharges(bigBones);
-            }),
-
             // Unified menu entry.
-            new OnMenuEntryAdded("Rub").replaceOption("Teleport")
+            new OnMenuEntryAdded("Rub").replaceOption("Teleport"),
+
+            // Auto-charge.
+            new OnAutoChargeMessage("Giantsoul amulet", "Big bones", 1, this)
         ));
     }
 }
