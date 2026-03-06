@@ -575,7 +575,6 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 	@Subscribe
 	public void onChatMessage(final ChatMessage event) {
 		final CustomChatMessage chatMessage = new CustomChatMessage(event);
-		System.out.println(chatMessage);
 		store.onChatMessage(chatMessage);
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onChatMessage(chatMessage));
 	}
