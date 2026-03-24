@@ -14,7 +14,8 @@ public class W_VenatorBow extends ChargedItem {
 
         this.items = new TriggerItem[]{
             new TriggerItem(ItemId.VENATOR_BOW_UNCHARGED).fixedCharges(0),
-            new TriggerItem(ItemId.VENATOR_BOW)
+            new TriggerItem(ItemId.VENATOR_BOW),
+            new TriggerItem(ItemId.ECHO_VENATOR_BOW)
         };
 
         this.triggers.addAll(List.of(

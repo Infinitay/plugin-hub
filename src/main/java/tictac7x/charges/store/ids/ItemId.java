@@ -1533,6 +1533,7 @@ public final class ItemId {
     // Venator bow
     public static final int VENATOR_BOW = ItemID.VENATOR_BOW;
     public static final int VENATOR_BOW_UNCHARGED = ItemID.VENATOR_BOW_UNCHARGED;
+    public static final int ECHO_VENATOR_BOW = ItemID.VENATOR_BOW_ORNAMENT;
 
     // Warped sceptre
     public static final int WARPED_SCEPTRE = ItemID.WARPED_SCEPTRE;
