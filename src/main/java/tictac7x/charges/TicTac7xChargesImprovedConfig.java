@@ -51,6 +51,7 @@ public interface TicTac7xChargesImprovedConfig extends Config {
     // Helms
     String circlet_of_water = "circlet_of_water";
     String kandarin_headgear = "kandarin_headgear";
+    String serpentine_helm = "serpentine_helm";
 
     // Boots
     String fremennik_sea_boots = "fremennik_sea_boots";
@@ -1299,6 +1300,13 @@ public interface TicTac7xChargesImprovedConfig extends Config {
                 section = infoboxes
         ) default boolean eyeOfAyakInfobox() { return true; }
 
+    @ConfigItem(
+        keyName = serpentine_helm + _infobox,
+        name = "Serpentine helm",
+        description = "",
+        section = infoboxes
+    ) default boolean serpentineHelmInfobox() { return true; }
+
     @ConfigSection(
         name = "Overlays",
         description = "Choose for which charged items number is shown next to it",
@@ -2202,6 +2210,13 @@ public interface TicTac7xChargesImprovedConfig extends Config {
                 section = overlays
         ) default boolean eyeOfAyakOverlay() { return true; }
 
+        @ConfigItem(
+            keyName = serpentine_helm + _overlay,
+            name = "Serpentine helm",
+            description = "",
+            section = overlays
+        ) default boolean serpentineHelmOverlay() { return true; }
+
     @ConfigSection(
         name = "Debug",
         description = "Values of charges for all items under the hood",
@@ -2828,4 +2843,11 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             description = amulet_of_chemistry,
             section = debug
         ) default int getAmuletOfChemistryCharges() { return ChargeId.UNKNOWN; }
+
+        @ConfigItem(
+            keyName = serpentine_helm,
+            name = serpentine_helm,
+            description = serpentine_helm,
+            section = debug
+        ) default int getSerpentineHelmCharges() { return ChargeId.UNKNOWN; }
 }
