@@ -2828,4 +2828,11 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             description = amulet_of_chemistry,
             section = debug
         ) default int getAmuletOfChemistryCharges() { return ChargeId.UNKNOWN; }
+
+        @ConfigItem(
+            keyName = venator_bow,
+            name = venator_bow,
+            description = venator_bow,
+            section = debug
+        ) default int getVenatorBowCharges() { return ChargeId.UNKNOWN; }
 }
