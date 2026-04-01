@@ -69,7 +69,7 @@ public class W_VenatorBow extends ChargedItemWithStorage {
                     Matcher unchargeMatcher = unchargePattern.matcher(cleanedText);
                     Widget objectboxItemWidget = provider.client.getWidget(InterfaceID.Objectbox.ITEM);
                     // Check against the uncharged item since the item displayed on the widget will be the uncharged version
-                    if (unchargeMatcher.find() && objectboxItemWidget != null && objectboxItemWidget.getItemId() == this.items[0].itemId) { // 0th item is the uncharged version
+                    if (unchargeMatcher.find() && objectboxItemWidget != null && objectboxItemWidget.getItemId() == this.itemId) {
                         storage.clear();
                     }
                 }
