@@ -52,6 +52,8 @@ public interface TicTac7xChargesImprovedConfig extends Config {
     String circlet_of_water = "circlet_of_water";
     String kandarin_headgear = "kandarin_headgear";
     String serpentine_helm = "serpentine_helm";
+    String magma_helm = "magma_helm";
+    String tanzanite_helm = "tanzanite_helm";
 
     // Boots
     String fremennik_sea_boots = "fremennik_sea_boots";
@@ -1307,6 +1309,20 @@ public interface TicTac7xChargesImprovedConfig extends Config {
         section = infoboxes
     ) default boolean serpentineHelmInfobox() { return true; }
 
+    @ConfigItem(
+        keyName = magma_helm + _infobox,
+        name = "Magma helm",
+        description = "",
+        section = infoboxes
+    ) default boolean magmaHelmInfobox() { return true; }
+
+    @ConfigItem(
+        keyName = tanzanite_helm + _infobox,
+        name = "Tanzanite helm",
+        description = "",
+        section = infoboxes
+    ) default boolean tanzaniteHelmInfobox() { return true; }
+
     @ConfigSection(
         name = "Overlays",
         description = "Choose for which charged items number is shown next to it",
@@ -2217,6 +2233,20 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             section = overlays
         ) default boolean serpentineHelmOverlay() { return true; }
 
+        @ConfigItem(
+            keyName = magma_helm + _overlay,
+            name = "Magma helm",
+            description = "",
+            section = overlays
+        ) default boolean magmaHelmOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = tanzanite_helm + _overlay,
+            name = "Tanzanite helm",
+            description = "",
+            section = overlays
+        ) default boolean tanzaniteHelmOverlay() { return true; }
+
     @ConfigSection(
         name = "Debug",
         description = "Values of charges for all items under the hood",
@@ -2850,4 +2880,18 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             description = serpentine_helm,
             section = debug
         ) default int getSerpentineHelmCharges() { return ChargeId.UNKNOWN; }
+
+        @ConfigItem(
+            keyName = magma_helm,
+            name = magma_helm,
+            description = magma_helm,
+            section = debug
+        ) default int getMagmaHelmCharges() { return ChargeId.UNKNOWN; }
+
+    @ConfigItem(
+        keyName = tanzanite_helm,
+        name = tanzanite_helm,
+        description = tanzanite_helm,
+        section = debug
+    ) default int getTanzaniteHelmCharges() { return ChargeId.UNKNOWN; }
 }

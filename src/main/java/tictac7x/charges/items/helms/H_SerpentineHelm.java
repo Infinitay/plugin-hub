@@ -19,20 +19,21 @@ public class H_SerpentineHelm extends ChargedItemWithStorage
 {
 	public H_SerpentineHelm(final Provider provider)
 	{
-		super(TicTac7xChargesImprovedConfig.serpentine_helm, ItemId.SERPENTINE_HELM, provider);
+		this(TicTac7xChargesImprovedConfig.serpentine_helm, ItemId.SERPENTINE_HELM, provider);
+
+		this.items = new TriggerItem[]{
+			new TriggerItem(ItemId.SERPENTINE_HELM_UNCHARGED).fixedCharges(0),
+			new TriggerItem(ItemId.SERPENTINE_HELM)
+		};
+	}
+
+	public H_SerpentineHelm(final String configKey, final int itemId, final Provider provider)
+	{
+		super(configKey, itemId, provider);
 
 		this.storage.storableItems(
 			new StorableItem(ItemId.ZULRAH_SCALES)
 		);
-
-		this.items = new TriggerItem[]{
-			new TriggerItem(ItemId.SERPENTINE_HELM),
-			new TriggerItem(ItemId.SERPENTINE_HELM_UNCHARGED).fixedCharges(0),
-			new TriggerItem(ItemId.SERPENTINE_MAGMA_HELM),
-			new TriggerItem(ItemId.SERPENTINE_MAGMA_HELM_UNCHARGED).fixedCharges(0),
-			new TriggerItem(ItemId.SERPENTINE_TANZANITE_HELM),
-			new TriggerItem(ItemId.SERPENTINE_TANZANITE_HELM_UNCHARGED).fixedCharges(0)
-		};
 
 		this.triggers.addAll(List.of(
 			// Check
@@ -46,7 +47,7 @@ public class H_SerpentineHelm extends ChargedItemWithStorage
 				final Optional<Widget> widget = TicTac7xChargesImprovedPlugin.getWidget(provider.client, 584, 5);
 				if (
 					widget.isPresent() &&
-						widget.get().getItemId() == ItemId.SERPENTINE_HELM &&
+						widget.get().getItemId() == this.itemId &&
 						script.getScriptEvent().getArguments().length >= 5 &&
 						script.getScriptEvent().getArguments()[4].toString().equals("Yes")
 				)
@@ -57,13 +58,7 @@ public class H_SerpentineHelm extends ChargedItemWithStorage
 
 			// Degrade in combat - Note that this may always be off by 10 because the moment the player is in combat it consumes 10 scales, and then 10 every 90 ticks
 			// But the exact timing is not known for the "grace" period on the initial consumption. Therefore, I won't account for that initial consumption
-			new OnCombat(90).isEquipped().consumer(() -> {
-				final Optional<StorageItem> scales = this.storage.getStorage().getItem(ItemId.ZULRAH_SCALES);
-				if (scales.isPresent() && scales.get().getQuantity() > 0)
-				{
-					scales.get().decreaseQuantity(10);
-				}
-			}),
+			new OnCombat(90).isEquipped().consumer(() -> storage.remove(ItemId.ZULRAH_SCALES, 10)),
 
 			// Ran out of charges upon degrading in combat
 			new OnChatMessage("Your serpentine helm has run out of Zulrah's scales.").matcherConsumer(m -> storage.clear())
