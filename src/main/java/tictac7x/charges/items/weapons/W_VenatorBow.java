@@ -19,22 +19,24 @@ import java.util.List;
 
 public class W_VenatorBow extends ChargedItemWithStorage {
     public W_VenatorBow(final Provider provider) {
-        super(TicTac7xChargesImprovedConfig.venator_bow, ItemId.VENATOR_BOW, provider);
+        this(TicTac7xChargesImprovedConfig.venator_bow, ItemId.VENATOR_BOW, provider);
+
+        this.items = new TriggerItem[]{
+            new TriggerItem(ItemId.VENATOR_BOW_UNCHARGED).fixedCharges(0),
+            new TriggerItem(ItemId.VENATOR_BOW)
+        };
+    }
+
+    public W_VenatorBow(final String configKey, final int itemId, final Provider provider) {
+        super(configKey, itemId, provider);
 
         this.storage.storableItems(
             new StorableItem(ItemId.ANCIENT_ESSENCE)
         );
 
-        this.items = new TriggerItem[]{
-            new TriggerItem(ItemId.VENATOR_BOW_UNCHARGED).fixedCharges(0),
-            new TriggerItem(ItemId.VENATOR_BOW),
-            new TriggerItem(ItemId.ECHO_VENATOR_BOW),
-            new TriggerItem(ItemId.ECHO_VENATOR_BOW_UNCHARGED).fixedCharges(0)
-        };
-
         this.triggers.addAll(List.of(
             // Charge it with ancient essence.
-            new OnWidgetLoaded(InterfaceID.OBJECTBOX, 0).consumer(() -> {
+            new OnWidgetLoaded(InterfaceID.OBJECTBOX, 0).onItemClick().consumer(() -> {
                 Widget objectboxTextWidget = provider.client.getWidget(InterfaceID.Objectbox.TEXT);
                 if (objectboxTextWidget != null && objectboxTextWidget.getText() != null && !objectboxTextWidget.getText().isEmpty()) {
                     String cleanedText = TicTac7xChargesImprovedPlugin.getCleanText(objectboxTextWidget.getText());
@@ -54,20 +56,27 @@ public class W_VenatorBow extends ChargedItemWithStorage {
                         int charges = TicTac7xChargesImprovedPlugin.getNumberFromCommaString(chargeMatcher.group("charges"));
                         final StorageItem ancientEssence = new StorageItem(ItemId.ANCIENT_ESSENCE, charges);
                         storage.clearAndPut(ancientEssence);
-                        return;
                     }
+                }
+            }),
 
-                    // Uncharge
+            // Uncharge (you can only uncharge ALL charges at once)
+            new OnWidgetLoaded(InterfaceID.OBJECTBOX, 0).consumer(() -> {
+                Widget objectboxTextWidget = provider.client.getWidget(InterfaceID.Objectbox.TEXT);
+                if (objectboxTextWidget != null && objectboxTextWidget.getText() != null && !objectboxTextWidget.getText().isEmpty()) {
+                    String cleanedText = TicTac7xChargesImprovedPlugin.getCleanText(objectboxTextWidget.getText());
                     Pattern unchargePattern = Pattern.compile("You fully uncharge your (echo )?venator bow, regaining (?<charges>.+) ancient essence in the process.");
                     Matcher unchargeMatcher = unchargePattern.matcher(cleanedText);
-                    if (unchargeMatcher.find()) {
+                    Widget objectboxItemWidget = provider.client.getWidget(InterfaceID.Objectbox.ITEM);
+                    // Check against the uncharged item since the item displayed on the widget will be the uncharged version
+                    if (unchargeMatcher.find() && objectboxItemWidget != null && objectboxItemWidget.getItemId() == this.items[0].itemId) { // 0th item is the uncharged version
                         storage.clear();
                     }
                 }
             }),
 
             // Check.
-            new OnChatMessage("Your venator bow has (?<charges>.+) charges? remaining.").onItemClick().matcherConsumer(m -> {
+            new OnChatMessage("Your (echo )?venator bow has (?<charges>.+) charges? remaining.").onItemClick().matcherConsumer(m -> {
                 final StorageItem ancientEssence = new StorageItem(ItemId.ANCIENT_ESSENCE, TicTac7xChargesImprovedPlugin.getNumberFromCommaString(m.group("charges")));
                 storage.clearAndPut(ancientEssence);
             }).setDynamicallyCharges(),
