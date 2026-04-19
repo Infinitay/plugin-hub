@@ -146,11 +146,7 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 	private final String pluginVersion = "v0.6.12";
 	private final String pluginMessage =
 		"<colHIGHLIGHT>Item Charges Improved " + pluginVersion + ":<br>" +
-		"<colHIGHLIGHT>* New seeds and corals support for seed box.<br>" +
-		"<colHIGHLIGHT>* Amulet of bounty added.<br>" +
-		"<colHIGHLIGHT>* Cowbell amulet added.<br>" +
-		"<colHIGHLIGHT>* Watering cans, filled baskets and sacks added.<br>" +
-		"<colHIGHLIGHT>* Tome of water auto-charge fixed."
+		"<colHIGHLIGHT>* Reagent pouch fixes."
 	;
 
 	@Inject
@@ -894,10 +890,10 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 		return getCleanText(event.getMessage());
 	}
 
-	public static String menuOptionEmptyToBank = "Empty to bank";
-	public static String menuOptionFillFromBank = "Fill from bank";
-	public static String menuOptionEmptyToInventory = "Empty to inventory";
-	public static String menuOptionFillFromInventory = "Fill from inventory";
+	public static String menuOptionEmptyToBank = "Empty-to-bank";
+	public static String menuOptionFillFromBank = "Fill-from-bank";
+	public static String menuOptionEmptyToInventory = "Empty-to-inventory";
+	public static String menuOptionFillFromInventory = "Fill-from-inventory";
 
 	public static int getNumberFromCommaString(final String charges) {
 		return Integer.parseInt(charges.replaceAll(",", "").replaceAll("\\.", ""));
