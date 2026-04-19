@@ -166,6 +166,7 @@ public interface TicTac7xChargesImprovedConfig extends Config {
     String waterskin = "waterskin";
 
     // Weapons
+    String abyssal_tentacle = "abyssal_tentacle";
     String arclight = "arclight";
     String blazing_blowpipe = "blazing_blowpipe";
     String bow_of_faerdhinen = "bow_of_faerdhinen";
@@ -1299,6 +1300,13 @@ public interface TicTac7xChargesImprovedConfig extends Config {
                 section = infoboxes
         ) default boolean eyeOfAyakInfobox() { return true; }
 
+        @ConfigItem(
+            keyName = abyssal_tentacle + _infobox,
+            name = "Abyssal tentacle",
+            description = "",
+            section = infoboxes
+        ) default boolean abyssalTentacleInfobox() { return true; }
+
     @ConfigSection(
         name = "Overlays",
         description = "Choose for which charged items number is shown next to it",
@@ -2202,6 +2210,13 @@ public interface TicTac7xChargesImprovedConfig extends Config {
                 section = overlays
         ) default boolean eyeOfAyakOverlay() { return true; }
 
+        @ConfigItem(
+            keyName = abyssal_tentacle + _overlay,
+            name = "Abyssal tentacle",
+            description = "",
+            section = overlays
+        ) default boolean abyssalTentacleOverlay() { return true; }
+
     @ConfigSection(
         name = "Debug",
         description = "Values of charges for all items under the hood",
@@ -2828,4 +2843,11 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             description = amulet_of_chemistry,
             section = debug
         ) default int getAmuletOfChemistryCharges() { return ChargeId.UNKNOWN; }
+
+        @ConfigItem(
+            keyName = abyssal_tentacle,
+            name = abyssal_tentacle,
+            description = abyssal_tentacle,
+            section = debug
+        ) default int getAbyssalTentacleCharges() { return ChargeId.UNKNOWN; }
 }

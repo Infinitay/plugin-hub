@@ -474,6 +474,7 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 			new U_Waterskin(provider),
 
 			// Weapons
+            new W_AbyssalTentacle(provider),
 			new W_Arclight(provider),
 			new W_BlazingBlowpipe(provider),
 			new W_BowOfFaerdhinen(provider),
