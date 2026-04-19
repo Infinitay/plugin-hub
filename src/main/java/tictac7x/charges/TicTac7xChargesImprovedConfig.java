@@ -166,6 +166,7 @@ public interface TicTac7xChargesImprovedConfig extends Config {
     String waterskin = "waterskin";
 
     // Weapons
+    String abyssal_tentacle = "abyssal_tentacle";
     String arclight = "arclight";
     String blazing_blowpipe = "blazing_blowpipe";
     String bow_of_faerdhinen = "bow_of_faerdhinen";
@@ -1306,6 +1307,13 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             description = "",
             section = infoboxes
         ) default boolean echoVenatorBowInfobox() { return true; }
+  
+        @ConfigItem(
+            keyName = abyssal_tentacle + _infobox,
+            name = "Abyssal tentacle",
+            description = "",
+            section = infoboxes
+        ) default boolean abyssalTentacleInfobox() { return true; }
 
     @ConfigSection(
         name = "Overlays",
@@ -2216,6 +2224,13 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             description = "",
             section = overlays
         ) default boolean echoVenatorBowOverlay() { return true; }
+  
+        @ConfigItem(
+            keyName = abyssal_tentacle + _overlay,
+            name = "Abyssal tentacle",
+            description = "",
+            section = overlays
+        ) default boolean abyssalTentacleOverlay() { return true; }
 
     @ConfigSection(
         name = "Debug",
@@ -2851,10 +2866,17 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             section = debug
         ) default int getVenatorBowCharges() { return ChargeId.UNKNOWN; }
 
-    @ConfigItem(
-        keyName = echo_venator_bow,
-        name = echo_venator_bow,
-        description = echo_venator_bow,
-        section = debug
-    ) default int getEchoVenatorBowCharges() { return ChargeId.UNKNOWN; }
+        @ConfigItem(
+            keyName = echo_venator_bow,
+            name = echo_venator_bow,
+            description = echo_venator_bow,
+            section = debug
+        ) default int getEchoVenatorBowCharges() { return ChargeId.UNKNOWN; }
+  
+        @ConfigItem(
+            keyName = abyssal_tentacle,
+            name = abyssal_tentacle,
+            description = abyssal_tentacle,
+            section = debug
+        ) default int getAbyssalTentacleCharges() { return ChargeId.UNKNOWN; }
 }
