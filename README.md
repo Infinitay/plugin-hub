@@ -121,6 +121,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - Waterskins
 
 ### Weapons
+- Abyssal tentacle
 - Arclight
 - Blazing blowpipe
 - Bow of faerdhinen
