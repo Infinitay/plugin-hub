@@ -174,6 +174,7 @@ public interface TicTac7xChargesImprovedConfig extends Config {
     String craws_bow = "craws_bow";
     String crystal_bow = "crystal_bow";
     String crystal_halberd = "crystal_halberd";
+    String echo_venator_bow = "echo_venator_bow";
     String eye_of_ayak = "eye_of_ayak";
     String ibans_staff = "ibans_staff";
     String infernal_axe = "infernal_axe";
@@ -1301,6 +1302,13 @@ public interface TicTac7xChargesImprovedConfig extends Config {
         ) default boolean eyeOfAyakInfobox() { return true; }
 
         @ConfigItem(
+            keyName = echo_venator_bow + _infobox,
+            name = "Echo venator bow",
+            description = "",
+            section = infoboxes
+        ) default boolean echoVenatorBowInfobox() { return true; }
+  
+        @ConfigItem(
             keyName = abyssal_tentacle + _infobox,
             name = "Abyssal tentacle",
             description = "",
@@ -2211,6 +2219,13 @@ public interface TicTac7xChargesImprovedConfig extends Config {
         ) default boolean eyeOfAyakOverlay() { return true; }
 
         @ConfigItem(
+            keyName = echo_venator_bow + _overlay,
+            name = "Echo Venator Bow",
+            description = "",
+            section = overlays
+        ) default boolean echoVenatorBowOverlay() { return true; }
+  
+        @ConfigItem(
             keyName = abyssal_tentacle + _overlay,
             name = "Abyssal tentacle",
             description = "",
@@ -2844,6 +2859,20 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             section = debug
         ) default int getAmuletOfChemistryCharges() { return ChargeId.UNKNOWN; }
 
+        @ConfigItem(
+            keyName = venator_bow,
+            name = venator_bow,
+            description = venator_bow,
+            section = debug
+        ) default int getVenatorBowCharges() { return ChargeId.UNKNOWN; }
+
+        @ConfigItem(
+            keyName = echo_venator_bow,
+            name = echo_venator_bow,
+            description = echo_venator_bow,
+            section = debug
+        ) default int getEchoVenatorBowCharges() { return ChargeId.UNKNOWN; }
+  
         @ConfigItem(
             keyName = abyssal_tentacle,
             name = abyssal_tentacle,
