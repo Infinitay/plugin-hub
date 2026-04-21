@@ -1,4 +1,4 @@
-# Item Charges Improved - v0.6.11
+# Item Charges Improved - v0.6.12
 
 Show charges of various items that are in inventory or equipped
 
@@ -121,6 +121,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - Waterskins
 
 ### Weapons
+- Abyssal tentacle
 - Arclight
 - Blazing blowpipe
 - Bow of faerdhinen

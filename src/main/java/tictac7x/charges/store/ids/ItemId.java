@@ -1441,6 +1441,9 @@ public final class ItemId {
     public static final int WATERSKIN_3 = ItemID.WATER_SKIN3;
     public static final int WATERSKIN_4 = ItemID.WATER_SKIN4;
 
+    // Abyssal Tentacle Whip
+    public static final int ABYSSAL_TENTACLE = ItemID.ABYSSAL_TENTACLE;
+
     // Arclight
     public static final int ARCLIGHT = ItemID.ARCLIGHT;
     public static final int ARCLIGHT_UNCHARGED = ItemID.ARCLIGHT_INACTIVE;
@@ -1533,6 +1536,9 @@ public final class ItemId {
     // Venator bow
     public static final int VENATOR_BOW = ItemID.VENATOR_BOW;
     public static final int VENATOR_BOW_UNCHARGED = ItemID.VENATOR_BOW_UNCHARGED;
+    public static final int ANCIENT_ESSENCE = ItemID.ANCIENT_ESSENCE;
+    public static final int ECHO_VENATOR_BOW = ItemID.VENATOR_BOW_ORNAMENT;
+    public static final int ECHO_VENATOR_BOW_UNCHARGED = ItemID.VENATOR_BOW_ORNAMENT_UNCHARGED;
 
     // Warped sceptre
     public static final int WARPED_SCEPTRE = ItemID.WARPED_SCEPTRE;
