@@ -7,11 +7,9 @@ import tictac7x.charges.store.ids.ItemId;
 
 public class W_EchoVenatorBow extends W_VenatorBow {
     public W_EchoVenatorBow(final Provider provider) {
-        super(TicTac7xChargesImprovedConfig.echo_venator_bow, ItemId.ECHO_VENATOR_BOW, provider);
-
-        this.items = new TriggerItem[]{
+        super(TicTac7xChargesImprovedConfig.echo_venator_bow, ItemId.ECHO_VENATOR_BOW, provider, new TriggerItem[]{
             new TriggerItem(ItemId.ECHO_VENATOR_BOW_UNCHARGED).fixedCharges(0),
             new TriggerItem(ItemId.ECHO_VENATOR_BOW)
-        };
+        });
     }
 }
